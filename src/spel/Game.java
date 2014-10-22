@@ -29,8 +29,6 @@ public class Game extends Main {
 		gui.add(new Cursor("res/cursor.png"));
 	}
 	
-	double x, y;
-	
 	public void update(double dt) {
 		
 		if (keys.keyPressed(Keyboard.KEY_ESCAPE)) {
