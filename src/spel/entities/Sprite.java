@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -12,17 +14,6 @@ public class Sprite {
 	
 	public Texture texture;
 	public double x, y, width, height;
-	
-	public static Sprite[] wallSprites = getTiles();
-	public static Sprite floorSprite = new Sprite("res/tiles/floor.png");
-	
-	public static Sprite[] getTiles() {
-		Sprite[] sprites = new Sprite[16];
-		for (int i = 0; i < sprites.length; i++) {
-			sprites[i] = new Sprite("res/tiles/tiles/tile" + i + ".png");
-		}
-		return sprites;
-	}
 	
 	public Sprite(String path) {
 		try {
