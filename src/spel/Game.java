@@ -15,29 +15,26 @@ public class Game extends Main {
 	public Keys keys;
 	public Input input;
 	private boolean paused;
-	Text t;
 	
 	public void init() {
 		UPDATES_PER_SECOND = 60;
 		input = new Input(0);
 		keys = new Keys();
 		
-		t = new Text();
-		
 		entities = new Vector<Entity>();
 		gui = new Vector<Entity>();
 		pauseMenu = new Vector<Entity>();
 		
 		gui.add(new Cursor("res/cursor.png"));
-		gui.add(new Entity(50, 50, "res/fontsheet.png"));
 	}
+	
+	double x, y;
 	
 	public void update(double dt) {
 		
 		if (keys.keyPressed(Keyboard.KEY_ESCAPE)) {
 			paused = !paused;
 		}
-		
 		keys.setKeys();
 		
 		for (Entity e : gui) {
@@ -69,8 +66,6 @@ public class Game extends Main {
 		for (Entity e : gui) {
 			e.render(interpolation);
 		}
-		
-		t.render(100, 100, "Tjena test 123");
 		return 0;
 	}
 	
