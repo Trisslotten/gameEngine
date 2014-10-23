@@ -7,7 +7,6 @@ import org.newdawn.slick.Input;
 
 import spel.entities.Entity;
 import spel.entities.gui.Cursor;
-import spel.entities.gui.ExitButton;
 import spel.main.Main;
 
 public class Game extends Main {
