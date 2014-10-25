@@ -28,16 +28,16 @@ public class Sprite {
 		texture.bind(); // or GL11.glBind(texture.getTextureID());
 		GL11.glBegin(GL11.GL_QUADS);
 		{
-			GL11.glTexCoord2d(0, y);
+			GL11.glTexCoord2d(0, 0);
 			GL11.glVertex2d(xpos, ypos);
 			
-			GL11.glTexCoord2d(x, y);
+			GL11.glTexCoord2d(x, 0);
 			GL11.glVertex2d(xpos + width, ypos);
 			
-			GL11.glTexCoord2d(x, 0);
+			GL11.glTexCoord2d(x, y);
 			GL11.glVertex2d(xpos + width, ypos + height);
 			
-			GL11.glTexCoord2d(0, 0);
+			GL11.glTexCoord2d(0, y);
 			GL11.glVertex2d(xpos, ypos + height);
 		}
 		GL11.glEnd();

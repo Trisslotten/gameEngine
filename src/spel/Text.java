@@ -18,4 +18,7 @@ public class Text {
 	public void render(int x, int y, String text) {
 		font.drawString(x, y, text, Color.white);
 	}
+	public void render(int x, int y, String text, Color color) {
+		font.drawString(x, y, text, color);
+	}
 }

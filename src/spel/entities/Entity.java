@@ -48,13 +48,15 @@ public class Entity {
 	}
 	
 	public void update(double dt) {
+		xpos += xspd*dt/1000;
+		ypos += yspd*dt/1000;
 		xdraw = xpos;
 		ydraw = ypos;
 	}
 	
 	public void render(double ip) {
-		xdraw += xspd * ip;
-		ydraw += yspd * ip;
+		xdraw += xspd * ip/1000;
+		ydraw += yspd * ip/1000;
 		frames[frameIndex].render(xdraw, ydraw);
 	}
 	

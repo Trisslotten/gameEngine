@@ -11,23 +11,24 @@ import org.lwjgl.opengl.GL11;
 
 public class Main implements Runnable {
 	
-	protected int width = 1280, height = 600;
+	protected int width = 1280, height = 720;
+	
 	public int getWidth() {
 		return width;
 	}
-
+	
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
+	
 	public int getHeight() {
 		return height;
 	}
-
+	
 	public void setHeight(int height) {
 		this.height = height;
 	}
-
+	
 	protected String title = "LWJGL";
 	protected double UPDATES_PER_SECOND = 30.0;
 	protected boolean vsync = false;
@@ -62,7 +63,7 @@ public class Main implements Runnable {
 		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, Display.getWidth(), 0, Display.getHeight(), 1, -1);
+		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
 	}
@@ -154,6 +155,13 @@ public class Main implements Runnable {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		
 		return 0;
+	}
+	
+	public double getUPS() {
+		return UPDATES_PER_SECOND;
+	}
+	public void setUPS(double ups) {
+		UPDATES_PER_SECOND = ups;
 	}
 	
 	public static void main(String[] args) {

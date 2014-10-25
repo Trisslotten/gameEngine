@@ -2,26 +2,27 @@ package spel.entities.gui;
 
 import org.lwjgl.input.Mouse;
 
+import spel.Game;
 import spel.entities.Entity;
 
 public class Cursor extends Entity {
 	
-	public Cursor(String filepath) {
+	private Game game;
+	
+	public Cursor(String filepath, Game game) {
 		super(Mouse.getX(), Mouse.getY(), filepath);
+		this.game = game;
 	}
 	
 	public void update(double dt) {
 		xpos = Mouse.getX();
-		ypos = Mouse.getY() - 16;
-		xdraw = xpos;
-		ydraw = ypos;
+		ypos = game.getHeight() - Mouse.getY();
 	}
-	
 	public void render(double ip) {
-		Mouse.poll();
 		xdraw = Mouse.getX();
-		ydraw = Mouse.getY() - 16;
+		ydraw = game.getHeight() - Mouse.getY();
 		super.render(ip);
 	}
+	
 	
 }
