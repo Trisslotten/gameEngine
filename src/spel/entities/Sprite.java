@@ -13,6 +13,9 @@ public class Sprite {
 	public Texture texture;
 	public double x, y, width, height;
 	
+	public static Sprite tile = new Sprite("res/asd.png");
+	public static Sprite tile2 = new Sprite("res/tile2.png");
+	
 	
 	public Sprite(String path) {
 		try {

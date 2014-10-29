@@ -5,13 +5,14 @@ import static org.lwjgl.opengl.GL11.glGetString;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Main implements Runnable {
 	
-	protected int width = 1280, height = 720;
+	protected int width, height;
 	
 	public int getWidth() {
 		return width;
@@ -47,7 +48,16 @@ public class Main implements Runnable {
 		running = false;
 	}
 	
-	private void glinit() {
+	private void glinit(int width, int height) {
+		this.width = width;
+		this.height = height;
+		try {
+			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setTitle(title);
+			Display.create();
+		} catch (LWJGLException e) {
+			System.exit(0);
+		}
 		version = glGetString(GL_VERSION);
 		Display.setTitle("OpenGL " + version + " | " + title + " | " + 0 + " ups, " + 0 + " fps");
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -94,14 +104,8 @@ public class Main implements Runnable {
 	
 	public void run() {
 		
-		try {
-			Display.setDisplayMode(new DisplayMode(width, height));
-			Display.setTitle(title);
-			Display.create();
-		} catch (LWJGLException e) {
-			System.exit(0);
-		}
-		glinit();
+		
+		glinit(1280,720);
 		init();
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
@@ -146,6 +150,7 @@ public class Main implements Runnable {
 				frames = 0;
 			}
 		}
+		AL.destroy();
 		Display.destroy();
 	}
 	

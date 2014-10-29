@@ -14,7 +14,7 @@ public class Cursor extends Entity {
 		this.game = game;
 	}
 	
-	public void update(double dt) {
+	public void update() {
 		xpos = Mouse.getX();
 		ypos = game.getHeight() - Mouse.getY();
 	}

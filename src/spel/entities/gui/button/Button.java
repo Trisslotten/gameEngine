@@ -1,9 +1,6 @@
 package spel.entities.gui.button;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 
 import spel.Game;
 import spel.Game.State;
@@ -18,20 +15,25 @@ public class Button extends Entity {
 	private String text;
 	private Text t;
 	
-	private Game game;
+	protected Game game;
 	
-	
-	
-	
-	public Button(double xpos, double ypos, String path, Cursor cursor,String text, Game game) {
-		super(xpos, ypos, new String[] {path});
-		c = cursor;
+	public Button(double xpos, double ypos, String path, Game game, String text) {
+		super(xpos, ypos, new String[] { path });
+		c = game.cursor;
 		this.text = text;
 		this.t = game.t;
 		this.game = game;
 	}
+	public Button(double xpos, double ypos, String path, Game game) {
+		super(xpos, ypos, new String[] { path });
+		c = game.cursor;
+		this.text = "";
+		this.t = game.t;
+		this.game = game;
+	}
+	
 	public Button(double xpos, double ypos, String path, Cursor cursor) {
-		super(xpos, ypos, new String[] {path});
+		super(xpos, ypos, new String[] { path });
 		c = cursor;
 	}
 	
@@ -40,8 +42,8 @@ public class Button extends Entity {
 	}
 	
 	public boolean clicked(int button) {
-		int x = (int)c.getXpos();
-		int y = (int)c.getYpos();
+		int x = (int) c.getXpos();
+		int y = (int) c.getYpos();
 		return Mouse.isButtonDown(button) && x > xpos && x < xpos + width && y > ypos && y < ypos + height;
 	}
 	
@@ -57,8 +59,8 @@ public class Button extends Entity {
 		clicked = clicked(0);
 		hover = hover();
 		if (released) releasedEvent();
-		if(clicked) clickedEvent();
-		if(hover) hoverEvent();
+		if (clicked) clickedEvent();
+		if (hover) hoverEvent();
 	}
 	
 	public void releasedEvent() {
@@ -75,16 +77,11 @@ public class Button extends Entity {
 	
 	public void render(double interpolation) {
 		/*
-		if (clicked) {
-			frameIndex = 2;
-		} else if (hover) {
-			frameIndex = 1;
-		} else {
-			frameIndex = 0;
-		}
-		*/
-		if(t!=null) {
-			t.render((int)xdraw, (int)ydraw, text);
+		 * if (clicked) { frameIndex = 2; } else if (hover) { frameIndex = 1; }
+		 * else { frameIndex = 0; }
+		 */
+		if (t != null) {
+			t.render((int) xdraw, (int) ydraw, text);
 		}
 		super.render(interpolation);
 	}
