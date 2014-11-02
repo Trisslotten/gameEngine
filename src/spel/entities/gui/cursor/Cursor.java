@@ -1,4 +1,4 @@
-package spel.entities.gui;
+package spel.entities.gui.cursor;
 
 import org.lwjgl.input.Mouse;
 

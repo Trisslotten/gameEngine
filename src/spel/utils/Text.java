@@ -1,4 +1,4 @@
-package spel;
+package spel.utils;
 
 import java.awt.Font;
 

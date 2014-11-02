@@ -3,7 +3,9 @@ package spel.main;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glGetString;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
@@ -78,7 +80,24 @@ public class Main implements Runnable {
 		
 	}
 	
-	protected void init() {
+	protected void init() {}
+	
+	protected void loadAssets() {}
+	
+	protected void preGLInit() {}
+	
+	public void changeResolution(int width, int height) {
+		int oldheight = this.height;
+		this.width = width;
+		this.height = height;
+		try {
+			Display.setDisplayMode(new DisplayMode(width, height));
+			GL11.glTranslated(0, oldheight - height, 0);
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+		// GL11.glScissor(0, 0, width, height); GL11.glViewport(0, 0, width,
+		// height);
 		
 	}
 	
@@ -103,10 +122,23 @@ public class Main implements Runnable {
 	}
 	
 	public void run() {
-		
-		
-		glinit(1280,720);
+		preGLInit();
+		if (!(width > 0 && height > 0)) {
+			width = 1280;
+			height = 720;
+		}
+		glinit(width, height);
 		init();
+		loadAssets();
+		Cursor emptyCursor;
+		try {
+			emptyCursor = new Cursor(1, 1, 0, 0, 1, BufferUtils.createIntBuffer(1), null);
+			Mouse.setNativeCursor(emptyCursor);
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ms = 1000.0 / UPDATES_PER_SECOND;
@@ -124,13 +156,8 @@ public class Main implements Runnable {
 			lastTime = now;
 			while (delta >= 1 && updates < UPDATES_PER_SECOND) {
 				updateDelta = getUpdateDelta();
-				int x = Mouse.getX();
-				int y = Mouse.getY();
-				Mouse.setGrabbed(!(x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1));
-				if (Mouse.isGrabbed()) {
-					Mouse.setCursorPosition(x, y);
-				}
 				update(updateDelta);
+				
 				updates++;
 				delta--;
 			}
@@ -150,8 +177,13 @@ public class Main implements Runnable {
 				frames = 0;
 			}
 		}
+		quit();
 		AL.destroy();
 		Display.destroy();
+	}
+	
+	protected void quit() {
+		
 	}
 	
 	protected void update(double dt) {}
@@ -165,6 +197,7 @@ public class Main implements Runnable {
 	public double getUPS() {
 		return UPDATES_PER_SECOND;
 	}
+	
 	public void setUPS(double ups) {
 		UPDATES_PER_SECOND = ups;
 	}
