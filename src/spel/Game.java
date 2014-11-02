@@ -33,17 +33,16 @@ public class Game extends Main {
 	
 	public void preGLInit() {
 		settings = new Settings();
-		settings.set(this);
-		
+		setRes(settings);
 		System.out.println(System.getProperty("user.home"));
 		
 	}
 	
 	public void init() {
-		UPDATES_PER_SECOND = 60;
+		UPDATES_PER_SECOND = 144;
 		gameState = State.MENU;
 		keys = new Keys();
-		text = new Text();
+		text = new Text(14);
 		gui = new Gui(this);
 		
 		entities = new Vector<Entity>();

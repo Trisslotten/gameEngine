@@ -12,6 +12,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import spel.utils.Settings;
+
 public class Main implements Runnable {
 	
 	protected int width, height;
@@ -33,8 +35,8 @@ public class Main implements Runnable {
 	}
 	
 	protected String title = "LWJGL";
-	protected double UPDATES_PER_SECOND = 30.0;
-	protected boolean vsync = false;
+	protected double UPDATES_PER_SECOND = 60.0;
+	public boolean fullscreen=false;
 	protected String version = "";
 	
 	protected boolean running = false;
@@ -54,7 +56,16 @@ public class Main implements Runnable {
 		this.width = width;
 		this.height = height;
 		try {
-			Display.setDisplayMode(new DisplayMode(width, height));
+			if(fullscreen) {
+				System.out.println("ska vara fullscreen");
+				Display.setDisplayModeAndFullscreen(new DisplayMode(width, height));
+				Display.setFullscreen(fullscreen);
+			}else {
+				System.out.println("ska INTE vara fullscreen");
+				Display.setDisplayMode(new DisplayMode(width, height));
+			}
+			
+			
 			Display.setTitle(title);
 			Display.create();
 		} catch (LWJGLException e) {
@@ -71,9 +82,6 @@ public class Main implements Runnable {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 		GL11.glViewport(0, 0, width, height);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -85,21 +93,6 @@ public class Main implements Runnable {
 	protected void loadAssets() {}
 	
 	protected void preGLInit() {}
-	
-	public void changeResolution(int width, int height) {
-		int oldheight = this.height;
-		this.width = width;
-		this.height = height;
-		try {
-			Display.setDisplayMode(new DisplayMode(width, height));
-			GL11.glTranslated(0, oldheight - height, 0);
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
-		// GL11.glScissor(0, 0, width, height); GL11.glViewport(0, 0, width,
-		// height);
-		
-	}
 	
 	public double getMillis() {
 		return ((double) System.nanoTime()) / 1000000.0;
@@ -194,6 +187,13 @@ public class Main implements Runnable {
 		return 0;
 	}
 	
+	public void setRes(Settings s) {
+		this.width = s.getWidth();
+		this.height = s.getHeight();
+		this.fullscreen = s.fullscreen;
+	}
+	
+	
 	public double getUPS() {
 		return UPDATES_PER_SECOND;
 	}
@@ -201,9 +201,9 @@ public class Main implements Runnable {
 	public void setUPS(double ups) {
 		UPDATES_PER_SECOND = ups;
 	}
-	
+	/*
 	public static void main(String[] args) {
 		new Main().start();
 	}
-	
+	*/
 }

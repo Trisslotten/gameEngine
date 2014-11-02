@@ -9,14 +9,15 @@ public class Text {
 	
 	TrueTypeFont font;
 	
-	public Text() {
+	public Text(int fontSize) {
 		// load a default java font
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+		Font awtFont = new Font("Arial", Font.BOLD, fontSize);
 		font = new TrueTypeFont(awtFont, false);
 	}
 	
-	public void render(int x, int y, String text) {
-		font.drawString(x, y, text, Color.white);
+	public void render(int x, int y, String text, int width,int height) {
+		int fontWidth = font.getWidth(text);
+		font.drawString(x+(width/2-fontWidth/2), y, text, Color.white);
 	}
 	public void render(int x, int y, String text, Color color) {
 		font.drawString(x, y, text, color);

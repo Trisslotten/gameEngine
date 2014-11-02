@@ -7,9 +7,9 @@ import spel.entities.Entity;
 
 public class Button extends Entity {
 	
-	private boolean clicked, hover, released;
+	private boolean clicked, hover, released, down;
 	
-	private String text;
+	protected String text;
 	
 	protected Game game;
 	
@@ -17,7 +17,12 @@ public class Button extends Entity {
 		super(xpos, ypos, new String[] { path });
 		this.text = text;
 		this.game = game;
-		
+	}
+	
+	public Button(double xpos, double ypos, String[] frames, Game game, String text) {
+		super(xpos, ypos, frames);
+		this.text = text;
+		this.game = game;
 	}
 	
 	public Button(double xpos, double ypos, String path, Game game) {
@@ -32,11 +37,15 @@ public class Button extends Entity {
 	}
 	
 	public boolean released() {
-		return clicked && !clicked();
+		return hover()&&down&&!isDown();
+	}
+	
+	public boolean isDown() {
+		return Mouse.isButtonDown(0);
 	}
 	
 	public boolean clicked() {
-		return hover() && Mouse.isButtonDown(0) && !clicked;
+		return hover()&&!down&&isDown();
 	}
 	
 	public void update(double dt) {
@@ -45,7 +54,7 @@ public class Button extends Entity {
 		released = released();
 		clicked = clicked();
 		hover = hover();
-		
+		down = isDown();
 		if (released) {
 			releasedEvent();
 		}
@@ -75,10 +84,11 @@ public class Button extends Entity {
 		 * if (clicked) { frameIndex = 2; } else if (hover) { frameIndex = 1; }
 		 * else { frameIndex = 0; }
 		 */
-		if (game.text != null && text != null) {
-			game.text.render((int) xdraw, (int) ydraw, text);
-		}
+		
 		super.render(interpolation);
+		if (game.text != null && text != null) {
+			game.text.render((int) xdraw, (int) ydraw, text, (int) width, (int) height);
+		}
 	}
 	
 	public boolean isClicked() {
