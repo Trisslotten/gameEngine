@@ -47,7 +47,7 @@ public class Game extends Main {
 	}
 	
 	public void initNewGame() {
-		
+		saveGame = SaveGame.load(this);
 	}
 	
 	public void handleInputs(double dt) {

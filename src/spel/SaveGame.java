@@ -37,7 +37,7 @@ public class SaveGame implements Serializable {
 		this.level = saveGame.level;
 	}
 	
-	public static SaveGame load() {
+	public static SaveGame load(Game game) {
 		SaveGame saveGame = null;
 		ObjectInputStream in;
 		try {
@@ -45,6 +45,7 @@ public class SaveGame implements Serializable {
 			saveGame = (SaveGame) in.readObject();
 			in.close();
 		} catch (IOException e) {
+			saveGame = new SaveGame(game);
 		} catch (ClassNotFoundException e) {}
 		return saveGame;
 	}

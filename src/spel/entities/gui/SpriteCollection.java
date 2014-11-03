@@ -9,5 +9,6 @@ public class SpriteCollection {
 	public static final Sprite tile2 = new Sprite("res/tile2.png");
 	public static final Sprite asd = new Sprite("res/pixel.png");
 	public static final Sprite player = new Sprite("res/pixel.png");
-	
+	public static final Sprite menubg = new Sprite("res/sstartsida.png");
+	public static final Sprite pauseCover = new Sprite("res/pausecover.png");
 }

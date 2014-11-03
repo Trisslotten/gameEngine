@@ -20,6 +20,10 @@ public class Gui {
 		pauseElements = new Vector<Entity>();
 		settingsElements = new Vector<Entity>();
 		menuElements = new Vector<Entity>();
+		
+		menuBackground = new StartBackground(0,0,game.getWidth(),game.getHeight());
+		pauseCover = new PauseCover(0,0,game.getWidth(),game.getHeight());
+		
 	}
 	
 	public void update(double dt) {
