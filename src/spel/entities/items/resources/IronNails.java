@@ -1,4 +1,4 @@
-package spel.entities;
+package spel.entities.items.resources;
 
 public class IronNails extends Resource {
 

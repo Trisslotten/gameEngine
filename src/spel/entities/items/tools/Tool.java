@@ -1,4 +1,6 @@
-package spel.entities;
+package spel.entities.items.tools;
+
+import spel.entities.items.Item;
 
 public class Tool extends Item {
 	double time = 2;
