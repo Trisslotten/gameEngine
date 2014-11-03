@@ -4,19 +4,20 @@ import spel.Game;
 import spel.SaveGame;
 import spel.entities.Sprite;
 
-public class StartButton extends Button {
+public class ContinueButton extends Button {
 	
-	public StartButton(double xpos, double ypos, Game game, String text) {
+	public ContinueButton(double xpos, double ypos, Game game, String text) {
 		super(xpos, ypos, game, text);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public StartButton(float xpos, float ypos, Game game, Sprite sprite) {
+	public ContinueButton(float xpos, float ypos, Game game, Sprite sprite) {
 		super(xpos, ypos, game, sprite);
+		// TODO Auto-generated constructor stub
 	}
 	
 	public void clickedEvent() {
-		game.saveGame = new SaveGame(game); 
+		game.saveGame = SaveGame.load(game);
 		game.gameState = Game.State.PLAYING;
 	}
 	

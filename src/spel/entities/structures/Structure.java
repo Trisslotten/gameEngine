@@ -1,4 +1,6 @@
-package spel.entities;
+package spel.entities.structures;
+
+import spel.entities.Entity;
 
 public class Structure extends Entity {
 	boolean permanent;

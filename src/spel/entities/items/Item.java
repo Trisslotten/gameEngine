@@ -1,4 +1,4 @@
-package spel.entities;
+package spel.entities.items;
 
 public class Item {
 

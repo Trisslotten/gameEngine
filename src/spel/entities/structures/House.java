@@ -1,6 +1,5 @@
-package spel.entities;
+package spel.entities.structures;
 
-import spel.entities.Structure;
 
 public class House extends Structure {
 

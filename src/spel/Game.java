@@ -5,7 +5,6 @@ import org.lwjgl.input.Keyboard;
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
 import spel.main.Main;
-import spel.tileMap.Level;
 import spel.utils.Keys;
 import spel.utils.Settings;
 import spel.utils.Text;
@@ -22,7 +21,6 @@ public class Game extends Main {
 	public SaveGame saveGame;
 	public Gui gui;
 	public boolean buttonClicked;
-	public Level level;
 	
 	public enum State {
 		MENU, PLAYING, STARTING;
@@ -39,15 +37,10 @@ public class Game extends Main {
 		keys = new Keys();
 		text = new Text(14);
 		gui = new Gui(this);
-		level = new Level(this);
 	}
 	
 	public void loadAssets() {
 		cursor = new Cursor("res/cursor.png", this);
-	}
-	
-	public void initNewGame() {
-		saveGame = SaveGame.load(this);
 	}
 	
 	public void handleInputs(double dt) {
@@ -60,13 +53,13 @@ public class Game extends Main {
 	}
 	
 	public void quit() {
+		saveGame.save();
 		settings.save();
 	}
 	
 	public void update(double dt) {
 		handleInputs(dt);
 		if (gameState == State.STARTING) {
-			initNewGame();
 			gameState = State.PLAYING;
 			oldState = State.MENU;
 		}
@@ -79,7 +72,6 @@ public class Game extends Main {
 	
 	public int render(double interpolation) {
 		super.render(interpolation);
-		level.render(0, 0);
 		
 		if (gameState == State.PLAYING) {
 			double interp = interpolation;
