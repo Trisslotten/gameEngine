@@ -1,21 +1,19 @@
 package spel.entities;
 
 public class Mob extends Entity {
+	int health = 100;
 
-	public Mob(double xpos, double ypos, String[] frames) {
-		super(xpos, ypos, frames);
-		// TODO Auto-generated constructor stub
+	public Mob(double xpos, double ypos) {
+		super(xpos, ypos);
+
 	}
-
-	public Mob(double xpos, double ypos, double height, double width,
-			String filepath) {
-		super(xpos, ypos, height, width, filepath);
-		// TODO Auto-generated constructor stub
+	public void damage(int damage){
+		health-=damage;
+		if(health<=0){
+			
+		}
 	}
-
-	public Mob(double xpos, double ypos, String filepath) {
-		super(xpos, ypos, filepath);
-		// TODO Auto-generated constructor stub
+	public boolean ded(){
+		return health<=0;
 	}
-
 }

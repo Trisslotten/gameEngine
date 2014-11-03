@@ -8,5 +8,6 @@ public class SpriteCollection {
 	public static final Sprite cursor = new Sprite("res/cursor.png");
 	public static final Sprite tile2 = new Sprite("res/tile2.png");
 	public static final Sprite asd = new Sprite("res/pixel.png");
+	public static final Sprite player = new Sprite("res/pixel.png");
 	
 }
