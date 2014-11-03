@@ -36,7 +36,6 @@ public class Main implements Runnable {
 	
 	protected String title = "LWJGL";
 	protected double UPDATES_PER_SECOND = 60.0;
-	public boolean fullscreen=false;
 	protected String version = "";
 	
 	protected boolean running = false;
@@ -56,15 +55,7 @@ public class Main implements Runnable {
 		this.width = width;
 		this.height = height;
 		try {
-			if(fullscreen) {
-				System.out.println("ska vara fullscreen");
-				Display.setDisplayModeAndFullscreen(new DisplayMode(width, height));
-				Display.setFullscreen(fullscreen);
-			}else {
-				System.out.println("ska INTE vara fullscreen");
-				Display.setDisplayMode(new DisplayMode(width, height));
-			}
-			
+			Display.setDisplayMode(new DisplayMode(width, height));
 			
 			Display.setTitle(title);
 			Display.create();
@@ -190,9 +181,7 @@ public class Main implements Runnable {
 	public void setRes(Settings s) {
 		this.width = s.getWidth();
 		this.height = s.getHeight();
-		this.fullscreen = s.fullscreen;
 	}
-	
 	
 	public double getUPS() {
 		return UPDATES_PER_SECOND;
@@ -202,8 +191,6 @@ public class Main implements Runnable {
 		UPDATES_PER_SECOND = ups;
 	}
 	/*
-	public static void main(String[] args) {
-		new Main().start();
-	}
-	*/
+	 * public static void main(String[] args) { new Main().start(); }
+	 */
 }

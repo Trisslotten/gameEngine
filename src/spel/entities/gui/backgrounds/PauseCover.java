@@ -1,6 +1,7 @@
-package spel.entities.gui;
+package spel.entities.gui.backgrounds;
 
 import spel.entities.Entity;
+import spel.entities.gui.SpriteCollection;
 
 public class PauseCover extends Entity {
 	

@@ -4,6 +4,7 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.Entity;
+import spel.entities.Sprite;
 
 public class Button extends Entity {
 	
@@ -11,15 +12,23 @@ public class Button extends Entity {
 	
 	protected String text;
 	
+	protected Sprite sprite;
+	
 	protected Game game;
 	
-	public Button(double xpos, double ypos, String path, Game game, String text) {
+	public Button(double xpos, double ypos, Game game, String text) {
 		super(xpos, ypos);
 		this.text = text;
 		this.game = game;
 	}
-	public Button(double xpos, double ypos, String path, Game game) {
+	
+	public Button(float xpos, float ypos, Game game, Sprite sprite) {
 		super(xpos, ypos);
+		this.width = sprite.width;
+		this.height = sprite.height;
+		this.xpos = xpos * (float) game.getWidth();
+		this.ypos = ypos * (float) game.getHeight();
+		this.sprite = sprite;
 		this.game = game;
 	}
 	
@@ -30,7 +39,7 @@ public class Button extends Entity {
 	}
 	
 	public boolean released() {
-		return hover()&&down&&!isDown();
+		return hover() && down && !isDown();
 	}
 	
 	public boolean isDown() {
@@ -38,7 +47,7 @@ public class Button extends Entity {
 	}
 	
 	public boolean clicked() {
-		return hover()&&!down&&isDown();
+		return hover() && !down && isDown();
 	}
 	
 	public void update(double dt) {
@@ -73,12 +82,8 @@ public class Button extends Entity {
 	}
 	
 	public void render(double interpolation) {
-		/*
-		 * if (clicked) { frameIndex = 2; } else if (hover) { frameIndex = 1; }
-		 * else { frameIndex = 0; }
-		 */
-		
 		super.render(interpolation);
+		sprite.render(xdraw, ydraw);
 		if (game.text != null && text != null) {
 			game.text.render((int) xdraw, (int) ydraw, text, (int) width, (int) height);
 		}

@@ -18,7 +18,6 @@ public class Settings implements Serializable {
 	private static final long serialVersionUID = -2193533982488815929L;
 	public int height, width;
 	public float volume;
-	public boolean fullscreen;
 	
 	public static final String filename = "settings.stn";
 	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
@@ -33,21 +32,18 @@ public class Settings implements Serializable {
 				in = new ObjectInputStream(new FileInputStream(filepath));
 				settings = (Settings) in.readObject();
 				in.close();
-				System.out.println("det funkar " + settings.height);
 				break;
 				
 			} catch (IOException e) {
-				System.out.println("det funkar inte");
 				File dir = new File(filedir);
 				success = dir.mkdir();
-				settings = new Settings(1280,720,1,false);
+				settings = new Settings(1280,720,1);
 				settings.save();
 			} catch (ClassNotFoundException e) {}
 		} while(success);
 		this.height = settings.height;
 		this.width = settings.width;
 		this.volume = settings.volume;
-		this.fullscreen = settings.fullscreen;
 	}
 	
 	public void set(Game game) {
@@ -56,7 +52,7 @@ public class Settings implements Serializable {
 	}
 	
 	public void save() {
-		Settings settings = new Settings(width, height, volume, fullscreen);
+		Settings settings = new Settings(width, height, volume);
 		System.out.println("height = "+height);
 		ObjectOutputStream ut;
 		try {
@@ -83,12 +79,11 @@ public class Settings implements Serializable {
 	public int getWidth() {
 		return width;
 	}
-	public Settings(int width, int height, float volume, boolean fullscreen) {
+	public Settings(int width, int height, float volume) {
 		super();
 		this.height = height;
 		this.width = width;
 		this.volume = volume;
-		this.fullscreen = fullscreen;
 	}
 	
 }

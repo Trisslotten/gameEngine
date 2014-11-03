@@ -4,16 +4,33 @@ import spel.entities.Sprite;
 
 public class SpriteCollection {
 	
-	public static final Sprite tile = new Sprite("res/tile.png");
-	public static final Sprite cursor = new Sprite("res/cursor.png");
-	public static final Sprite tile2 = new Sprite("res/tile2.png");
-	public static final Sprite asd = new Sprite("res/pixel.png");
-	public static final Sprite player = new Sprite("res/pixel.png");
-	public static final Sprite menubg = new Sprite("res/sstartsida.png");
-	public static final Sprite pauseCover = new Sprite("res/pausecover.png");
-	public static final Sprite settings = new Sprite("res/settings.png");
-	public static final Sprite quit = new Sprite("res/quit.png");
-	public static final Sprite cont = new Sprite("res/continue.png");
+	/*
+	 * Buttons
+	 */
+	public static final Sprite settings = 	new Sprite("res/art/buttons/settings.png");
+	public static final Sprite quit = 		new Sprite("res/art/buttons/quit.png");
+	public static final Sprite cont = 		new Sprite("res/art/buttons/continue.png");
+	public static final Sprite start = 		new Sprite("res/art/buttons/start.png");
+	
+	/*
+	 * Backgrounds
+	 */
+	public static final Sprite menubg = 	new Sprite("res/art/backgrounds/sstartsida.png");
+	public static final Sprite pauseCover = new Sprite("res/art/backgrounds/pausecover.png");
+	
+	/*
+	 * Tiles 	
+	 */
+	public static final Sprite tile = 	new Sprite("res/art/tiles/tile.png");
+	public static final Sprite tile2 = 	new Sprite("res/art/tiles/tile2.png");
+	
+	/*
+	 * ETC
+	 */
+	public static final Sprite cursor = new Sprite("res/art/cursor.png");
+	public static final Sprite asd =	new Sprite("res/art/pixel.png");
+	
+	
 	
 }
 
