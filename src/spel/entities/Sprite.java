@@ -13,9 +13,6 @@ public class Sprite {
 	public Texture texture;
 	public double x, y, width, height;
 	
-	public static Sprite tile = new Sprite("res/tile.png");
-	
-	
 	public Sprite(String path) {
 		try {
 			texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(path));

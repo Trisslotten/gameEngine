@@ -4,43 +4,16 @@ public class Entity {
 	
 	protected double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
 	
-
-	protected int frameIndex;
-	
-	protected Sprite[] frames;
-	
-	public Entity(double xpos, double ypos, String[] frames) {
-		frameIndex = 0;
-		this.frames = new Sprite[frames.length];
-		for (int i = 0; i < frames.length; i++) {
-			this.frames[i] = new Sprite(frames[i]);
-		}
-		height = this.frames[0].height;
-		width = this.frames[0].width;
+	public Entity(double xpos, double ypos) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 		xdraw = xpos;
 		ydraw = ypos;
 	}
 	
-	public Entity(double xpos, double ypos, double height, double width, String filepath) {
-		frameIndex = 0;
-		frames = new Sprite[1];
+	public Entity(double xpos, double ypos, double height, double width) {
 		this.height = height;
 		this.width = width;
-		frames[0] = new Sprite(filepath);
-		frames[0].height = height;
-		frames[0].width = width;
-		this.xpos = xpos;
-		this.ypos = ypos;
-		xdraw = xpos;
-		ydraw = ypos;
-	}
-	
-	public Entity(double xpos, double ypos, String filepath) {
-		frameIndex = 0;
-		frames = new Sprite[1];
-		frames[frameIndex] = new Sprite(filepath);
 		this.xpos = xpos;
 		this.ypos = ypos;
 		xdraw = xpos;
@@ -57,11 +30,6 @@ public class Entity {
 	public void render(double ip) {
 		xdraw += xspd * ip/1000;
 		ydraw += yspd * ip/1000;
-		frames[frameIndex].render(xdraw, ydraw);
-	}
-	
-	public void setFrame(Sprite frame) {
-		frames[0] = frame;
 	}
 	
 	public double getXpos() {
@@ -111,13 +79,6 @@ public class Entity {
 	public void setHeight(double height) {
 		this.height = height;
 	}
-
-	public int getFrameIndex() {
-		return frameIndex;
-	}
-
-	public void setFrameIndex(int frameIndex) {
-		this.frameIndex = frameIndex;
-	}
+	
 	
 }

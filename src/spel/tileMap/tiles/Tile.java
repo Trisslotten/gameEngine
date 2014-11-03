@@ -1,15 +1,18 @@
 package spel.tileMap.tiles;
 
-import spel.entities.Sprite;
+import java.io.Serializable;
 
-public class Tile {
+import spel.entities.Sprite;
+import spel.entities.gui.SpriteCollection;
+
+public class Tile implements Serializable {
 	
 	public Tile() {
 		
 	}
 	
 	public void render(int xpos, int ypos) {
-		Sprite.tile.render(xpos, ypos);
+		SpriteCollection.tile.render(xpos, ypos);
 	}
 	
 }

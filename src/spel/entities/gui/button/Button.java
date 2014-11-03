@@ -14,19 +14,12 @@ public class Button extends Entity {
 	protected Game game;
 	
 	public Button(double xpos, double ypos, String path, Game game, String text) {
-		super(xpos, ypos, new String[] { path });
+		super(xpos, ypos);
 		this.text = text;
 		this.game = game;
 	}
-	
-	public Button(double xpos, double ypos, String[] frames, Game game, String text) {
-		super(xpos, ypos, frames);
-		this.text = text;
-		this.game = game;
-	}
-	
 	public Button(double xpos, double ypos, String path, Game game) {
-		super(xpos, ypos, new String[] { path });
+		super(xpos, ypos);
 		this.game = game;
 	}
 	

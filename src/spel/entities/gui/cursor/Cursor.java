@@ -4,13 +4,14 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.Entity;
+import spel.entities.gui.SpriteCollection;
 
 public class Cursor extends Entity {
 	
 	private Game game;
 	
 	public Cursor(String filepath, Game game) {
-		super(Mouse.getX(), Mouse.getY(), filepath);
+		super(Mouse.getX(), Mouse.getY());
 		this.game = game;
 	}
 	
@@ -21,7 +22,7 @@ public class Cursor extends Entity {
 	public void render(double ip) {
 		xdraw = Mouse.getX();
 		ydraw = game.getHeight() - Mouse.getY();
-		super.render(ip);
+		SpriteCollection.cursor.render(xdraw, ydraw);
 	}
 	
 	
