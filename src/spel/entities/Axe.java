@@ -2,8 +2,8 @@ package spel.entities;
 
 public class Axe extends Tool {
 
-	public Axe() {
-
+	public Axe(boolean iron) {
+		super(iron);
 	}
 
 }
