@@ -1,6 +1,7 @@
 package spel.tileMap;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
@@ -25,6 +26,34 @@ public class Level implements Serializable {
 		this.height = game.getHeight();
 		tilePixelLength = (int) SpriteCollection.tile.width;
 		tiles = new Tile[levelSize * levelSize];
+
+		float[] noise = new float[levelSize * levelSize];
+
+		Random rand = new Random();
+		for (int i = 0; i < noise.length; i++) {
+			while (noise[i] > 0)
+				noise[i] = rand.nextFloat();
+		}
+		int range = 3;
+		float a = 0;
+		float b = 0;
+		float ab = 0;
+		for (int y = 0; y < levelSize; y++) {
+			for (int x = 0; x < levelSize; x++) {
+				if (x + range + (y + range) * levelSize < levelSize * levelSize) {
+					ab += 1 / range;
+					if (x % range == 0) {
+						a = noise[x + y * levelSize];
+						b = noise[x + range + y * levelSize];
+						ab = 0;
+					}
+					noise[x + y * levelSize] = a * (1 - ab) + b * ab;
+				}
+			}
+		}
+		float[] gradient = new float[levelSize * levelSize];
+		
+
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = new Tile();
 		}

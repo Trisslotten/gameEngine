@@ -86,6 +86,7 @@ public class SaveGame implements Serializable {
 		for (Entity e : entities) {
 			e.render(interp);
 		}
+		player.render(interp);
 	}
 
 }
