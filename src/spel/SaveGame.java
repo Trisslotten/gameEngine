@@ -24,11 +24,12 @@ public class SaveGame implements Serializable {
 	public static final String filepath = System.getProperty("user.home") + "/Documents/My Games/TestGame/save.med";
 	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
 	
-	public int x = 0;
-	
 	public Vector<Entity> entities;
 	// public Player player;
 	public Level level;
+	
+	//temporary
+	public int x = 0, y = 0;
 	
 	public SaveGame(Game game) {
 		entities = new Vector<Entity>();
@@ -53,6 +54,8 @@ public class SaveGame implements Serializable {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+			File dir = new File(filedir);
+			dir.mkdir();
 			saveGame = new SaveGame(game);
 		}
 		return saveGame;
