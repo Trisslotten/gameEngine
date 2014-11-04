@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import spel.entities.Entity;
 import spel.entities.Player;
