@@ -1,10 +1,7 @@
 package spel;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
@@ -24,8 +21,6 @@ public class Game extends Main {
 	public Settings settings;
 	public SaveGame saveGame;
 	public Gui gui;
-	public double ty=0;
-	public double tx=0;
 	public boolean buttonClicked;
 
 	public enum State {
@@ -94,12 +89,6 @@ public class Game extends Main {
 
 	public static void main(String[] args) {
 		new Game().start();
-	}
-	public int getTx(){
-		return (int) tx;
-	}
-	public int getTy(){
-		return (int) ty;
 	}
 	
 }
