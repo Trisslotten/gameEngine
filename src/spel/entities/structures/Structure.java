@@ -13,8 +13,7 @@ public class Structure extends Entity {
 			boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width);
 		this.permanent = permanent;
-		this.gridlocked = gridlocked;
-	}
+		this.gridlocked = gridlocked;}
 
 	public void update() {
 		if (!permanent) {
