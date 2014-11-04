@@ -23,7 +23,7 @@ public class Player extends Entity implements Serializable {
 		super(xpos, ypos);
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
-		velocity = 175;
+		velocity = 250;
 	}
 
 	public void update(double dt, Game game) {
