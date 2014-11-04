@@ -51,11 +51,39 @@ public class Level implements Serializable {
 				}
 			}
 		}
+		for (int y = 0; y < levelSize; y++) {
+			for (int x = 0; x < levelSize; x++) {
+				if (x + range + (y + range) * levelSize < levelSize * levelSize) {
+					ab += 1 / range;
+					if (x % range == 0) {
+						a = noise[x + y * levelSize];
+						b = noise[x + (range + y) * levelSize];
+						ab = 0;
+					}
+					noise[x + y * levelSize] = a * (1 - ab) + b * ab;
+				}
+			}
+		}
 		float[] gradient = new float[levelSize * levelSize];
+		for (int y = 0; y < levelSize; y++) {
+			for (int x = 0; x < levelSize; x++) {
+				gradient[x+y*levelSize] = Math.abs(-x/(2*levelSize)+1)*Math.abs(-y/(2*levelSize)+1);
+			}
+		}
+		for(int i=0;i<noise.length;i++){
+			noise[i] -= gradient[i];
+			if(noise[i]<0)
+				noise[i] = 0;
+		}
 		
 
 		for (int i = 0; i < tiles.length; i++) {
-			tiles[i] = new Tile();
+			if(noise[i]>0.5f) {
+				tiles[i] = new Tileno2();
+			} else {
+				tiles[i] = new Tile();
+			}
+			
 		}
 	}
 
