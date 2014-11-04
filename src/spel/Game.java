@@ -32,7 +32,7 @@ public class Game extends Main {
 	}
 	
 	public void init() {
-		UPDATES_PER_SECOND = 60;
+		UPDATES_PER_SECOND = 10;
 		gameState = State.MENU;
 		keys = new Keys();
 		text = new Text(14);
@@ -64,7 +64,7 @@ public class Game extends Main {
 			oldState = State.MENU;
 		}
 		if (gameState == State.PLAYING) {
-			saveGame.update(dt);
+			saveGame.update(dt, this);
 		}
 		gui.update(dt);
 		buttonClicked = false;

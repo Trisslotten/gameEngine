@@ -5,6 +5,12 @@ import spel.entities.Sprite;
 public class SpriteCollection {
 	
 	/*
+	 * PlayerSprites
+	 */
+	public static final Sprite player = new Sprite("res/art/placeholder.png");
+	
+	
+	/*
 	 * Buttons
 	 */
 	public static final Sprite settings = 	new Sprite("res/art/buttons/settings.png");

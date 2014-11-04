@@ -12,37 +12,37 @@ import java.util.Vector;
 import org.lwjgl.input.Keyboard;
 
 import spel.entities.Entity;
+import spel.entities.Player;
 import spel.tileMap.Level;
 
 public class SaveGame implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 134354553867719645L;
-	
-	public static final String filepath = System.getProperty("user.home") + "/Documents/My Games/TestGame/save.med";
-	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
-	
+
+	public static final String filepath = System.getProperty("user.home")
+			+ "/Documents/My Games/TestGame/save.med";
+	public static final String filedir = System.getProperty("user.home")
+			+ "/Documents/My Games/TestGame/";
+
 	public Vector<Entity> entities;
-	// public Player player;
+	public Player player;
 	public Level level;
-	
-	//temporary
-	public int x = 0, y = 0;
-	
+
 	public SaveGame(Game game) {
 		entities = new Vector<Entity>();
-		// player = new Player();
+		player = new Player(500, 500, game);
 		level = new Level(game);
 	}
-	
+
 	public SaveGame(SaveGame saveGame) {
 		this.entities = saveGame.entities;
+		this.player = saveGame.player;
 		this.level = saveGame.level;
-		this.x = saveGame.x;  
 	}
-	
+
 	public static SaveGame load(Game game) {
 		SaveGame saveGame = null;
 		ObjectInputStream in;
@@ -60,7 +60,7 @@ public class SaveGame implements Serializable {
 		}
 		return saveGame;
 	}
-	
+
 	public void save() {
 		SaveGame saveGame = new SaveGame(this);
 		ObjectOutputStream ut;
@@ -71,22 +71,20 @@ public class SaveGame implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 			File dir = new File(filedir);
-			if (dir.mkdir()) save();
+			if (dir.mkdir())
+				save();
 		}
 	}
-	
-	public void update(double dt) {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 288 * dt / 1000;
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 288 * dt / 1000;
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y -= 288 * dt / 1000;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y += 288 * dt / 1000;
+
+	public void update(double dt, Game game) {
+		player.update(dt, game);
 	}
-	
+
 	public void render(double interp) {
-		level.render(x, y);
+		level.render((int) player.getXdraw(), (int) player.getYdraw());
 		for (Entity e : entities) {
 			e.render(interp);
 		}
 	}
-	
+
 }
