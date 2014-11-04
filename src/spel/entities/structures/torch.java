@@ -8,7 +8,9 @@ public class torch extends Structure {
 
 	}
 
-	public void update(double dt) {
+	public void update(double dt) {// should have a two-frame animation to make
+									// it look like it is burning, hense the
+									// updater
 		super.update(dt);
 	}
 }

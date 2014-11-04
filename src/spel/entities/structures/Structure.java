@@ -15,16 +15,6 @@ public class Structure extends Entity {
 		this.permanent = permanent;
 		this.gridlocked = gridlocked;}
 
-	public void update() {
-		if (!permanent) {
-			if (tick >= 360) {
-				durability--;
-				tick = 0;
-			} else {
-				tick++;
-			}
-		}
-	}
 	public void build(){
 		structurelevel++;
 	}
