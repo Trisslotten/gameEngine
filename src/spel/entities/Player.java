@@ -27,11 +27,11 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void update(double dt, Game game) {
-		if (Mouse.isButtonDown(0)) {
+		if (Mouse.isButtonDown(1)) {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
 		}
-		if (Math.abs(xpos - Tx) >= 5 && Math.abs(ypos - Ty) >= 5 && Tx != 0
+		if (Math.abs(xpos - Tx) >= 1 && Math.abs(ypos - Ty) >= 1 && Tx != 0
 				&& Ty != 0) {
 			double dx = xpos - Tx;
 			double dy = ypos - Ty;
@@ -51,10 +51,11 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void render(double interpolation) {
+		interpolation=0;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 
-		SpriteCollection.player.render(windowWidth / 2, windowHeight / 2);
+		SpriteCollection.player.render((windowWidth / 2)-32, (windowHeight / 2)-32);
 	}
 
 	public void setTx(int Tx) {

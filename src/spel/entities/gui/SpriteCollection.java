@@ -7,7 +7,7 @@ public class SpriteCollection {
 	/*
 	 * PlayerSprites
 	 */
-	public static final Sprite player = new Sprite("res/art/placeholder.png");
+	public static final Sprite player = new Sprite("res/art/kaj/kaj.png");
 	
 	
 	/*
@@ -27,7 +27,7 @@ public class SpriteCollection {
 	/*
 	 * Tiles 	
 	 */
-	public static final Sprite tile = 	new Sprite("res/art/tiles/tile.png");
+	public static final Sprite tile = 	new Sprite("res/art/tiles/tileno2.png");
 	public static final Sprite tile2 = 	new Sprite("res/art/tiles/tile2.png");
 	
 	/*
