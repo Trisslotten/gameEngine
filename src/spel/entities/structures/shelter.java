@@ -7,5 +7,4 @@ public class Shelter extends Structure {
 		super(xpos, ypos, height, width, permanent, gridlocked);
 
 	}
-
 }
