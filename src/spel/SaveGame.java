@@ -76,11 +76,14 @@ public class SaveGame implements Serializable {
 	}
 	
 	public void update(double dt) {
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) x += 288 * dt / 1000;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 288 * dt / 1000;
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 288 * dt / 1000;
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y -= 288 * dt / 1000;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y += 288 * dt / 1000;
 	}
 	
 	public void render(double interp) {
-		level.render(x, 0);
+		level.render(x, y);
 		for (Entity e : entities) {
 			e.render(interp);
 		}
