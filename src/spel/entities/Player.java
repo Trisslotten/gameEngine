@@ -18,7 +18,6 @@ public class Player extends Entity implements Serializable {
 	public int windowWidth, windowHeight;
 	int pointerindex = 0;
 	double timer;
-	double pointertimer = 0.1;
 	boolean drawWPointer = false;
 	double velocity;
 	int direction = 0;
