@@ -12,11 +12,14 @@ public class SpriteCollection {
 	/*
 	 * Buttons
 	 */
-	public static final Sprite settings = new Sprite("res/art/buttons/settings.png");
-	public static final Sprite quit = new Sprite("res/art/buttons/quit.png");
-	public static final Sprite cont = new Sprite("res/art/buttons/continue.png");
-	public static final Sprite start = new Sprite("res/art/buttons/start.png");
-
+	public static final Sprite settings = new Sprite("res/art/buttons/menu/inst.png");
+	public static final Sprite settingsHover = new Sprite("res/art/buttons/menu/inst_hover.png");
+	public static final Sprite quit = new Sprite("res/art/buttons/menu/avsluta.png");
+	public static final Sprite quitHover = new Sprite("res/art/buttons/menu/avsluta_hover.png");
+	public static final Sprite cont = new Sprite("res/art/buttons/menu/Fortspela.png");
+	public static final Sprite contHover = new Sprite("res/art/buttons/menu/Fortspela_hover.png");
+	public static final Sprite start = new Sprite("res/art/buttons/menu/spela.png");
+	public static final Sprite startHover = new Sprite("res/art/buttons/menu/spela_hover.png");
 	/*
 	 * Backgrounds
 	 */

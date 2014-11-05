@@ -8,7 +8,13 @@ import spel.entities.Sprite;
 
 public class Button extends Entity {
 	
-	private boolean clicked, hover, released, down;
+	protected boolean clicked;
+
+	protected boolean hover;
+
+	protected boolean released;
+
+	protected boolean down;
 	
 	protected String text;
 	
