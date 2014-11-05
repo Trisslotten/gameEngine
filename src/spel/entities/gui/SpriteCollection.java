@@ -9,6 +9,24 @@ public class SpriteCollection {
 	 */
 	public static final Sprite player = new Sprite("res/art/kaj/kaj.png");
 
+	public static final Sprite[][] playerWalking = new Sprite[][] { new Sprite[] {
+			new Sprite("res/art/kaj/0/walk1.png"),new Sprite("res/art/kaj/0/walk2.png"),new Sprite("res/art/kaj/0/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/1/walk1.png"),new Sprite("res/art/kaj/1/walk2.png"),new Sprite("res/art/kaj/1/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/2/walk1.png"),new Sprite("res/art/kaj/2/walk2.png"),new Sprite("res/art/kaj/2/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/3/walk1.png"),new Sprite("res/art/kaj/3/walk2.png"),new Sprite("res/art/kaj/3/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/4/walk1.png"),new Sprite("res/art/kaj/4/walk2.png"),new Sprite("res/art/kaj/4/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/5/walk1.png"),new Sprite("res/art/kaj/5/walk2.png"),new Sprite("res/art/kaj/5/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/6/walk1.png"),new Sprite("res/art/kaj/6/walk2.png"),new Sprite("res/art/kaj/6/walk3.png")
+	}, new Sprite[] {
+			new Sprite("res/art/kaj/7/walk1.png"),new Sprite("res/art/kaj/7/walk2.png"),new Sprite("res/art/kaj/7/walk3.png")
+	}, };
+
 	/*
 	 * Buttons
 	 */
@@ -40,7 +58,7 @@ public class SpriteCollection {
 	 * Plants
 	 */
 	public static final Sprite palmtree = new Sprite("res/art/plants/palm.png");
-	
+
 	/*
 	 * ETC
 	 */

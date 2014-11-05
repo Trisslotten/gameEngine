@@ -33,7 +33,7 @@ public class Game extends Main {
 	}
 
 	public void init() {
-		UPDATES_PER_SECOND = 60;
+		UPDATES_PER_SECOND = 144;
 		gameState = State.MENU;
 		keys = new Keys();
 		text = new Text(14);

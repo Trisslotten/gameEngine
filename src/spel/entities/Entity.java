@@ -1,8 +1,10 @@
 package spel.entities;
 
+import java.io.Serializable;
+
 import spel.Game;
 
-public class Entity {
+public class Entity implements Serializable {
 	
 	protected double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
 	

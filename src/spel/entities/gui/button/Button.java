@@ -9,13 +9,7 @@ import spel.utils.Sound;
 
 public class Button extends Entity {
 
-	protected boolean clicked;
-
-	protected boolean hover;
-
-	protected boolean released;
-
-	protected boolean down;
+	protected boolean clicked, hover,  released, down, soundPlayed = false;
 
 	protected String text;
 
@@ -23,8 +17,6 @@ public class Button extends Entity {
 
 	protected Game game;
 
-	protected boolean soundPlayed = false;
-	
 	public Button(double xpos, double ypos, Game game, String text) {
 		super(xpos, ypos);
 		this.text = text;
@@ -61,7 +53,7 @@ public class Button extends Entity {
 
 	public void update(double dt) {
 		super.update(dt);
-		if(!hover&&hover()){
+		if (!hover && hover()) {
 			Sound.woodbutton.play(game.settings);
 		}
 
