@@ -28,26 +28,6 @@ public class Level implements Serializable {
 		tilePixelLength = (int) SpriteCollection.tile.width;
 		tiles = new Tile[levelSize * levelSize];
 
-		/*
-		 * double range = 10.0; double a = 0.0; double b = 0.0; double ab = 0.0;
-		 * for (int y = 0; y < levelSize; y++) { for (int x = 0; x < levelSize;
-		 * x++) { if (x + range + (y + range) * levelSize < levelSize *
-		 * levelSize) { ab += 1 / range; if (x % range == 0) { a = noise[x + y *
-		 * levelSize]; b = noise[x + (int) range + y * levelSize]; ab = 0; }
-		 * noise[x + y * levelSize] = a * (1 - ab) + b * ab; } } } for (int y =
-		 * 0; y < levelSize; y++) { for (int x = 0; x < levelSize; x++) { if (x
-		 * + range + (y + range) * levelSize < levelSize * levelSize) { ab += 1
-		 * / range; if (x % range == 0) { a = noise[x + y * levelSize]; b =
-		 * noise[x + ((int) range + y) * levelSize]; ab = 0; } noise[x + y *
-		 * levelSize] = a * (1 - ab) + b * ab; System.out.println(noise[x + y *
-		 * levelSize]); } } } double[] gradient = new double[levelSize *
-		 * levelSize]; for (int y = 0; y < levelSize; y++) { for (int x = 0; x <
-		 * levelSize; x++) { gradient[x + y * levelSize] = Math.abs(-(double) x
-		 * * 2 / ((double) levelSize) + (double) 1) * Math.abs(-(double) y * 2 /
-		 * ((double) levelSize) + (double) 1); } } for (int i = 0; i <
-		 * noise.length; i++) { noise[i] -= gradient[i]; if (noise[i] < 0)
-		 * noise[i] = 0; }
-		 */
 		double[] noise = new double[levelSize * levelSize];
 
 		Random rand = new Random();
