@@ -3,10 +3,10 @@ package spel.entities.structures;
 import spel.entities.Entity;
 
 public class Structure extends Entity {
-	boolean permanent;
+	protected boolean permanent;
 	boolean gridlocked;
-	int durability = 100;
-	int tick = 0;
+	protected int durability = 100;
+	protected int tick = 0;
 	int structurelevel = 0;
 
 	public Structure(double xpos, double ypos, double height, double width,

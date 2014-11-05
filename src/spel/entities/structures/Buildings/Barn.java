@@ -1,4 +1,6 @@
-package spel.entities.structures;
+package spel.entities.structures.Buildings;
+
+import spel.entities.structures.Structure;
 
 public class Barn extends Structure {
 

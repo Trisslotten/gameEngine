@@ -42,7 +42,7 @@ public class Player extends Entity implements Serializable {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
 		}
-		if (Math.abs(xpos - Tx) >= 1 && Math.abs(ypos - (Ty)) >= 1 && Tx != 0
+		if (Math.abs(xpos - Tx) >= 10 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0
 				&& Ty != 0) {
 			drawWPointer = true;
 			double dx = xpos - Tx;
@@ -82,8 +82,10 @@ public class Player extends Entity implements Serializable {
 	public void setTy(int Ty) {
 		this.Ty = Ty;
 	}
-	public int getrange(double ypos, double ypos2){
-		int r = (int) Math.sqrt(Math.pow(xpos-ypos,2)+Math.pow(ypos-ypos2, 2));
+
+	public int getrange(double ypos, double ypos2) {
+		int r = (int) Math.sqrt(Math.pow(xpos - ypos, 2)
+				+ Math.pow(ypos - ypos2, 2));
 		return r;
 	}
 
