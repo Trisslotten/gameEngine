@@ -1,5 +1,7 @@
 package spel.entities;
 
+import spel.Game;
+
 public class NPC extends Mob {
 	String name;
 	int hunger = 100;
@@ -15,10 +17,10 @@ public class NPC extends Mob {
 		this.eventNPC = eventNPC;
 	}
 
-	public void update(double dt) {
+	public void update(double dt, Game game) {
 		super.update(dt);
 
-		if (eventNPC && player.getrange(xpos, ypos) <= 512 && !found) {
+		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512 && !found) {
 			boolean found = true;
 		}
 
