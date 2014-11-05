@@ -17,9 +17,11 @@ public class NPC extends Mob {
 
 	public void update(double dt) {
 		super.update(dt);
-		/*
-		 * if(eventNPC&&player.getrange<=512&&!found){ boolean found=true; }
-		 */
+
+		if (eventNPC && player.getrange(xpos, ypos) <= 512 && !found) {
+			boolean found = true;
+		}
+
 		if (friend) {
 			if (tick >= 1080) {// should have no hunger left after aprox. 1.5
 								// in-game days, will rapidly die if not fed

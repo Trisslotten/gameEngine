@@ -82,5 +82,9 @@ public class Player extends Entity implements Serializable {
 	public void setTy(int Ty) {
 		this.Ty = Ty;
 	}
+	public int getrange(double ypos, double ypos2){
+		int r = (int) Math.sqrt(Math.pow(xpos-ypos,2)+Math.pow(ypos-ypos2, 2));
+		return r;
+	}
 
 }
