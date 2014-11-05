@@ -21,6 +21,12 @@ public class Level implements Serializable {
 	public int tilePixelLength;
 
 	public int width, height;
+	
+	public Tile getTile(int xoffset, int yoffset) {
+		int x = xoffset/tilePixelLength;
+		int y = yoffset/tilePixelLength;
+		return tiles[x+y*levelSize];
+	}
 
 	public Level(Game game) {
 		this.width = game.getWidth();
