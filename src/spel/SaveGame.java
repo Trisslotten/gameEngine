@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 
 import spel.entities.Entity;
 import spel.entities.Player;
@@ -82,12 +83,15 @@ public class SaveGame implements Serializable {
 		player.update(dt, game);
 	}
 
-	public void render(double interp) {
-		level.render((int) player.getXdraw(), (int) player.getYdraw());
+	public void render(double interp, Game game) {
+		level.render((int) player.getXdraw(), (int) player.getYdraw(), game);
 		for (Entity e : entities) {
 			e.render(interp);
 		}
 		player.render(interp);
+		
+		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.black);
+		
 	}
 
 }

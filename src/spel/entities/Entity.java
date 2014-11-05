@@ -1,5 +1,7 @@
 package spel.entities;
 
+import spel.Game;
+
 public class Entity {
 	
 	protected double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
@@ -31,6 +33,18 @@ public class Entity {
 		xdraw += xspd * ip/1000;
 		ydraw += yspd * ip/1000;
 	}
+	public void update(double dt, Game game) {
+		xpos += xspd*dt/1000;
+		ypos += yspd*dt/1000;
+		xdraw = xpos;
+		ydraw = ypos;
+	}
+	
+	public void render(double ip, Game game) {
+		xdraw += xspd * ip/1000;
+		ydraw += yspd * ip/1000;
+	}
+	
 	
 	public double getXdraw() {
 		return xdraw;

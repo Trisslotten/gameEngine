@@ -79,7 +79,7 @@ public class Game extends Main {
 			double interp = interpolation;
 			if (gameState != State.PLAYING)
 				interp = 0;
-			saveGame.render(interp);
+			saveGame.render(interp, this);
 		}
 		gui.render(interpolation);
 
