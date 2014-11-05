@@ -3,6 +3,7 @@ package spel.entities.gui.button;
 import spel.Game;
 import spel.entities.Sprite;
 import spel.entities.gui.SpriteCollection;
+import spel.utils.Sound;
 
 
 public class QuitButton extends Button {
