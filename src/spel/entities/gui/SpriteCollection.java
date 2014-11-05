@@ -27,8 +27,13 @@ public class SpriteCollection {
 	/*
 	 * Tiles 	
 	 */
-	public static final Sprite tile = 	new Sprite("res/art/tiles/tileno2.png");
-	public static final Sprite tile2 = 	new Sprite("res/art/tiles/tile2.png");
+	public static final Sprite tile = 		new Sprite("res/art/tiles/tileno2.png");
+	public static final Sprite tile2 = 		new Sprite("res/art/tiles/tile2.png");
+	public static final Sprite grass = 		new Sprite("res/art/tiles/grass.png");
+	public static final Sprite darkGrass = 	new Sprite("res/art/tiles/dark_grass.png");
+	public static final Sprite sand = 		new Sprite("res/art/tiles/sand.png");
+	public static final Sprite water = 		new Sprite("res/art/tiles/water.png");
+	
 	
 	/*
 	 * ETC

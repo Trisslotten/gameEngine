@@ -34,8 +34,10 @@ public class SaveGame implements Serializable {
 
 	public SaveGame(Game game) {
 		entities = new Vector<Entity>();
-		player = new Player(500, 500, game);
 		level = new Level(game);
+		
+		player = new Player(3000, 3000, game);
+		
 	}
 
 	public SaveGame(SaveGame saveGame) {

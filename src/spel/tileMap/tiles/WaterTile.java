@@ -2,17 +2,15 @@ package spel.tileMap.tiles;
 
 import spel.entities.gui.SpriteCollection;
 
-public class Tile2 extends Tile {
+public class WaterTile extends Tile {
 
-	public Tile2() {
+	public WaterTile() {
 		// TODO Auto-generated constructor stub
 	}
-	
 	public void render(int xpos, int ypos) {
-		SpriteCollection.tile2.render(xpos, ypos);
+		SpriteCollection.water.render(xpos, ypos);
 	}
 	public void render(int xpos, int ypos,int width, int height) {
-		SpriteCollection.tile2.render(xpos, ypos,width,height);
+		SpriteCollection.water.render(xpos, ypos,width,height);
 	}
-
 }

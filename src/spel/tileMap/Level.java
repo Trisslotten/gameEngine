@@ -5,8 +5,8 @@ import java.util.Random;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
-import spel.tileMap.tiles.Tile;
-import spel.tileMap.tiles.Tile2;
+import spel.tileMap.tiles.*;
+import spel.utils.SimplexNoise_octave;
 
 public class Level implements Serializable {
 
@@ -17,7 +17,7 @@ public class Level implements Serializable {
 
 	public Tile[] tiles;
 
-	public int levelSize = 128;
+	public int levelSize = 64;
 	public int tilePixelLength;
 
 	public int width, height;
@@ -28,68 +28,66 @@ public class Level implements Serializable {
 		tilePixelLength = (int) SpriteCollection.tile.width;
 		tiles = new Tile[levelSize * levelSize];
 
+		/*
+		 * double range = 10.0; double a = 0.0; double b = 0.0; double ab = 0.0;
+		 * for (int y = 0; y < levelSize; y++) { for (int x = 0; x < levelSize;
+		 * x++) { if (x + range + (y + range) * levelSize < levelSize *
+		 * levelSize) { ab += 1 / range; if (x % range == 0) { a = noise[x + y *
+		 * levelSize]; b = noise[x + (int) range + y * levelSize]; ab = 0; }
+		 * noise[x + y * levelSize] = a * (1 - ab) + b * ab; } } } for (int y =
+		 * 0; y < levelSize; y++) { for (int x = 0; x < levelSize; x++) { if (x
+		 * + range + (y + range) * levelSize < levelSize * levelSize) { ab += 1
+		 * / range; if (x % range == 0) { a = noise[x + y * levelSize]; b =
+		 * noise[x + ((int) range + y) * levelSize]; ab = 0; } noise[x + y *
+		 * levelSize] = a * (1 - ab) + b * ab; System.out.println(noise[x + y *
+		 * levelSize]); } } } double[] gradient = new double[levelSize *
+		 * levelSize]; for (int y = 0; y < levelSize; y++) { for (int x = 0; x <
+		 * levelSize; x++) { gradient[x + y * levelSize] = Math.abs(-(double) x
+		 * * 2 / ((double) levelSize) + (double) 1) * Math.abs(-(double) y * 2 /
+		 * ((double) levelSize) + (double) 1); } } for (int i = 0; i <
+		 * noise.length; i++) { noise[i] -= gradient[i]; if (noise[i] < 0)
+		 * noise[i] = 0; }
+		 */
 		double[] noise = new double[levelSize * levelSize];
 
 		Random rand = new Random();
-		for (int i = 0; i < noise.length; i++) {
-			do {
-				noise[i] = rand.nextDouble();
-			} while (noise[i] == 0);
-		}
-		double range = 3.0;
-		double a = 0.0;
-		double b = 0.0;
-		double ab = 0.0;
+
+		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
+		double amplitude = 0;
+		int iterations = 5;
+		double smthnss = 50;
+		double smoothx = smthnss * levelSize / 30;
+		double smoothy = smthnss * levelSize / 30;
+		double levelSize = this.levelSize;
+
 		for (int y = 0; y < levelSize; y++) {
 			for (int x = 0; x < levelSize; x++) {
-				if (x + range + (y + range) * levelSize < levelSize * levelSize) {
-					ab += 1 / range;
-					if (x % range == 0) {
-						a = noise[x + y * levelSize];
-						b = noise[x + (int) range + y * levelSize];
-						ab = 0;
-					}
-					noise[x + y * levelSize] = a * (1 - ab) + b * ab;
+				noise[(int) (x + y * levelSize)] = 0;
+				amplitude = 2;
+				for (int i = 0; i < iterations; i++) {
+					noise[(int) (x + y * levelSize)] += (noisegen.noise(x / (smoothx) * amplitude, y / (smoothy) * amplitude) + 1) / amplitude;
+					amplitude *= 2;
 				}
+				noise[(int) (x + y * levelSize)] *= (1 - Math.abs((x / levelSize * 2) - 1)) * (1 - Math.abs((y / levelSize * 2) - 1));
+				System.out.print((int) (noise[(int) (x + y * levelSize)] * 9.0) + ",");
 			}
-		}
-		for (int y = 0; y < levelSize; y++) {
-			for (int x = 0; x < levelSize; x++) {
-				if (x + range + (y + range) * levelSize < levelSize * levelSize) {
-					ab += 1 / range;
-					if (x % range == 0) {
-						a = noise[x + y * levelSize];
-						b = noise[x + ((int) range + y) * levelSize];
-						ab = 0;
-					}
-					noise[x + y * levelSize] = a * (1 - ab) + b * ab;
-					System.out.println(noise[x + y * levelSize]);
-				}
-			}
-		}
-		double[] gradient = new double[levelSize * levelSize];
-		for (int y = 0; y < levelSize; y++) {
-			for (int x = 0; x < levelSize; x++) {
-				gradient[x + y * levelSize] = Math.abs(-(double) x * 2
-						/ ((double) levelSize) + (double) 1)
-						* Math.abs(-(double) y * 2 / ((double) levelSize)
-								+ (double) 1);
-			}
-		}
-		for (int i = 0; i < noise.length; i++) {
-			noise[i] -= gradient[i];
-			if (noise[i] < 0)
-				noise[i] = 0;
+			System.out.println();
 		}
 
 		for (int i = 0; i < tiles.length; i++) {
-			if (noise[i] > 0.5f) {
-				tiles[i] = new Tile();
+			if (noise[i] > 0.2) {
+				if (noise[i] > 0.3) {
+					if(noise[i] > 0.6)
+						tiles[i] = new DarkGrassTile();
+					else
+						tiles[i] = new GrassTile();
+				} else
+					tiles[i] = new SandTile();
 			} else {
-				tiles[i] = new Tile2();
+				tiles[i] = new WaterTile();
 			}
-
 		}
+
 	}
 
 	public void render(int xoffset, int yoffset) {
@@ -108,11 +106,13 @@ public class Level implements Serializable {
 
 		for (int y = ystart; y < yend; y++) {
 			for (int x = xstart; x < xend; x++) {
-				tiles[x + y * levelSize]
-						.render(x * tilePixelLength - xoffset + width / 2, y
-								* tilePixelLength - yoffset + height / 2);
-				Tile tile = tiles[x + y * levelSize];
-				
+				tiles[x + y * levelSize].render(x * tilePixelLength - xoffset + width / 2, y * tilePixelLength - yoffset + height / 2);
+			}
+		}
+		int size = 1;
+		for (int y = 0; y < levelSize; y++) {
+			for (int x = 0; x < levelSize; x++) {
+				tiles[x + y * levelSize].render(x * size, y * size, size, size);
 			}
 		}
 	}

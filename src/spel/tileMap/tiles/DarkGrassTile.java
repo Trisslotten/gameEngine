@@ -2,17 +2,17 @@ package spel.tileMap.tiles;
 
 import spel.entities.gui.SpriteCollection;
 
-public class Tile2 extends Tile {
+public class DarkGrassTile extends Tile {
 
-	public Tile2() {
+	public DarkGrassTile() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void render(int xpos, int ypos) {
-		SpriteCollection.tile2.render(xpos, ypos);
+		SpriteCollection.darkGrass.render(xpos, ypos);
 	}
 	public void render(int xpos, int ypos,int width, int height) {
-		SpriteCollection.tile2.render(xpos, ypos,width,height);
+		SpriteCollection.darkGrass.render(xpos, ypos,width,height);
 	}
 
 }
