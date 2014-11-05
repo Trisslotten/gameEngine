@@ -16,7 +16,10 @@ public class Player extends Entity implements Serializable {
 	public int Ty = 0;
 	public int Tx = 0;
 	public int windowWidth, windowHeight;
-	boolean drawWPointer=false;
+	int pointerindex = 0;
+	double timer;
+	double pointertimer = 0.1;
+	boolean drawWPointer = false;
 	double velocity;
 
 	public Player(double xpos, double ypos, Game game) {
@@ -27,20 +30,28 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void update(double dt, Game game) {
+		timer++;
+		if (timer >= 4) {
+			pointerindex++;
+			timer = 0;
+			if (pointerindex > 8) {
+				pointerindex = 0;
+			}
+		}
 		if (Mouse.isButtonDown(1)) {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
 		}
 		if (Math.abs(xpos - Tx) >= 1 && Math.abs(ypos - (Ty)) >= 1 && Tx != 0
 				&& Ty != 0) {
-			drawWPointer=true;
+			drawWPointer = true;
 			double dx = xpos - Tx;
 			double dy = ypos - Ty;
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity * dt / 1000;
 			yspd = Math.sin(angle) * velocity * dt / 1000;
 		} else {
-			drawWPointer=false;
+			drawWPointer = false;
 			xspd = 0;
 			yspd = 0;
 		}
@@ -53,13 +64,15 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void render(double interpolation) {
-		interpolation=0;
+		interpolation = 0;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
-		if(drawWPointer){
-		SpriteCollection.WPointer.render(Tx-xpos+windowWidth / 2-32,Ty-ypos+windowHeight / 2-40);
+		if (drawWPointer) {
+			SpriteCollection.WPointer[pointerindex].render(Tx - xpos
+					+ windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
-		SpriteCollection.player.render((windowWidth / 2)-32, (windowHeight / 2)-87);
+		SpriteCollection.player.render((windowWidth / 2) - 32,
+				(windowHeight / 2) - 87);
 	}
 
 	public void setTx(int Tx) {
