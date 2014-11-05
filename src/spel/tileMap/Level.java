@@ -38,8 +38,8 @@ public class Level implements Serializable {
 		
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
-		int iterations = 10;
-		double smthnss = 20;
+		int iterations = 50;
+		double smthnss = 45;
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double levelSize = this.levelSize;
