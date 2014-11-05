@@ -2,8 +2,10 @@ package spel.tileMap;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.Vector;
 
 import spel.Game;
+import spel.entities.Entity;
 import spel.entities.gui.SpriteCollection;
 import spel.tileMap.tiles.*;
 import spel.utils.Position;
@@ -17,50 +19,12 @@ public class Level implements Serializable {
 	private static final long serialVersionUID = -7039780207013125942L;
 
 	public Tile[] tiles;
+	Vector<Entity> plants = new Vector<Entity>();
 
 	public int levelSize = 256;
 	public int tilePixelLength;
 
 	public int width, height;
-
-	public Tile getTile(int xoffset, int yoffset) {
-		int x = (int) ((double) xoffset / (double) (tilePixelLength));
-		int y = (int) ((double) yoffset / (double) (tilePixelLength));
-		if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1)
-			return tiles[x + y * levelSize];
-		return tiles[0];
-	}
-
-	public Position getSpawnPosition() {
-		
-		Random rand = new Random();
-		int x = rand.nextInt(levelSize);
-		int y = 0;
-		Tile tile = null;
-		if (rand.nextBoolean()) {
-			y = levelSize-1;
-			do {
-				tile = tiles[x + y * levelSize];
-				y--;
-				if (y < 0) {
-					x = rand.nextInt(levelSize);
-					y = levelSize;
-				}
-			} while (!tile.getClass().getSimpleName().equals(new SandTile().getClass().getSimpleName()));
-		} else {
-			y = 0;
-			do {
-				tile = tiles[x + y * levelSize];
-				y++;
-				if (y >= levelSize) {
-					x = rand.nextInt(levelSize);
-					y = 0;
-				}
-			} while (!tile.getClass().getSimpleName().equals(new SandTile().getClass().getSimpleName()));
-		}
-		return new Position(x * tilePixelLength, y * tilePixelLength);
-
-	}
 
 	public Level(Game game) {
 		this.width = game.getWidth();
@@ -72,8 +36,8 @@ public class Level implements Serializable {
 
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
-		int iterations = 3;
-		double smthnss = 15;
+		int iterations = 1;
+		double smthnss = 30;
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double levelSize = this.levelSize;
@@ -106,6 +70,62 @@ public class Level implements Serializable {
 				tiles[i] = new WaterTile();
 			}
 		}
+
+		plants = new Vector<Entity>();
+
+		for (int y = 0; y < this.levelSize; y++) {
+			for (int x = 0; x < this.levelSize; x++) {
+				Tile tile = tiles[x + y * this.levelSize];
+				if (tile.getClass() == GrassTile.class) {
+					
+				} else if (tile.getClass() == DarkGrassTile.class) {
+
+				}
+			}
+		}
+
+	}
+
+	public Tile getTile(int xoffset, int yoffset) {
+		int x = (int) ((double) xoffset / (double) (tilePixelLength));
+		int y = (int) ((double) yoffset / (double) (tilePixelLength));
+		if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1)
+			return tiles[x + y * levelSize];
+		return tiles[0];
+	}
+
+	public Position getSpawnPosition() {
+
+		Random rand = new Random();
+		int x = rand.nextInt(levelSize);
+		int y = 0;
+		Tile tile = null;
+		if (rand.nextBoolean()) {
+			y = levelSize - 1;
+			do {
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1)
+					tile = tiles[x + y * levelSize];
+				y--;
+				if (y < 0) {
+					x = rand.nextInt(levelSize - 1);
+					y = levelSize;
+				}
+			} while (tile.getClass() != SandTile.class);
+			// while (!tile.getClass().getSimpleName().equals(new
+			// SandTile().getClass().getSimpleName()));
+		} else {
+			y = 0;
+			do {
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1)
+					tile = tiles[x + y * levelSize];
+				y++;
+				if (y >= levelSize) {
+					x = rand.nextInt(levelSize - 1);
+					y = 0;
+				}
+			} while (tile.getClass() != SandTile.class);
+		}
+		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
 

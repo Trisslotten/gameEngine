@@ -34,6 +34,11 @@ public class SpriteCollection {
 	public static final Sprite water = new Sprite("res/art/tiles/water.png");
 
 	/*
+	 * Plants
+	 */
+	public static final Sprite palmtree = new Sprite("res/art/plants/palm.png");
+	
+	/*
 	 * ETC
 	 */
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
