@@ -60,11 +60,23 @@ public class Player extends Entity implements Serializable {
 					if (temp == 1) {
 						direction = 1;
 					} else if (temp == 2 || temp == 3) {
-						direction = 2;
+						if(Ty>ypos){
+							direction = -2;
+						}else{
+							direction = 2;
+						}
 					} else if (temp == 4 || temp == 5) {
-						direction = 3;
+						if(Ty>ypos){
+							direction = -3;
+						}else{
+							direction = 3;
+						}
 					} else if (temp == 6 || temp == 7) {
-						direction = 4;
+						if(Ty>ypos){
+							direction = -4;
+						}else{
+							direction = 4;
+						}
 					} else if (temp == 8) {
 						direction = 5;
 					}
