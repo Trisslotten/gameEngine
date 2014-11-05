@@ -12,8 +12,7 @@ public class SpriteCollection {
 	/*
 	 * Buttons
 	 */
-	public static final Sprite settings = new Sprite(
-			"res/art/buttons/settings.png");
+	public static final Sprite settings = new Sprite("res/art/buttons/settings.png");
 	public static final Sprite quit = new Sprite("res/art/buttons/quit.png");
 	public static final Sprite cont = new Sprite("res/art/buttons/continue.png");
 	public static final Sprite start = new Sprite("res/art/buttons/start.png");
@@ -21,10 +20,8 @@ public class SpriteCollection {
 	/*
 	 * Backgrounds
 	 */
-	public static final Sprite menubg = new Sprite(
-			"res/art/backgrounds/sstartsida.png");
-	public static final Sprite pauseCover = new Sprite(
-			"res/art/backgrounds/pausecover.png");
+	public static final Sprite menubg = new Sprite("res/art/backgrounds/sstartsida.png");
+	public static final Sprite pauseCover = new Sprite("res/art/backgrounds/pausecover.png");
 
 	/*
 	 * Tiles
@@ -32,8 +29,7 @@ public class SpriteCollection {
 	public static final Sprite tile = new Sprite("res/art/tiles/tileno2.png");
 	public static final Sprite tile2 = new Sprite("res/art/tiles/tile2.png");
 	public static final Sprite grass = new Sprite("res/art/tiles/grass.png");
-	public static final Sprite darkGrass = new Sprite(
-			"res/art/tiles/dark_grass.png");
+	public static final Sprite darkGrass = new Sprite("res/art/tiles/dark_grass.png");
 	public static final Sprite sand = new Sprite("res/art/tiles/sand.png");
 	public static final Sprite water = new Sprite("res/art/tiles/water.png");
 

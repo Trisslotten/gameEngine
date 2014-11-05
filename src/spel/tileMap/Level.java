@@ -6,6 +6,7 @@ import java.util.Random;
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.tileMap.tiles.*;
+import spel.utils.Position;
 import spel.utils.SimplexNoise_octave;
 
 public class Level implements Serializable {
@@ -17,29 +18,62 @@ public class Level implements Serializable {
 
 	public Tile[] tiles;
 
-	public int levelSize = 64;
+	public int levelSize = 256;
 	public int tilePixelLength;
 
 	public int width, height;
-	
+
 	public Tile getTile(int xoffset, int yoffset) {
-		int x = xoffset/tilePixelLength;
-		int y = yoffset/tilePixelLength;
-		return tiles[x+y*levelSize];
+		int x = (int) ((double) xoffset / (double) (tilePixelLength));
+		int y = (int) ((double) yoffset / (double) (tilePixelLength));
+		if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1)
+			return tiles[x + y * levelSize];
+		return tiles[0];
+	}
+
+	public Position getSpawnPosition() {
+		
+		Random rand = new Random();
+		int x = rand.nextInt(levelSize);
+		int y = 0;
+		Tile tile = null;
+		if (rand.nextBoolean()) {
+			y = levelSize-1;
+			do {
+				tile = tiles[x + y * levelSize];
+				y--;
+				if (y < 0) {
+					x = rand.nextInt(levelSize);
+					y = levelSize;
+				}
+			} while (!tile.getClass().getSimpleName().equals(new SandTile().getClass().getSimpleName()));
+		} else {
+			y = 0;
+			do {
+				tile = tiles[x + y * levelSize];
+				y++;
+				if (y >= levelSize) {
+					x = rand.nextInt(levelSize);
+					y = 0;
+				}
+			} while (!tile.getClass().getSimpleName().equals(new SandTile().getClass().getSimpleName()));
+		}
+		return new Position(x * tilePixelLength, y * tilePixelLength);
+
 	}
 
 	public Level(Game game) {
 		this.width = game.getWidth();
 		this.height = game.getHeight();
-		tilePixelLength = (int) SpriteCollection.tile.width;
+		tilePixelLength = (int) SpriteCollection.grass.width;
 		tiles = new Tile[levelSize * levelSize];
 
 		double[] noise = new double[levelSize * levelSize];
-		
+
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
-		int iterations = 50;
-		double smthnss = 45;
+		int iterations = 3;
+		double smthnss = 15;
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double levelSize = this.levelSize;
@@ -53,15 +87,16 @@ public class Level implements Serializable {
 					amplitude *= 2;
 				}
 				noise[(int) (x + y * levelSize)] *= (1 - Math.abs((x / levelSize * 2) - 1)) * (1 - Math.abs((y / levelSize * 2) - 1));
-				System.out.print((int) (noise[(int) (x + y * levelSize)] * 9.0) + ",");
+				// System.out.print((int) (noise[(int) (x + y * levelSize)] *
+				// 9.0) + ",");
 			}
-			System.out.println();
+			// System.out.println();
 		}
 
 		for (int i = 0; i < tiles.length; i++) {
 			if (noise[i] > 0.2) {
 				if (noise[i] > 0.3) {
-					if(noise[i] > 0.6)
+					if (noise[i] > 0.6)
 						tiles[i] = new DarkGrassTile();
 					else
 						tiles[i] = new GrassTile();

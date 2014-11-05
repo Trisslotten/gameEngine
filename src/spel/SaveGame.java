@@ -15,6 +15,7 @@ import org.lwjgl.input.Mouse;
 import spel.entities.Entity;
 import spel.entities.Player;
 import spel.tileMap.Level;
+import spel.utils.Position;
 
 public class SaveGame implements Serializable {
 
@@ -23,10 +24,8 @@ public class SaveGame implements Serializable {
 	 */
 	private static final long serialVersionUID = 134354553867719645L;
 
-	public static final String filepath = System.getProperty("user.home")
-			+ "/Documents/My Games/TestGame/save.med";
-	public static final String filedir = System.getProperty("user.home")
-			+ "/Documents/My Games/TestGame/";
+	public static final String filepath = System.getProperty("user.home") + "/Documents/My Games/TestGame/save.med";
+	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
 
 	public Vector<Entity> entities;
 	public Player player;
@@ -35,9 +34,9 @@ public class SaveGame implements Serializable {
 	public SaveGame(Game game) {
 		entities = new Vector<Entity>();
 		level = new Level(game);
-		
-		player = new Player(3000, 3000, game);
-		
+		Position pos = level.getSpawnPosition(); 
+		player = new Player(pos.x, pos.y, game);
+
 	}
 
 	public SaveGame(SaveGame saveGame) {
