@@ -10,38 +10,42 @@ import java.io.Serializable;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import spel.entities.Entity;
+import spel.entities.Player;
 import spel.tileMap.Level;
 
 public class SaveGame implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 134354553867719645L;
-	
-	public static final String filepath = System.getProperty("user.home") + "/Documents/My Games/TestGame/save.med";
-	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
-	
-	public int x = 0;
-	
+
+	public static final String filepath = System.getProperty("user.home")
+			+ "/Documents/My Games/TestGame/save.med";
+	public static final String filedir = System.getProperty("user.home")
+			+ "/Documents/My Games/TestGame/";
+
 	public Vector<Entity> entities;
-	// public Player player;
+	public Player player;
 	public Level level;
-	
+
 	public SaveGame(Game game) {
 		entities = new Vector<Entity>();
-		// player = new Player();
 		level = new Level(game);
+		
+		player = new Player(3000, 3000, game);
+		
 	}
-	
+
 	public SaveGame(SaveGame saveGame) {
 		this.entities = saveGame.entities;
+		this.player = saveGame.player;
 		this.level = saveGame.level;
-		this.x = saveGame.x;  
 	}
-	
+
 	public static SaveGame load(Game game) {
 		SaveGame saveGame = null;
 		ObjectInputStream in;
@@ -53,11 +57,13 @@ public class SaveGame implements Serializable {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+			File dir = new File(filedir);
+			dir.mkdir();
 			saveGame = new SaveGame(game);
 		}
 		return saveGame;
 	}
-	
+
 	public void save() {
 		SaveGame saveGame = new SaveGame(this);
 		ObjectOutputStream ut;
@@ -68,19 +74,21 @@ public class SaveGame implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 			File dir = new File(filedir);
-			if (dir.mkdir()) save();
+			if (dir.mkdir())
+				save();
 		}
 	}
-	
-	public void update(double dt) {
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) x += 288 * dt / 1000;
+
+	public void update(double dt, Game game) {
+		player.update(dt, game);
 	}
-	
+
 	public void render(double interp) {
-		level.render(x, 0);
+		level.render((int) player.getXdraw(), (int) player.getYdraw());
 		for (Entity e : entities) {
 			e.render(interp);
 		}
+		player.render(interp);
 	}
-	
+
 }

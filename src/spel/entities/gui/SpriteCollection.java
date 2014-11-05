@@ -5,6 +5,12 @@ import spel.entities.Sprite;
 public class SpriteCollection {
 	
 	/*
+	 * PlayerSprites
+	 */
+	public static final Sprite player = new Sprite("res/art/kaj/kaj.png");
+	
+	
+	/*
 	 * Buttons
 	 */
 	public static final Sprite settings = 	new Sprite("res/art/buttons/settings.png");
@@ -21,15 +27,20 @@ public class SpriteCollection {
 	/*
 	 * Tiles 	
 	 */
-	public static final Sprite tile = 	new Sprite("res/art/tiles/tile.png");
-	public static final Sprite tile2 = 	new Sprite("res/art/tiles/tile2.png");
+	public static final Sprite tile = 		new Sprite("res/art/tiles/tileno2.png");
+	public static final Sprite tile2 = 		new Sprite("res/art/tiles/tile2.png");
+	public static final Sprite grass = 		new Sprite("res/art/tiles/grass.png");
+	public static final Sprite darkGrass = 	new Sprite("res/art/tiles/dark_grass.png");
+	public static final Sprite sand = 		new Sprite("res/art/tiles/sand.png");
+	public static final Sprite water = 		new Sprite("res/art/tiles/water.png");
+	
 	
 	/*
 	 * ETC
 	 */
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite asd =	new Sprite("res/art/pixel.png");
-	
+	public static final Sprite WPointer = new Sprite("res/art/pointers/WPointer.gif");
 	
 	
 }

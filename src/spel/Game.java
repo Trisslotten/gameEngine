@@ -1,6 +1,7 @@
 package spel;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
@@ -10,7 +11,7 @@ import spel.utils.Settings;
 import spel.utils.Text;
 
 public class Game extends Main {
-	
+
 	public Keys keys;
 	public Cursor cursor;
 	public Text text;
@@ -21,16 +22,16 @@ public class Game extends Main {
 	public SaveGame saveGame;
 	public Gui gui;
 	public boolean buttonClicked;
-	
+
 	public enum State {
 		MENU, PLAYING, STARTING;
 	}
-	
+
 	public void preGLInit() {
 		settings = new Settings();
 		setRes(settings);
 	}
-	
+
 	public void init() {
 		UPDATES_PER_SECOND = 60;
 		gameState = State.MENU;
@@ -38,25 +39,26 @@ public class Game extends Main {
 		text = new Text(14);
 		gui = new Gui(this);
 	}
-	
+
 	public void loadAssets() {
 		cursor = new Cursor("res/cursor.png", this);
 	}
-	
+
 	public void handleInputs(double dt) {
 		if (keys.keyPressed(Keyboard.KEY_ESCAPE)) {
 			gui.inSettings = false;
-			if (gameState != State.MENU) paused = !paused;
+			if (gameState != State.MENU)
+				paused = !paused;
 		}
 		cursor.update();
 		keys.setKeys();
 	}
-	
+
 	public void quit() {
 		saveGame.save();
 		settings.save();
 	}
-	
+
 	public void update(double dt) {
 		handleInputs(dt);
 		if (gameState == State.STARTING) {
@@ -64,26 +66,27 @@ public class Game extends Main {
 			oldState = State.MENU;
 		}
 		if (gameState == State.PLAYING) {
-			saveGame.update(dt);
+			saveGame.update(dt, this);
 		}
 		gui.update(dt);
 		buttonClicked = false;
 	}
-	
+
 	public int render(double interpolation) {
 		super.render(interpolation);
-		
+
 		if (gameState == State.PLAYING) {
 			double interp = interpolation;
-			if (gameState != State.PLAYING) interp = 0;
+			if (gameState != State.PLAYING)
+				interp = 0;
 			saveGame.render(interp);
 		}
 		gui.render(interpolation);
-		
+
 		cursor.render(interpolation);
 		return 0;
 	}
-	
+
 	public static void main(String[] args) {
 		new Game().start();
 	}

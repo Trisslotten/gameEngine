@@ -14,5 +14,8 @@ public class Tile implements Serializable {
 	public void render(int xpos, int ypos) {
 		SpriteCollection.tile.render(xpos, ypos);
 	}
+	public void render(int xpos, int ypos,int width, int height) {
+		SpriteCollection.tile.render(xpos, ypos,width,height);
+	}
 	
 }

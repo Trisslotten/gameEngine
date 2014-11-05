@@ -32,6 +32,13 @@ public class Entity {
 		ydraw += yspd * ip/1000;
 	}
 	
+	public double getXdraw() {
+		return xdraw;
+	}
+	public double getYdraw() {
+		return ydraw;
+	}
+	
 	public double getXpos() {
 		return xpos;
 	}
