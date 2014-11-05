@@ -7,16 +7,15 @@ import spel.entities.gui.SpriteCollection;
 
 public class StartButton extends Button {
 	
-	public StartButton(double xpos, double ypos, Game game, String text) {
-		super(xpos, ypos, game, text);
-		// TODO Auto-generated constructor stub
+	public StartButton(float xpos, float ypos, Game game, Sprite sprite) {
+		super(xpos, ypos, game, sprite);
 	}
 	
 	public void render(double interpolation) {
 		if(hover){
-			SpriteCollection.quitHover.render(xpos, ypos);
+			SpriteCollection.startHover.render(xpos, ypos);
 		} else {
-			SpriteCollection.quit.render(xpos, ypos);
+			SpriteCollection.start.render(xpos, ypos);
 		}
 	}
 	

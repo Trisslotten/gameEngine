@@ -37,6 +37,15 @@ public class Button extends Entity {
 		this.sprite = sprite;
 		this.game = game;
 	}
+	public Button(float xpos, float ypos, Game game, Sprite sprite) {
+		super(xpos, ypos);
+		this.width = sprite.width;
+		this.height = sprite.height;
+		this.xpos = xpos * (float) game.getWidth();
+		this.ypos = ypos * (float) game.getHeight();
+		this.sprite = sprite;
+		this.game = game;
+	}
 	
 	private boolean hover() {
 		int x = (int) game.cursor.getXpos();

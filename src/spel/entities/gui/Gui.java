@@ -7,6 +7,7 @@ import spel.entities.Entity;
 import spel.entities.gui.backgrounds.PauseCover;
 import spel.entities.gui.backgrounds.StartBackground;
 import spel.entities.gui.button.ContinueButton;
+import spel.entities.gui.button.QuitButton;
 import spel.entities.gui.button.StartButton;
 
 public class Gui {
@@ -28,8 +29,9 @@ public class Gui {
 		menuBackground = new StartBackground(0,0,game.getWidth(),game.getHeight());
 		pauseCover = new PauseCover(0,0,game.getWidth(),game.getHeight());
 		
-		menuElements.add(new ContinueButton	(0.60f,0.60f,game,SpriteCollection.cont));
-		menuElements.add(new StartButton	(0.60f,0.70f,game,SpriteCollection.start));
+		menuElements.add(new ContinueButton	(0.60f,0.60f,game,SpriteCollection.quit));
+		menuElements.add(new StartButton	(0.60f,0.70f,game,SpriteCollection.quit));
+		menuElements.add(new QuitButton	(0.60f,0.80f,game,SpriteCollection.quit));
 		
 		
 	}

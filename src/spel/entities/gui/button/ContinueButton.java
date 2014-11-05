@@ -7,10 +7,6 @@ import spel.entities.gui.SpriteCollection;
 
 public class ContinueButton extends Button {
 	
-	public ContinueButton(double xpos, double ypos, Game game, String text) {
-		super(xpos, ypos, game, text);
-		// TODO Auto-generated constructor stub
-	}
 	
 	public ContinueButton(float xpos, float ypos, Game game, Sprite sprite) {
 		super(xpos, ypos, game, sprite);
