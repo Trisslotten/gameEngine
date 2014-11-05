@@ -21,6 +21,7 @@ public class Player extends Entity implements Serializable {
 	double pointertimer = 0.1;
 	boolean drawWPointer = false;
 	double velocity;
+	int direction = 0;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
@@ -30,6 +31,7 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void update(double dt, Game game) {
+
 		timer++;
 		if (timer >= 4) {
 			pointerindex++;
@@ -42,7 +44,8 @@ public class Player extends Entity implements Serializable {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
 		}
-		if (Math.abs(xpos - Tx) >= 10 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0
+		if (Math.abs(xpos - Tx) >= 10 && Tx != 0
+				&& Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0
 				&& Ty != 0) {
 			drawWPointer = true;
 			double dx = xpos - Tx;
@@ -50,6 +53,37 @@ public class Player extends Entity implements Serializable {
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity * dt / 1000;
 			yspd = Math.sin(angle) * velocity * dt / 1000;
+
+			for (int i = 0; i < 9; i++) {
+				if (angle < i * (Math.PI / 8) && angle > -i * (Math.PI / 8)) {
+					int temp = i;
+					if (temp == 1) {
+						direction = 1;
+					} else if (temp == 2 || temp == 3) {
+						if(Ty>ypos){
+							direction = -2;
+						}else{
+							direction = 2;
+						}
+					} else if (temp == 4 || temp == 5) {
+						if(Ty>ypos){
+							direction = -3;
+						}else{
+							direction = 3;
+						}
+					} else if (temp == 6 || temp == 7) {
+						if(Ty>ypos){
+							direction = -4;
+						}else{
+							direction = 4;
+						}
+					} else if (temp == 8) {
+						direction = 5;
+					}
+					System.out.println(direction);
+					break;
+				}
+			}
 		} else {
 			drawWPointer = false;
 			xspd = 0;
@@ -64,7 +98,7 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void render(double interpolation) {
-		interpolation = 0;
+		interpolation /= 1000;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
