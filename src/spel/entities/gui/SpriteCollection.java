@@ -40,7 +40,7 @@ public class SpriteCollection {
 	 */
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite asd =	new Sprite("res/art/pixel.png");
-	
+	public static final Sprite WPointer = new Sprite("res/art/pointers/WPointer.gif");
 	
 	
 }
