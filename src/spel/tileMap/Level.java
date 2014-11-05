@@ -29,9 +29,7 @@ public class Level implements Serializable {
 		tiles = new Tile[levelSize * levelSize];
 
 		double[] noise = new double[levelSize * levelSize];
-
-		Random rand = new Random();
-
+		
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
 		int iterations = 5;
