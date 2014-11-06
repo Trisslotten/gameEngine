@@ -11,7 +11,7 @@ public class NPC extends Mob {
 	int tick = 0;
 	int tx = 0;
 	int ty = 0;
-	int velocity=256;
+	int velocity = 256;
 	boolean eventNPC;
 	boolean found = false;
 	boolean friend = false;
@@ -27,9 +27,8 @@ public class NPC extends Mob {
 		Random rand = new Random();
 		super.update(dt);
 
-		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512
-				&& !found) {
-			boolean found = true;
+		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512 && !found) {
+			// found = true;
 		}
 
 		if (friend) {
@@ -51,21 +50,28 @@ public class NPC extends Mob {
 			} else {
 				starving = false;
 			}
-		} else if (!friend && !found && tick >= 360) {
+		} else if (!friend && !found && tick >= 60) {
 			tx = rand.nextInt(1024) - 512;
 			ty = rand.nextInt(1024) - 512;
-			double dx = xpos - (tx-xpos);
-			double dy = ypos - (ty-xpos);
+			double dx = xpos - (tx - xpos);
+			double dy = ypos - (ty - xpos);
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity * dt / 1000;
 			yspd = Math.sin(angle) * velocity * dt / 1000;
 		}
+
+		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
+		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
+		System.out.println(xdraw);
+		System.out.println(ydraw);
+		System.out.println();
 	}
+
 	public void render(double interpolation) {
-		interpolation /= 100;
+		interpolation /= 1000;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
-		SpriteCollection.NPC.render(xpos - 32, ypos - 87);
+		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 	}
 
 	public void eat(int amount) {

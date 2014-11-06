@@ -7,13 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Vector;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
-import spel.entities.Entity;
 import spel.entities.Player;
 import spel.tileMap.Level;
 import spel.utils.Position;
@@ -28,12 +24,10 @@ public class SaveGame implements Serializable {
 	public static final String filepath = System.getProperty("user.home") + "/Documents/TestGame/save.med";
 	public static final String filedir = System.getProperty("user.home") + "/Documents/TestGame/";
 
-	public Vector<Entity> entities;
 	public Player player;
 	public Level level;
 
 	public SaveGame(Game game) {
-		entities = new Vector<Entity>();
 		level = new Level(game);
 		Position pos = level.getSpawnPosition(); 
 		player = new Player(pos.x, pos.y, game);
@@ -41,7 +35,6 @@ public class SaveGame implements Serializable {
 	}
 
 	public SaveGame(SaveGame saveGame) {
-		this.entities = saveGame.entities;
 		this.player = saveGame.player;
 		this.level = saveGame.level;
 	}
@@ -81,13 +74,11 @@ public class SaveGame implements Serializable {
 
 	public void update(double dt, Game game) {
 		player.update(dt, game);
+		level.update(dt, game);
 	}
 
 	public void render(double interp, Game game) {
 		level.render((int) player.getXdraw(), (int) player.getYdraw(), game, player);
-		for (Entity e : entities) {
-			e.render(interp);
-		}
 		
 		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.black);
 		

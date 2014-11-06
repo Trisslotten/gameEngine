@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import spel.Game;
 import spel.entities.Entity;
+import spel.entities.NPC;
 import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.vegetation.Tree;
@@ -22,6 +23,7 @@ public class Level implements Serializable {
 
 	public Tile[] tiles;
 	Vector<Entity> plants = new Vector<Entity>();
+	Vector<NPC> NPCs = new Vector<NPC>();
 
 	public int levelSize = 128;
 	public int tilePixelLength;
@@ -80,7 +82,7 @@ public class Level implements Serializable {
 			for (int x = 0; x < this.levelSize; x++) {
 				Tile tile = tiles[x + y * this.levelSize];
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
-					if (rand.nextBoolean()&&rand.nextBoolean()) {
+					if (rand.nextBoolean() && rand.nextBoolean()) {
 						int xpos = x * tilePixelLength;
 						int ypos = y * tilePixelLength;
 						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
@@ -90,7 +92,10 @@ public class Level implements Serializable {
 				}
 			}
 		}
-
+		for(int i=0;i<20;i++){
+			Position pos = getSpawnPosition();
+			NPCs.add(new NPC(pos.x,pos.y, Integer.toHexString(rand.nextInt()), true));
+		}
 	}
 
 	public Tile getTile(int xoffset, int yoffset) {
@@ -101,18 +106,55 @@ public class Level implements Serializable {
 		return tiles[0];
 	}
 
-	public Position getSpawnPosition() {
+	public Position getNPCPosition() {
 
 		Random rand = new Random();
-		int x = rand.nextInt(levelSize-1);
+		int x = rand.nextInt(levelSize - 1);
 		int y = 0;
 		Tile tile = null;
 		if (rand.nextBoolean()) {
 			y = levelSize - 1;
 			do {
-				if(x+y*levelSize>0&&x+y*levelSize<levelSize*levelSize-1)
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1&&rand.nextBoolean())
 					tile = tiles[x + y * levelSize];
-				else 
+				else
+					tile = tiles[0];
+				y--;
+				if (y < 0) {
+					x = rand.nextInt(levelSize - 1);
+					y = levelSize;
+				}
+			} while (!tile.getClass().getSimpleName().equals(new GrassTile().getClass().getSimpleName()));
+		} else {
+			y = 0;
+			do {
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1)
+					tile = tiles[x + y * levelSize];
+				else
+					tile = tiles[0];
+				y++;
+				if (y >= levelSize) {
+					x = rand.nextInt(levelSize - 1);
+					y = 0;
+				}
+			} while (!tile.getClass().getSimpleName().equals(new GrassTile().getClass().getSimpleName()));
+		}
+		return new Position(x * tilePixelLength, y * tilePixelLength);
+
+	}
+
+	public Position getSpawnPosition() {
+
+		Random rand = new Random();
+		int x = rand.nextInt(levelSize - 1);
+		int y = 0;
+		Tile tile = null;
+		if (rand.nextBoolean()) {
+			y = levelSize - 1;
+			do {
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1)
+					tile = tiles[x + y * levelSize];
+				else
 					tile = tiles[0];
 				y--;
 				if (y < 0) {
@@ -123,9 +165,9 @@ public class Level implements Serializable {
 		} else {
 			y = 0;
 			do {
-				if(x+y*levelSize>0&&x+y*levelSize<levelSize*levelSize-1)
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1)
 					tile = tiles[x + y * levelSize];
-				else 
+				else
 					tile = tiles[0];
 				y++;
 				if (y >= levelSize) {
@@ -137,8 +179,13 @@ public class Level implements Serializable {
 		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
+	public void update(double dt, Game game) {
+		for(NPC npc: NPCs){
+			npc.update(dt, game);
+		}
+	}
 
-	public void render(int xoffset, int yoffset,Game game, Player player) {
+	public void render(int xoffset, int yoffset, Game game, Player player) {
 		int xstart = (xoffset - width / 2) / tilePixelLength;
 		int ystart = (yoffset - height / 2) / tilePixelLength;
 		int xend = (xoffset + tilePixelLength + width / 2) / tilePixelLength;
@@ -158,17 +205,20 @@ public class Level implements Serializable {
 			}
 		}
 		boolean behind = true;
-		for (int i=0;i<plants.size();i++) {
-			if(plants.elementAt(i).getYpos()+plants.elementAt(i).getHeight()*2>player.getYpos()&&behind){
+		for (int i = 0; i < plants.size(); i++) {
+			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() * 2 > player.getYpos() && behind) {
 				behind = false;
 				player.render(0);
 			}
 			plants.elementAt(i).render(0, game);
 		}
-		if(behind){
+		if (behind) {
 			player.render(0);
 		}
-		
+		for(NPC npc: NPCs){
+			npc.render(0);
+		}
+
 		int size = 1;
 		for (int y = 0; y < levelSize; y++) {
 			for (int x = 0; x < levelSize; x++) {

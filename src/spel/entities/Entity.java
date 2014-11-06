@@ -6,6 +6,10 @@ import spel.Game;
 
 public class Entity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3683846272279120860L;
 	protected double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
 	
 	public Entity(double xpos, double ypos) {

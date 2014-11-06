@@ -157,13 +157,13 @@ public class Main implements Runnable {
 
 			if ((long)getMillis() - timer > 1000) {
 				timer += 1000;
-				/*
+				
 				if (objects > 0) {
 					Display.setTitle("OpenGL " + version + " | " + title + " | " + updates + " TICKS, " + frames + " FPS | " + objects + " Rendered");
 				} else {
 					Display.setTitle("OpenGL " + version + " | " + title + " | " + updates + " TICKS, " + frames + " FPS");
 				}
-				*/
+				
 				updates = 0;
 				frames = 0;
 			}
