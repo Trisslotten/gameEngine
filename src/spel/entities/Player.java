@@ -59,6 +59,10 @@ public class Player extends Entity implements Serializable {
 		if (Mouse.isButtonDown(1)) {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
+			if(game.saveGame.level.isWaterTile(Tx, Ty)){
+				Ty = (int) ypos;
+				Tx = (int) xpos; 
+			}
 		}
 		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0
 				|| Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {

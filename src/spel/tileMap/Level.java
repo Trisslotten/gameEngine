@@ -104,9 +104,9 @@ public class Level implements Serializable {
 		boolean isWater = false;
 		int x = (int) ((double) xoffset / (double) (tilePixelLength));
 		int y = (int) ((double) yoffset / (double) (tilePixelLength));
-		if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1){
-			isWater = tiles[x + y * levelSize].getClass().getSimpleName().equals("WaterTile")||tiles[x + y * levelSize].getClass().getSimpleName().equals("DarkWater");
-		}
+		System.out.println(tiles[x + y * levelSize].getClass().getSimpleName());
+		isWater = tiles[x + y * levelSize].getClass().getSimpleName().equals("WaterTile") || tiles[x + y * levelSize].getClass().getSimpleName().equals("DarkWater");
+
 		return isWater;
 	}
 
