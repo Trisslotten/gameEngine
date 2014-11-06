@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import spel.Game;
 import spel.entities.Entity;
+import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.vegetation.Tree;
 import spel.tileMap.tiles.*;
@@ -79,7 +80,7 @@ public class Level implements Serializable {
 			for (int x = 0; x < this.levelSize; x++) {
 				Tile tile = tiles[x + y * this.levelSize];
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
-					if (rand.nextBoolean()) {
+					if (rand.nextBoolean()&&rand.nextBoolean()) {
 						int xpos = x * tilePixelLength - tilePixelLength/2 + rand.nextInt(tilePixelLength-20)+10;
 						int ypos = y * tilePixelLength - tilePixelLength + rand.nextInt(tilePixelLength-20+10);
 						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
@@ -137,7 +138,7 @@ public class Level implements Serializable {
 
 	}
 
-	public void render(int xoffset, int yoffset,Game game) {
+	public void render(int xoffset, int yoffset,Game game, Player player) {
 		int xstart = (xoffset - width / 2) / tilePixelLength;
 		int ystart = (yoffset - height / 2) / tilePixelLength;
 		int xend = (xoffset + tilePixelLength + width / 2) / tilePixelLength;
@@ -156,8 +157,13 @@ public class Level implements Serializable {
 				tiles[x + y * levelSize].render(x * tilePixelLength - xoffset + width / 2, y * tilePixelLength - yoffset + height / 2);
 			}
 		}
-		for (Entity e : plants) {
-			e.render(0,game);
+		boolean behind = true;
+		for (int i=0;i<plants.size()-1;i++) {
+			if(plants.elementAt(i+1).getYpos()>player.getYpos()&&behind){
+				behind = false;
+				player.render(0);
+			}
+			plants.elementAt(i).render(0, game);
 		}
 		
 		int size = 1;

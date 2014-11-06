@@ -84,11 +84,10 @@ public class SaveGame implements Serializable {
 	}
 
 	public void render(double interp, Game game) {
-		level.render((int) player.getXdraw(), (int) player.getYdraw(), game);
+		level.render((int) player.getXdraw(), (int) player.getYdraw(), game, player);
 		for (Entity e : entities) {
 			e.render(interp);
 		}
-		player.render(interp);
 		
 		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.black);
 		

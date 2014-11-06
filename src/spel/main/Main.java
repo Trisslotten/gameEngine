@@ -127,7 +127,7 @@ public class Main implements Runnable {
 		}
 
 		long lastTime = System.nanoTime();
-		long timer = System.currentTimeMillis();
+		long timer = (long) getMillis();
 		final double ms = 1000.0 / UPDATES_PER_SECOND;
 		final double ns = 1000000000.0 / UPDATES_PER_SECOND;
 		double delta = 0;
@@ -155,7 +155,7 @@ public class Main implements Runnable {
 			frames++;
 			Display.update();
 
-			if (System.currentTimeMillis() - timer > 1000) {
+			if ((long)getMillis() - timer > 1000) {
 				timer += 1000;
 				/*
 				if (objects > 0) {
