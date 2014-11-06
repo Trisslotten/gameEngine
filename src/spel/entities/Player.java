@@ -74,7 +74,6 @@ public class Player extends Entity implements Serializable {
 			for (int i = 0; i < 9; i++) {
 				double d = (double) i;
 				if (angle < d * (Math.PI / 8) && angle > -d * (Math.PI / 8)) {
-					int temp = i;
 					direction = i;
 					if (d == 1) {
 						direction = 4;
@@ -138,7 +137,6 @@ public class Player extends Entity implements Serializable {
 			SpriteCollection.player.render((windowWidth / 2) - 32,
 					(windowHeight / 2) - 87);
 		}
-
 	}
 
 	public void setTx(int Tx) {
