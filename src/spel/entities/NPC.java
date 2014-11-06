@@ -50,8 +50,10 @@ public class NPC extends Mob {
 		} else
 			for (int i = 1; i < 4; i++) {
 				if (!friend && !found && tick == i * 360) {
-					tx = (int) (xpos + (int) (rand.nextInt(1024) - 512));
-					ty = (int) (ypos + (int) (rand.nextInt(1024) - 512));
+					do {
+						tx = (int) (xpos + (int) (rand.nextInt(1024) - 512));
+						ty = (int) (ypos + (int) (rand.nextInt(1024) - 512));
+					} while (game.saveGame.level.isWaterTile(tx, ty));
 				}
 			}
 		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
