@@ -81,11 +81,13 @@ public class Level implements Serializable {
 		for (int y = 0; y < this.levelSize; y++) {
 			for (int x = 0; x < this.levelSize; x++) {
 				Tile tile = tiles[x + y * this.levelSize];
+				int xpos = x * tilePixelLength;
+				int ypos = y * tilePixelLength;
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
-					if (rand.nextBoolean() && rand.nextBoolean()) {
-						int xpos = x * tilePixelLength;
-						int ypos = y * tilePixelLength;
+					if (rand.nextBoolean()) {
 						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
+					} else if (rand.nextBoolean()) {
+						plants.add(new Tree(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 
@@ -96,6 +98,16 @@ public class Level implements Serializable {
 			Position pos = getNPCPosition();
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true));
 		}
+	}
+
+	public boolean isWaterTile(int xoffset, int yoffset) {
+		boolean isWater = false;
+		int x = (int) ((double) xoffset / (double) (tilePixelLength));
+		int y = (int) ((double) yoffset / (double) (tilePixelLength));
+		if (x + y * levelSize > 0 && x + y * levelSize < levelSize - 1){
+			isWater = tiles[x + y * levelSize].getClass().getSimpleName().equals("WaterTile")||tiles[x + y * levelSize].getClass().getSimpleName().equals("DarkWater");
+		}
+		return isWater;
 	}
 
 	public Tile getTile(int xoffset, int yoffset) {
@@ -207,7 +219,7 @@ public class Level implements Serializable {
 		}
 		boolean behind = true;
 		for (int i = 0; i < plants.size(); i++) {
-			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() * 2 > player.getYpos() && behind) {
+			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() * 3 > player.getYpos() && behind) {
 				behind = false;
 				player.render(0);
 			}
