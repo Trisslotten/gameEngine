@@ -12,7 +12,7 @@ public class QuitButton extends Button {
 		super(xpos, ypos, game, sprite);
 	}
 	
-	public void render(double interpolation) {
+	public void render() {
 		if(hover){
 			SpriteCollection.quitHover.render(xpos, ypos);
 		} else {

@@ -17,7 +17,7 @@ public class ContinueButton extends Button {
 		game.saveGame = SaveGame.load(game);
 		game.gameState = Game.State.PLAYING;
 	}
-	public void render(double interpolation) {
+	public void render() {
 		if(hover){
 			SpriteCollection.contHover.render(xpos, ypos);
 		} else {

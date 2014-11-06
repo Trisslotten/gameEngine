@@ -5,21 +5,24 @@ import org.lwjgl.input.Mouse;
 import spel.Game;
 import spel.entities.Entity;
 import spel.entities.Sprite;
+import spel.entities.gui.Graphics;
 import spel.utils.Sound;
 
-public class Button extends Entity {
+public class Button extends Graphics {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1198390322690529505L;
 
 	protected boolean clicked, hover,  released, down, soundPlayed = false;
-
-	protected String text;
 
 	protected Sprite sprite;
 
 	protected Game game;
 
-	public Button(double xpos, double ypos, Game game, String text) {
+	public Button(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
-		this.text = text;
 		this.game = game;
 	}
 
@@ -86,12 +89,8 @@ public class Button extends Entity {
 
 	}
 
-	public void render(double interpolation) {
-		super.render(interpolation);
+	public void render() {
 		sprite.render(xdraw, ydraw);
-		if (game.text != null && text != null) {
-			game.text.render((int) xdraw, (int) ydraw, text, (int) width, (int) height);
-		}
 	}
 
 	public boolean isClicked() {

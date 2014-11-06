@@ -80,7 +80,7 @@ public class SaveGame implements Serializable {
 	public void render(double interp, Game game) {
 		level.render((int) player.getXdraw(), (int) player.getYdraw(), game, player);
 		
-		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.black);
+		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.pink);
 		
 	}
 

@@ -11,7 +11,7 @@ public class StartButton extends Button {
 		super(xpos, ypos, game, sprite);
 	}
 	
-	public void render(double interpolation) {
+	public void render() {
 		if(hover){
 			SpriteCollection.startHover.render(xpos, ypos);
 		} else {

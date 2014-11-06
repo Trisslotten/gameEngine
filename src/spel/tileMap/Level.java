@@ -5,12 +5,18 @@ import java.util.Random;
 import java.util.Vector;
 
 import spel.Game;
-import spel.entities.Entity;
 import spel.entities.NPC;
 import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.Structure;
+import spel.entities.structures.vegetation.Rock;
 import spel.entities.structures.vegetation.Tree;
-import spel.tileMap.tiles.*;
+import spel.tileMap.tiles.DarkGrassTile;
+import spel.tileMap.tiles.DarkWater;
+import spel.tileMap.tiles.GrassTile;
+import spel.tileMap.tiles.SandTile;
+import spel.tileMap.tiles.Tile;
+import spel.tileMap.tiles.WaterTile;
 import spel.utils.Position;
 import spel.utils.SimplexNoise_octave;
 
@@ -22,13 +28,14 @@ public class Level implements Serializable {
 	private static final long serialVersionUID = -7039780207013125942L;
 
 	public Tile[] tiles;
-	Vector<Entity> plants = new Vector<Entity>();
+	Vector<Structure> plants = new Vector<Structure>();
 	Vector<NPC> NPCs = new Vector<NPC>();
 
-	public int levelSize = 32;
+	public int levelSize = 128;
 	public int tilePixelLength;
 
 	public int width, height;
+	Random rand = new Random();
 
 	public Level(Game game) {
 		this.width = game.getWidth();
@@ -40,54 +47,52 @@ public class Level implements Serializable {
 
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
-		int iterations = 5;
-		double smthnss = 25;
+		int iterations = 3;
+		double smthnss = 20;
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
-		double levelSize = this.levelSize;
+		double lvlSize = this.levelSize;
 
-		for (int y = 0; y < levelSize; y++) {
-			for (int x = 0; x < levelSize; x++) {
-				noise[(int) (x + y * levelSize)] = 0;
+		for (int y = 0; y < lvlSize; y++) {
+			for (int x = 0; x < lvlSize; x++) {
+				noise[(int) (x + y * lvlSize)] = 0;
 				amplitude = 2;
 				for (int i = 0; i < iterations; i++) {
-					noise[(int) (x + y * levelSize)] += (noisegen.noise(x / (smoothx) * amplitude, y / (smoothy) * amplitude) + 1) / amplitude;
+					noise[(int) (x + y * lvlSize)] += (noisegen.noise(x / (smoothx) * amplitude, y / (smoothy) * amplitude) + 1) / amplitude;
 					amplitude *= 2;
 				}
-				noise[(int) (x + y * levelSize)] *= (1 - Math.abs((x / levelSize * 2) - 1)) * (1 - Math.abs((y / levelSize * 2) - 1));
-				// System.out.print((int) (noise[(int) (x + y * levelSize)] *
-				// 9.0) + ",");
+				noise[(int) (x + y * lvlSize)] *= (1 - Math.abs((x / lvlSize * 2) - 1)) * (1 - Math.abs((y / lvlSize * 2) - 1));
 			}
-			// System.out.println();
 		}
 
 		for (int i = 0; i < tiles.length; i++) {
-			if (noise[i] > 0.2) {
-				if (noise[i] > 0.3) {
-					if (noise[i] > 0.6)
-						tiles[i] = new DarkGrassTile();
-					else
-						tiles[i] = new GrassTile();
-				} else
-					tiles[i] = new SandTile();
+			if (noise[i] > 0.12) {
+				if (noise[i] > 0.2) {
+					if (noise[i] > 0.3) {
+						if (noise[i] > 0.6)
+							tiles[i] = new DarkGrassTile();
+						else
+							tiles[i] = new GrassTile();
+					} else
+						tiles[i] = new SandTile();
+				} else {
+					tiles[i] = new WaterTile();
+				}
 			} else {
-				tiles[i] = new WaterTile();
+				tiles[i] = new DarkWater();
 			}
 		}
 
-		plants = new Vector<Entity>();
-
-		Random rand = new Random();
 		for (int y = 0; y < this.levelSize; y++) {
 			for (int x = 0; x < this.levelSize; x++) {
 				Tile tile = tiles[x + y * this.levelSize];
-				int xpos = x * tilePixelLength;
-				int ypos = y * tilePixelLength;
+				int xpos = x * tilePixelLength + rand.nextInt(tilePixelLength);
+				int ypos = y * tilePixelLength + rand.nextInt(tilePixelLength);
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
-					if (rand.nextBoolean()) {
+					if (rand.nextBoolean() && rand.nextBoolean()&& rand.nextBoolean()) {
 						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
-					} else if (rand.nextBoolean()) {
-						plants.add(new Tree(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
+					} else if (rand.nextBoolean()&& rand.nextBoolean()) {
+						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 
@@ -99,14 +104,18 @@ public class Level implements Serializable {
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true));
 		}
 	}
+	
+	
 
 	public boolean isWaterTile(int xoffset, int yoffset) {
 		boolean isWater = false;
 		int x = (int) ((double) xoffset / (double) (tilePixelLength));
 		int y = (int) ((double) yoffset / (double) (tilePixelLength));
-		System.out.println(tiles[x + y * levelSize].getClass().getSimpleName());
-		isWater = tiles[x + y * levelSize].getClass().getSimpleName().equals("WaterTile") || tiles[x + y * levelSize].getClass().getSimpleName().equals("DarkWater");
+		try {
+			isWater = tiles[x + y * levelSize].getClass().getSimpleName().equals("WaterTile") || tiles[x + y * levelSize].getClass().getSimpleName().equals("DarkWater");
+		} catch (IndexOutOfBoundsException e) {
 
+		}
 		return isWater;
 	}
 
@@ -119,8 +128,6 @@ public class Level implements Serializable {
 	}
 
 	public Position getNPCPosition() {
-
-		Random rand = new Random();
 		int x = rand.nextInt(levelSize - 1);
 		int y = 0;
 		Tile tile = null;
@@ -156,8 +163,6 @@ public class Level implements Serializable {
 	}
 
 	public Position getSpawnPosition() {
-
-		Random rand = new Random();
 		int x = rand.nextInt(levelSize - 1);
 		int y = 0;
 		Tile tile = null;
@@ -219,17 +224,17 @@ public class Level implements Serializable {
 		}
 		boolean behind = true;
 		for (int i = 0; i < plants.size(); i++) {
-			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() * 3 > player.getYpos() && behind) {
+			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() > player.getYpos() + player.height && behind) {
 				behind = false;
 				player.render(0);
 			}
-			plants.elementAt(i).render(0, game);
+			plants.elementAt(i).render(xoffset, yoffset, game);
 		}
 		if (behind) {
 			player.render(0);
 		}
 		for (NPC npc : NPCs) {
-			npc.render(0);
+			npc.render(xoffset, yoffset, game);
 		}
 
 		int size = 1;

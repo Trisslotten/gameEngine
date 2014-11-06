@@ -1,7 +1,6 @@
 package spel;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
@@ -81,7 +80,7 @@ public class Game extends Main {
 				interp = 0;
 			saveGame.render(interp, this);
 		}
-		gui.render(interpolation);
+		gui.render();
 
 		cursor.render(interpolation);
 		return 0;
@@ -90,5 +89,5 @@ public class Game extends Main {
 	public static void main(String[] args) {
 		new Game().start();
 	}
-	
+
 }

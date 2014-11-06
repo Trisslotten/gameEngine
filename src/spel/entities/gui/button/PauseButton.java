@@ -7,7 +7,7 @@ import spel.entities.gui.SpriteCollection;
 public class PauseButton extends Button {
 
 	public PauseButton(double xpos, double ypos, Game game, String text) {
-		super(xpos, ypos, game, text);
+		super(xpos, ypos, game);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,7 +19,7 @@ public class PauseButton extends Button {
 	public void clickedEvent() {
 		game.paused = !game.paused;
 	}
-	public void render(double interpolation) {
+	public void render() {
 		if(hover){
 			SpriteCollection.contHover.render(xpos, ypos);
 		} else {

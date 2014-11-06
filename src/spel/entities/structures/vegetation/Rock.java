@@ -6,6 +6,11 @@ import spel.entities.structures.Structure;
 
 public class Rock extends Structure {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 528861663061955237L;
+
 	public Rock(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
 		// TODO Auto-generated constructor stub
@@ -16,11 +21,9 @@ public class Rock extends Structure {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void render(double ip, Game game) {
-		xdraw += xspd * ip / 1000;
-		ydraw += yspd * ip / 1000;
-		xdraw = xpos - game.saveGame.player.getXpos() + game.getWidth() / 2;
-		ydraw = ypos - game.saveGame.player.getYpos() + game.getHeight() / 2;
+	public void render(int xoffset, int yoffset, Game game) {
+		xdraw = xpos - xoffset;
+		ydraw = ypos - yoffset;
 		SpriteCollection.rock.render(xdraw, ydraw);
 	}
 }

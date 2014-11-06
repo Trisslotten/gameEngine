@@ -10,7 +10,7 @@ public class Entity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3683846272279120860L;
-	protected double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
+	public double xpos, ypos, xdraw, ydraw, xspd, yspd, width, height;
 	
 	public Entity(double xpos, double ypos) {
 		this.xpos = xpos;
@@ -34,21 +34,15 @@ public class Entity implements Serializable {
 		xdraw = xpos;
 		ydraw = ypos;
 	}
-	
-	public void render(double ip) {
-		xdraw += xspd * ip/1000;
-		ydraw += yspd * ip/1000;
-	}
 	public void update(double dt, Game game) {
 		xpos += xspd*dt/1000;
 		ypos += yspd*dt/1000;
 		xdraw = xpos;
 		ydraw = ypos;
 	}
-	
-	public void render(double ip, Game game) {
-		xdraw += xspd * ip/1000;
-		ydraw += yspd * ip/1000;
+	public void render(int xoffset,int yoffset, Game game) {
+		xdraw = xpos-xoffset;
+		ydraw = ypos-yoffset;
 	}
 	
 	

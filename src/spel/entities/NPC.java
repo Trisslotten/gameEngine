@@ -79,10 +79,8 @@ public class NPC extends Mob {
 		ypos -= yspd;
 	}
 
-	public void render(double interpolation) {
-		interpolation /= 1000;
-		xdraw -= xspd * interpolation;
-		ydraw -= yspd * interpolation;
+	public void render(int xoffset, int yoffset, Game game) {
+		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 	}
 

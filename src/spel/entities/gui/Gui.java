@@ -6,14 +6,15 @@ import spel.Game;
 import spel.entities.Entity;
 import spel.entities.gui.backgrounds.PauseCover;
 import spel.entities.gui.backgrounds.StartBackground;
+import spel.entities.gui.button.Button;
 import spel.entities.gui.button.ContinueButton;
 import spel.entities.gui.button.QuitButton;
 import spel.entities.gui.button.StartButton;
 
 public class Gui {
 	
-	public Vector<Entity> pauseElements, settingsElements, menuElements;
-	public Entity pauseCover, menuBackground;
+	public Vector<Button> pauseElements, settingsElements, menuElements;
+	public Graphics pauseCover, menuBackground;
 	
 	public boolean inSettings;
 	
@@ -22,9 +23,9 @@ public class Gui {
 	public Gui(Game game) {
 		inSettings = false;
 		this.game = game;
-		pauseElements = new Vector<Entity>();
-		settingsElements = new Vector<Entity>();
-		menuElements = new Vector<Entity>();
+		pauseElements = new Vector<Button>();
+		settingsElements = new Vector<Button>();
+		menuElements = new Vector<Button>();
 		
 		menuBackground = new StartBackground(0,0,game.getWidth(),game.getHeight());
 		pauseCover = new PauseCover(0,0,game.getWidth(),game.getHeight());
@@ -64,26 +65,26 @@ public class Gui {
 		}
 	}
 	
-	public void render(double interpolation) {
+	public void render() {
 		if (game.gameState == Game.State.MENU) {
-			menuBackground.render(interpolation);
+			menuBackground.render();
 			if (inSettings) {
-				pauseCover.render(interpolation);
-				for (Entity e : settingsElements)
-					e.render(interpolation);
+				pauseCover.render();
+				for (Graphics e : settingsElements)
+					e.render();
 			} else {
-				for (Entity e : menuElements)
-					e.render(interpolation);
+				for (Graphics e : menuElements)
+					e.render();
 			}
 		} else if (game.gameState == Game.State.PLAYING) {
 			if (game.paused) {
-				pauseCover.render(interpolation);
+				pauseCover.render();
 				if (inSettings) {
-					for (Entity e : settingsElements)
-						e.render(interpolation);;
+					for (Graphics e : settingsElements)
+						e.render();;
 				} else {
-					for (Entity e : pauseElements)
-						e.render(interpolation);
+					for (Graphics e : pauseElements)
+						e.render();
 				}
 			}
 		}

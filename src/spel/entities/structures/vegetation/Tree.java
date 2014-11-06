@@ -25,10 +25,6 @@ public class Tree extends Structure {
 
 	}
 
-	public void render(double interpolation) {
-
-	}
-
 	public void update(double dt, Game game) {
 		xpos += xspd * dt / 1000;
 		ypos += yspd * dt / 1000;
@@ -36,11 +32,9 @@ public class Tree extends Structure {
 		ydraw = ypos;
 	}
 
-	public void render(double ip, Game game) {
-		xdraw += xspd * ip / 1000;
-		ydraw += yspd * ip / 1000;
-		xdraw = xpos - game.saveGame.player.getXpos() + game.getWidth() / 2;
-		ydraw = ypos - game.saveGame.player.getYpos() + game.getHeight() / 2;
+	public void render(int xoffset, int yoffset, Game game) {
+		xdraw = xpos - xoffset;
+		ydraw = ypos - yoffset;
 		SpriteCollection.palmtree.render(xdraw, ydraw);
 	}
 }
