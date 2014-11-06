@@ -11,7 +11,7 @@ public class NPC extends Mob {
 	int tick = 0;
 	int tx = 0;
 	int ty = 0;
-	int velocity = 256;
+	int velocity = 128;
 	boolean eventNPC;
 	boolean found = false;
 	boolean friend = false;
@@ -49,7 +49,8 @@ public class NPC extends Mob {
 			}
 		} else 
 			for(int i=1;i<4;i++){
-			if (!friend && !found && tick >= i*360) {
+			if (!friend && !found && tick == i*360) {
+				System.out.println("pos update");
 			tx = (int) (xpos+(int) (rand.nextInt(1024) - 512));
 			ty = (int) (ypos+(int) (rand.nextInt(1024) - 512));
 			}
