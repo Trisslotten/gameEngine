@@ -27,7 +27,8 @@ public class NPC extends Mob {
 		Random rand = new Random();
 		super.update(dt);
 
-		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512 && !found) {
+		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512
+				&& !found) {
 			// found = true;
 		}
 		if (friend) {
@@ -35,7 +36,6 @@ public class NPC extends Mob {
 								// in-game days, will rapidly die if not fed
 								// (looses all health in less than ~two seconds)
 				hunger--;
-				tick = 0;
 			}
 			if (hunger <= 0) {
 				health--;
@@ -47,24 +47,32 @@ public class NPC extends Mob {
 			} else {
 				starving = false;
 			}
-		} else 
-			for(int i=1;i<4;i++){
-			if (!friend && !found && tick == i*360) {
-				System.out.println("pos update");
-			tx = (int) (xpos+(int) (rand.nextInt(1024) - 512));
-			ty = (int) (ypos+(int) (rand.nextInt(1024) - 512));
+		} else
+			for (int i = 1; i < 4; i++) {
+				if (!friend && !found && tick == i * 360) {
+					tx = (int) (xpos + (int) (rand.nextInt(1024) - 512));
+					ty = (int) (ypos + (int) (rand.nextInt(1024) - 512));
+				}
 			}
+		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
+				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
+			double dx = xpos - tx;
+			double dy = ypos - ty;
+			double angle = Math.atan2(dy, dx);
+			xspd = Math.cos(angle) * velocity * dt / 1000;
+			yspd = Math.sin(angle) * velocity * dt / 1000;
+		} else {
+			xspd = 0;
+			yspd = 0;
 		}
-		if(tx !=0 && ty!=0){
-		double dx = xpos - tx;
-		double dy = ypos - ty;
-		double angle = Math.atan2(dy, dx);
-		xspd = Math.cos(angle) * velocity * dt / 1000;
-		yspd = Math.sin(angle) * velocity * dt / 1000;
 		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
 		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
+		if (tick >= 1080) {
+			tick = 0;
+		} else {
+			tick++;
 		}
-		tick++;
+
 		xpos -= xspd;
 		ypos -= yspd;
 	}

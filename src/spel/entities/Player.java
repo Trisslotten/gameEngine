@@ -21,7 +21,7 @@ public class Player extends Entity implements Serializable {
 	boolean drawWPointer = false, standframe = false;
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
-	Inventory inventory;
+	//Inventory inventory;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
