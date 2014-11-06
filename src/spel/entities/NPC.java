@@ -1,11 +1,17 @@
 package spel.entities;
 
+import java.util.Random;
+
 import spel.Game;
+import spel.entities.gui.SpriteCollection;
 
 public class NPC extends Mob {
 	String name;
 	int hunger = 100;
 	int tick = 0;
+	int tx = 0;
+	int ty = 0;
+	int velocity=256;
 	boolean eventNPC;
 	boolean found = false;
 	boolean friend = false;
@@ -18,9 +24,11 @@ public class NPC extends Mob {
 	}
 
 	public void update(double dt, Game game) {
+		Random rand = new Random();
 		super.update(dt);
 
-		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512 && !found) {
+		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512
+				&& !found) {
 			boolean found = true;
 		}
 
@@ -43,7 +51,21 @@ public class NPC extends Mob {
 			} else {
 				starving = false;
 			}
+		} else if (!friend && !found && tick >= 360) {
+			tx = rand.nextInt(1024) - 512;
+			ty = rand.nextInt(1024) - 512;
+			double dx = xpos - (tx-xpos);
+			double dy = ypos - (ty-xpos);
+			double angle = Math.atan2(dy, dx);
+			xspd = Math.cos(angle) * velocity * dt / 1000;
+			yspd = Math.sin(angle) * velocity * dt / 1000;
 		}
+	}
+	public void render(double interpolation) {
+		interpolation /= 100;
+		xdraw -= xspd * interpolation;
+		ydraw -= yspd * interpolation;
+		SpriteCollection.NPC.render(xpos - 32, ypos - 87);
 	}
 
 	public void eat(int amount) {

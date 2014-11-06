@@ -26,7 +26,7 @@ public class Player extends Entity implements Serializable {
 		super(xpos, ypos);
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
-		velocity = 250;
+		velocity = 256;
 	}
 
 	public void update(double dt, Game game) {
@@ -147,9 +147,9 @@ public class Player extends Entity implements Serializable {
 		this.Ty = Ty;
 	}
 
-	public int getrange(double ypos, double ypos2) {
-		int r = (int) Math.sqrt(Math.pow(xpos - ypos, 2)
-				+ Math.pow(ypos - ypos2, 2));
+	public int getrange(double xpos, double ypos) {
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
+				+ Math.pow(this.ypos - ypos, 2));
 		return r;
 	}
 
