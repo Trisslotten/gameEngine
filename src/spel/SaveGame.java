@@ -25,8 +25,8 @@ public class SaveGame implements Serializable {
 	 */
 	private static final long serialVersionUID = 134354553867719645L;
 
-	public static final String filepath = System.getProperty("user.home") + "/Documents/My Games/TestGame/save.med";
-	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
+	public static final String filepath = System.getProperty("user.home") + "/Documents/TestGame/save.med";
+	public static final String filedir = System.getProperty("user.home") + "/Documents/TestGame/";
 
 	public Vector<Entity> entities;
 	public Player player;
