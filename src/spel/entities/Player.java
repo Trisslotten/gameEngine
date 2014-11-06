@@ -21,6 +21,7 @@ public class Player extends Entity implements Serializable {
 	boolean drawWPointer = false, standframe = false;
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
+	Inventory inventory;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
@@ -100,7 +101,6 @@ public class Player extends Entity implements Serializable {
 					} else if (d == 8) {
 						direction = 0;
 					}
-					System.out.println(direction);
 					break;
 				}
 			}

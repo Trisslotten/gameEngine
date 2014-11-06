@@ -92,9 +92,9 @@ public class Level implements Serializable {
 				}
 			}
 		}
-		for(int i=0;i<20;i++){
-			Position pos = getSpawnPosition();
-			NPCs.add(new NPC(pos.x,pos.y, Integer.toHexString(rand.nextInt()), true));
+		for (int i = 0; i < 20; i++) {
+			Position pos = getNPCPosition();
+			NPCs.add(new NPC(pos.x, pos.y, "asd", true));
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Level implements Serializable {
 		if (rand.nextBoolean()) {
 			y = levelSize - 1;
 			do {
-				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1&&rand.nextBoolean())
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1 && rand.nextBoolean())
 					tile = tiles[x + y * levelSize];
 				else
 					tile = tiles[0];
@@ -128,7 +128,7 @@ public class Level implements Serializable {
 		} else {
 			y = 0;
 			do {
-				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1)
+				if (x + y * levelSize > 0 && x + y * levelSize < levelSize * levelSize - 1 && rand.nextBoolean())
 					tile = tiles[x + y * levelSize];
 				else
 					tile = tiles[0];
@@ -179,8 +179,9 @@ public class Level implements Serializable {
 		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
+
 	public void update(double dt, Game game) {
-		for(NPC npc: NPCs){
+		for (NPC npc : NPCs) {
 			npc.update(dt, game);
 		}
 	}
@@ -215,7 +216,7 @@ public class Level implements Serializable {
 		if (behind) {
 			player.render(0);
 		}
-		for(NPC npc: NPCs){
+		for (NPC npc : NPCs) {
 			npc.render(0);
 		}
 
