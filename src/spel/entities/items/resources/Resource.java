@@ -7,4 +7,8 @@ public class Resource extends Item {
 	public Resource (int amount){
 		this.amount=amount;
 	}
+	
+	public void addAmount(int amount) {
+		this.amount += amount;
+	}
 }
