@@ -25,7 +25,7 @@ public class Level implements Serializable {
 	Vector<Entity> plants = new Vector<Entity>();
 	Vector<NPC> NPCs = new Vector<NPC>();
 
-	public int levelSize = 128;
+	public int levelSize = 32;
 	public int tilePixelLength;
 
 	public int width, height;
@@ -92,7 +92,7 @@ public class Level implements Serializable {
 				}
 			}
 		}
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 50; i++) {
 			Position pos = getNPCPosition();
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true));
 		}
