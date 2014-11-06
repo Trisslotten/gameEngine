@@ -30,15 +30,12 @@ public class NPC extends Mob {
 		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512 && !found) {
 			// found = true;
 		}
-
 		if (friend) {
 			if (tick >= 1080) {// should have no hunger left after aprox. 1.5
 								// in-game days, will rapidly die if not fed
 								// (looses all health in less than ~two seconds)
 				hunger--;
 				tick = 0;
-			} else {
-				tick++;
 			}
 			if (hunger <= 0) {
 				health--;
@@ -50,21 +47,25 @@ public class NPC extends Mob {
 			} else {
 				starving = false;
 			}
-		} else if (!friend && !found && tick >= 60) {
-			tx = rand.nextInt(1024) - 512;
-			ty = rand.nextInt(1024) - 512;
-			double dx = xpos - (tx - xpos);
-			double dy = ypos - (ty - xpos);
-			double angle = Math.atan2(dy, dx);
-			xspd = Math.cos(angle) * velocity * dt / 1000;
-			yspd = Math.sin(angle) * velocity * dt / 1000;
+		} else 
+			for(int i=1;i<4;i++){
+			if (!friend && !found && tick >= i*360) {
+			tx = (int) (xpos+(int) (rand.nextInt(1024) - 512));
+			ty = (int) (ypos+(int) (rand.nextInt(1024) - 512));
+			}
 		}
-
+		if(tx !=0 && ty!=0){
+		double dx = xpos - tx;
+		double dy = ypos - ty;
+		double angle = Math.atan2(dy, dx);
+		xspd = Math.cos(angle) * velocity * dt / 1000;
+		yspd = Math.sin(angle) * velocity * dt / 1000;
 		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
 		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
-		System.out.println(xdraw);
-		System.out.println(ydraw);
-		System.out.println();
+		}
+		tick++;
+		xpos -= xspd;
+		ypos -= yspd;
 	}
 
 	public void render(double interpolation) {
