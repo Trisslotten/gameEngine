@@ -62,6 +62,12 @@ public class SpriteCollection {
 	/*
 	 * ETC
 	 */
+	
+	/*
+	 * NPC
+	 */
+	public static final Sprite NPC = new Sprite("res/art/NPC/NPC.png");
+	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite asd = new Sprite("res/art/pixel.png");
 	public static final Sprite[] WPointer = WPointer();
