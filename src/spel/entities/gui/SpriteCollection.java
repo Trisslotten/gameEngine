@@ -60,6 +60,7 @@ public class SpriteCollection {
 	 * Plants
 	 */
 	public static final Sprite palmtree = new Sprite("res/art/plants/palm.png");
+	public static final Sprite rock = new Sprite("res/art/plants/rock.png");
 
 	/*
 	 * ETC
