@@ -38,6 +38,7 @@ public class SpriteCollection {
 	public static final Sprite contHover = new Sprite("res/art/buttons/menu/Fortspela_hover.png");
 	public static final Sprite start = new Sprite("res/art/buttons/menu/spela.png");
 	public static final Sprite startHover = new Sprite("res/art/buttons/menu/spela_hover.png");
+	
 	/*
 	 * Backgrounds
 	 */
@@ -53,6 +54,7 @@ public class SpriteCollection {
 	public static final Sprite darkGrass = new Sprite("res/art/tiles/dark_grass.png");
 	public static final Sprite sand = new Sprite("res/art/tiles/sand.png");
 	public static final Sprite water = new Sprite("res/art/tiles/water.png");
+	public static final Sprite darkWater = new Sprite("res/art/tiles/dark_water.png");
 
 	/*
 	 * Plants
