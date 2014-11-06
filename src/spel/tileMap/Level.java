@@ -81,8 +81,8 @@ public class Level implements Serializable {
 				Tile tile = tiles[x + y * this.levelSize];
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
 					if (rand.nextBoolean()&&rand.nextBoolean()) {
-						int xpos = x * tilePixelLength - tilePixelLength/2 + rand.nextInt(tilePixelLength-20)+10;
-						int ypos = y * tilePixelLength - tilePixelLength + rand.nextInt(tilePixelLength-20+10);
+						int xpos = x * tilePixelLength;
+						int ypos = y * tilePixelLength;
 						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
@@ -158,12 +158,15 @@ public class Level implements Serializable {
 			}
 		}
 		boolean behind = true;
-		for (int i=0;i<plants.size()-1;i++) {
-			if(plants.elementAt(i+1).getYpos()>player.getYpos()&&behind){
+		for (int i=0;i<plants.size();i++) {
+			if(plants.elementAt(i).getYpos()+plants.elementAt(i).getHeight()*2>player.getYpos()&&behind){
 				behind = false;
 				player.render(0);
 			}
 			plants.elementAt(i).render(0, game);
+		}
+		if(behind){
+			player.render(0);
 		}
 		
 		int size = 1;

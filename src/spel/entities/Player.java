@@ -27,6 +27,8 @@ public class Player extends Entity implements Serializable {
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
 		velocity = 256;
+		this.height = SpriteCollection.player.height;
+		this.width = SpriteCollection.player.width;
 	}
 
 	public void update(double dt, Game game) {
