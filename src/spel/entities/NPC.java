@@ -39,7 +39,7 @@ public class NPC extends Mob {
 		super.update(dt);
 		if (eventNPC && clicked && !found) {
 			found = true;
-			friend=true;
+			friend = true;
 		}
 		if (friend) {
 			if (tick >= 1080) {// should have no hunger left after aprox. 1.5
@@ -103,9 +103,10 @@ public class NPC extends Mob {
 					&& cy > ypos - (windowHeight / 2) - height
 					&& cy < ypos - (windowHeight / 2)) {
 				clicked = true;
-				
-				hunger=10;
-				System.out.println(hunger +" "+starving);
+				hunger = 10;
+				System.out.println(hunger + " " + starving);
+			} else {
+				clicked = false;
 			}
 		}
 	}
@@ -115,9 +116,8 @@ public class NPC extends Mob {
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 		if (clicked) {
 			SpriteCollection.NPCEX.render(xdraw - 32, ydraw - 170);
-			clicked = false;
 		}
-		if(starving){
+		if (starving) {
 			SpriteCollection.NPCHUNG.render(xdraw - 32, ydraw - 170);
 		}
 	}
@@ -136,5 +136,9 @@ public class NPC extends Mob {
 
 	public boolean getstarving() {
 		return starving;
+	}
+
+	public boolean getclicked() {
+		return clicked;
 	}
 }

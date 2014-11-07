@@ -22,13 +22,13 @@ public class Player extends Entity implements Serializable {
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
 
-	// Inventory inventory;
+	Inventory inventory;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
-		velocity = 256;
+		velocity = 1024;
 		this.height = SpriteCollection.player.height;
 		this.width = SpriteCollection.player.width;
 	}
@@ -57,7 +57,7 @@ public class Player extends Entity implements Serializable {
 			}
 		}
 
-		if (Mouse.isButtonDown(1)) {
+		if (Mouse.isButtonDown(1) && !game.saveGame.level.getNPCclicked()) {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
 			if (game.saveGame.level.isWaterTile(Tx, Ty)) {

@@ -159,6 +159,14 @@ public class Level implements Serializable {
 		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
+	public boolean getNPCclicked(){
+		for(NPC e: NPCs){
+			if(e.getclicked()){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Position getSpawnPosition() {
 		int x = rand.nextInt(levelSize - 1);
