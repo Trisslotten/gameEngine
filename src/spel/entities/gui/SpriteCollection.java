@@ -76,6 +76,7 @@ public class SpriteCollection {
 	 */
 	public static final Sprite NPC = new Sprite("res/art/NPC/NPC.png");
 	public static final Sprite NPCEX = new Sprite("res/art/NPC/NPC!.png");
+	public static final Sprite NPCHUNG = new Sprite("res/art/NPC/NPCHUNG.png");
 	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite[] WPointer = WPointer();

@@ -2,6 +2,7 @@ package spel.entities;
 
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import spel.Game;
@@ -14,6 +15,7 @@ public class NPC extends Mob {
 	int tx = 0;
 	int ty = 0;
 	int velocity = 128;
+	int idlewalking = 0;
 	public int windowWidth, windowHeight;
 	boolean eventNPC;
 	boolean found = false;
@@ -26,8 +28,8 @@ public class NPC extends Mob {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
-		width=SpriteCollection.NPCEX.width;
-		height=SpriteCollection.NPCEX.height;
+		width = SpriteCollection.NPCEX.width;
+		height = SpriteCollection.NPCEX.height;
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
 	}
@@ -35,10 +37,9 @@ public class NPC extends Mob {
 	public void update(double dt, Game game) {
 		Random rand = new Random();
 		super.update(dt);
-
-		if (eventNPC && game.saveGame.player.getrange(xpos, ypos) <= 512
-				&& !found) {
-			// found = true;
+		if (eventNPC && clicked && !found) {
+			found = true;
+			friend=true;
 		}
 		if (friend) {
 			if (tick >= 1080) {// should have no hunger left after aprox. 1.5
@@ -56,15 +57,21 @@ public class NPC extends Mob {
 			} else {
 				starving = false;
 			}
-		} else
-			for (int i = 1; i < 4; i++) {
-				if (!friend && !found && tick == i * 360) {
-					do {
-						tx = (int) (xpos + (int) (rand.nextInt(1024) - 512));
-						ty = (int) (ypos + (int) (rand.nextInt(1024) - 512));
-					} while (game.saveGame.level.isWaterTile(tx, ty));
-				}
+		}
+		if (!found) {
+			idlewalking = 1024;
+		} else {
+			idlewalking = 128;
+		}
+		for (int i = 1; i < 4; i++) {
+			if (tick == i * 360) {
+				do {
+					tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
+					ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
+				} while (game.saveGame.level.isWaterTile(tx, ty));
 			}
+		}
+
 		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
 				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
 			double dx = xpos - tx;
@@ -87,14 +94,19 @@ public class NPC extends Mob {
 		xpos -= xspd;
 		ypos -= yspd;
 		if (Mouse.isButtonDown(0)) {
-			int cx=(int) ((game.saveGame.player.getxpos() - (windowWidth / 2))+game.cursor.getXpos());
-			int cy=(int) ((game.saveGame.player.getypos() - (windowHeight / 2))+game.cursor.getYpos());
-			System.out.println("clicked "+cx +" "+cy);
-			System.out.println("xpos "+xpos);
-			if(cx > xpos-(windowWidth/2)-30 && cx < xpos - (windowWidth/2)+30 && cy > ypos-(windowHeight/2)-height && cy < ypos - (windowHeight/2)){
-			clicked = true;	
-			System.out.println("being clicked");
-			}	
+			int cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
+					.getXpos());
+			int cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
+					.getYpos());
+			if (cx > xpos - (windowWidth / 2) - 30
+					&& cx < xpos - (windowWidth / 2) + 30
+					&& cy > ypos - (windowHeight / 2) - height
+					&& cy < ypos - (windowHeight / 2)) {
+				clicked = true;
+				
+				hunger=10;
+				System.out.println(hunger +" "+starving);
+			}
 		}
 	}
 
@@ -102,8 +114,11 @@ public class NPC extends Mob {
 		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 		if (clicked) {
-			SpriteCollection.NPCEX.render(xdraw - 32, ydraw-170);
+			SpriteCollection.NPCEX.render(xdraw - 32, ydraw - 170);
 			clicked = false;
+		}
+		if(starving){
+			SpriteCollection.NPCHUNG.render(xdraw - 32, ydraw - 170);
 		}
 	}
 
