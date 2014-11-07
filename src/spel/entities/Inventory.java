@@ -1,21 +1,25 @@
 package spel.entities;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import spel.entities.items.Item;
 import spel.entities.items.resources.Resource;
 
-public class Inventory {
+public class Inventory implements Serializable {
 
 	Vector<Item> items = new Vector<Item>();
 
 	public void addResource(Resource res) {
+		System.out.println("adding resource " + res.getClass().getSimpleName());
 		Item item = null;
 		for (int i = 0; i < items.size(); i++) {
 			if (items.elementAt(i).getClass().getSimpleName().equals(res.getClass().getSimpleName())) {
 				item = items.elementAt(i);
 				Resource res1 = (Resource) item;
+				System.out.println(res1.getAmount());
 				res1.addAmount(res.getAmount());
+				System.out.println(res1.getAmount());
 				items.remove(i);
 				items.add(res1);
 				return;
@@ -29,7 +33,7 @@ public class Inventory {
 	}
 
 	public void render() {
-		
+
 	}
 
 }

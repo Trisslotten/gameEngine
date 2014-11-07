@@ -31,7 +31,6 @@ public class SaveGame implements Serializable {
 		level = new Level(game);
 		Position pos = level.getSpawnPosition(); 
 		player = new Player(pos.x, pos.y, game);
-
 	}
 
 	public SaveGame(SaveGame saveGame) {

@@ -13,8 +13,8 @@ public class Player extends Entity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8501459826523145529L;
-	public int Ty = 0, lastTy;
-	public int Tx = 0, lastTx;
+	public int Ty = 0;
+	public int Tx = 0;
 	public int windowWidth, windowHeight;
 	int pointerindex = 0;
 	double timer;
@@ -22,8 +22,10 @@ public class Player extends Entity implements Serializable {
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
 	boolean walking = false;
+	
+	public boolean axeSelected = true, pickaxeSelected;
 
-	Inventory inventory;
+	public Inventory inventory;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
@@ -33,13 +35,13 @@ public class Player extends Entity implements Serializable {
 		this.height = SpriteCollection.player.height;
 		this.width = SpriteCollection.player.width;
 		deltaSum = 0;
+		inventory = new Inventory();
 	}
 
 	public void update(double dt, Game game) {
+		
+	
 		deltaSum++;
-		System.out.println(deltaSum);
-		System.out.println(deltaTimer);
-		System.out.println(walkframe);
 		double interval = 10;
 		if (deltaSum > deltaTimer + interval) {
 			deltaTimer += interval;

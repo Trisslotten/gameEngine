@@ -26,8 +26,7 @@ public class NPC extends Mob {
 	boolean clicked;
 	boolean stop = false;
 
-	public NPC(double xpos, double ypos, String name, boolean eventNPC,
-			Game game) {
+	public NPC(double xpos, double ypos, String name, boolean eventNPC, Game game) {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
@@ -89,8 +88,7 @@ public class NPC extends Mob {
 			}
 		}
 
-		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
-				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
+		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10 || Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
 			double dx = xpos - tx;
 			double dy = ypos - ty;
 			double angle = Math.atan2(dy, dx);
@@ -112,14 +110,9 @@ public class NPC extends Mob {
 		ypos -= yspd;
 		if (Mouse.isButtonDown(0) && !stop) {
 			stop = true;
-			int cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
-					.getXpos());
-			int cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
-					.getYpos());
-			if (cx > xpos - (windowWidth / 2) - 30
-					&& cx < xpos - (windowWidth / 2) + 30
-					&& cy > ypos - (windowHeight / 2) - height
-					&& cy < ypos - (windowHeight / 2)) {
+			int cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor.getXpos());
+			int cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor.getYpos());
+			if (cx > xpos - (windowWidth / 2) - 30 && cx < xpos - (windowWidth / 2) + 30 && cy > ypos - (windowHeight / 2) - height && cy < ypos - (windowHeight / 2)) {
 				if (clicked) {
 					clicked = false;
 				} else {

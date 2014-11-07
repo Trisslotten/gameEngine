@@ -7,9 +7,8 @@ import org.lwjgl.input.Mouse;
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.items.resources.Stone;
-import spel.entities.structures.Structure;
 
-public class Rock extends Structure {
+public class Rock extends Vegetation {
 
 	/**
 	 * 
@@ -19,12 +18,10 @@ public class Rock extends Structure {
 	public Rock(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
 	}
-	public void cut() {
-		durability -= 50;
-	}
 	
 	public Stone harvest(){
 		Random rand = new Random();
+		durability -= 50;
 		return new Stone(rand.nextInt(3)+2);
 	}
 
