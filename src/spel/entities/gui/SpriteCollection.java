@@ -26,6 +26,11 @@ public class SpriteCollection {
 	}, new Sprite[] {
 			new Sprite("res/art/kaj/7/walk1.png"),new Sprite("res/art/kaj/7/walk2.png"),new Sprite("res/art/kaj/7/walk3.png")
 	}, };
+	
+	/*
+	 * GUI
+	 */
+	public static final Sprite sidebar = new Sprite("res/art/gui/sidebar.png");
 
 	/*
 	 * Buttons
