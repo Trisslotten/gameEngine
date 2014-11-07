@@ -2,6 +2,7 @@ package spel.entities.structures.vegetation;
 
 import java.util.Random;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 import spel.Game;
@@ -32,15 +33,11 @@ public class Tree extends Structure {
 		durability -= 50;
 	}
 
-	public void update(double dt) {
-
-	}
 
 	public void update(double dt, Game game) {
-		xpos += xspd * dt / 1000;
-		ypos += yspd * dt / 1000;
-		xdraw = xpos;
-		ydraw = ypos;
+		if(game.saveGame.player.axeSelected&&Mouse.isButtonDown(0)&&hover(game)){
+			
+		}
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {

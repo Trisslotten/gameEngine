@@ -10,6 +10,8 @@ public class Cursor extends Entity {
 	
 	private Game game;
 	
+	private boolean[] buttons = new boolean[Mouse.getButtonCount()];
+	
 	public Cursor(String filepath, Game game) {
 		super(Mouse.getX(), Mouse.getY());
 		this.game = game;
@@ -18,11 +20,18 @@ public class Cursor extends Entity {
 	public void update() {
 		xpos = Mouse.getX();
 		ypos = game.getHeight() - Mouse.getY();
+		for(int i=0;i<buttons.length;i++) {
+			buttons[i] = Mouse.isButtonDown(i);
+		}
 	}
 	public void render(double ip) {
 		xdraw = Mouse.getX();
 		ydraw = game.getHeight() - Mouse.getY();
 		SpriteCollection.cursor.render(xdraw, ydraw);
+	}
+	
+	public boolean down(int i) {
+		return buttons[i];
 	}
 	
 	

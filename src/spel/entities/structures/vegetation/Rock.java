@@ -16,8 +16,6 @@ public class Rock extends Structure {
 	
 	public Rock(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
-		// TODO Auto-generated constructor stub
-		
 	}
 	public void cut() {
 		durability -= 50;
@@ -31,6 +29,10 @@ public class Rock extends Structure {
 	public Rock(double xpos, double ypos, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, permanent, gridlocked);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void update(Game game) {
+		if(pla)
 	}
 	
 	public void render(int xoffset, int yoffset, Game game) {
