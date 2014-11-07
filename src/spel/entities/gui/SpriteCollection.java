@@ -30,7 +30,7 @@ public class SpriteCollection {
 	/*
 	 * GUI
 	 */
-	public static final Sprite sidebar = new Sprite("res/art/gui/sidebar.png");
+	public static final Sprite sidebar = new Sprite("res/art/gui/base.png");
 
 	/*
 	 * Buttons
@@ -78,7 +78,6 @@ public class SpriteCollection {
 	public static final Sprite NPCEX = new Sprite("res/art/NPC/NPC!.png");
 	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
-	public static final Sprite asd = new Sprite("res/art/pixel.png");
 	public static final Sprite[] WPointer = WPointer();
 
 	public static Sprite[] WPointer() {

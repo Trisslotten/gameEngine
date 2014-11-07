@@ -2,6 +2,8 @@ package spel.entities;
 
 import java.util.Random;
 
+import org.lwjgl.input.Mouse;
+
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 
@@ -24,6 +26,8 @@ public class NPC extends Mob {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
+		width=SpriteCollection.NPCEX.width;
+		height=SpriteCollection.NPCEX.height;
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
 	}
@@ -82,12 +86,12 @@ public class NPC extends Mob {
 
 		xpos -= xspd;
 		ypos -= yspd;
-
-		if (Math.abs(((game.saveGame.player.getxpos() - (windowHeight / 2)) + game.cursor
-				.getXpos()) - xpos) > 100
-				|| Math.abs(((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
-						.getYpos()) - ypos) > 100) {
-			clicked = true;
+		if (Mouse.isButtonDown(0)) {
+			int cx=(int) ((game.saveGame.player.getxpos() - (windowHeight / 2))+game.cursor.getXpos());
+			int cy=(int) ((game.saveGame.player.getypos() - (windowWidth / 2))+game.cursor.getYpos());
+			if(xpos > cx && xpos < cx + width && ypos > cy && ypos < cy + height){
+			clicked = true;	
+			}	
 		}
 	}
 
@@ -95,8 +99,8 @@ public class NPC extends Mob {
 		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 		if (clicked) {
-			SpriteCollection.NPCEX.render(xdraw - 32, ydraw);
-			clicked=false;
+			SpriteCollection.NPCEX.render(xdraw - 32, ydraw-170);
+			clicked = false;
 		}
 	}
 

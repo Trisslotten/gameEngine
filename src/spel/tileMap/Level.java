@@ -101,7 +101,7 @@ public class Level implements Serializable {
 		}
 		for (int i = 0; i < 50; i++) {
 			Position pos = getNPCPosition();
-			NPCs.add(new NPC(pos.x, pos.y, "asd", true));
+			NPCs.add(new NPC(pos.x, pos.y, "asd", true, game));
 		}
 	}
 	
