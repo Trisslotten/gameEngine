@@ -36,8 +36,9 @@ public class Tree extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
-		if (Mouse.isButtonDown(0) && hover(game)) {
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover(game)&&!game.saveGame.player.treeClicked) {
 			System.out.println("asdasd");
+			game.saveGame.player.treeClicked();
 			game.saveGame.player.inventory.addResource(harvest());
 		}
 	}

@@ -8,6 +8,10 @@ import spel.entities.items.resources.Resource;
 
 public class Inventory implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1472282108566202597L;
 	Vector<Item> items = new Vector<Item>();
 
 	public void addResource(Resource res) {
@@ -17,9 +21,7 @@ public class Inventory implements Serializable {
 			if (items.elementAt(i).getClass().getSimpleName().equals(res.getClass().getSimpleName())) {
 				item = items.elementAt(i);
 				Resource res1 = (Resource) item;
-				System.out.println(res1.getAmount());
 				res1.addAmount(res.getAmount());
-				System.out.println(res1.getAmount());
 				items.remove(i);
 				items.add(res1);
 				return;

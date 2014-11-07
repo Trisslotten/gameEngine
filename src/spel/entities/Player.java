@@ -26,6 +26,7 @@ public class Player extends Entity implements Serializable {
 	public boolean axeSelected = true, pickaxeSelected;
 
 	public Inventory inventory;
+	public boolean treeClicked;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
@@ -129,7 +130,7 @@ public class Player extends Entity implements Serializable {
 		ypos -= yspd;
 		xdraw = xpos;
 		ydraw = ypos;
-
+		treeClicked = false;
 	}
 
 	public double getDrawBottom() {
@@ -179,6 +180,10 @@ public class Player extends Entity implements Serializable {
 		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
 				+ Math.pow(this.ypos - ypos, 2));
 		return r;
+	}
+
+	public void treeClicked() {
+		this.treeClicked = true;
 	}
 
 }
