@@ -36,8 +36,10 @@ public class Tree extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
+		if(game.cursor.buttonClicked(0)) {
+			
+		}
 		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover(game)&&!game.saveGame.player.treeClicked) {
-			System.out.println("asdasd");
 			game.saveGame.player.treeClicked();
 			game.saveGame.player.inventory.addResource(harvest());
 		}
@@ -47,7 +49,7 @@ public class Tree extends Vegetation {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
 		SpriteCollection.palmtree.render(xdraw, ydraw);
-		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
-		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
+		//game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
+		//game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
 	}
 }

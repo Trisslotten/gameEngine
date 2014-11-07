@@ -14,10 +14,14 @@ public class NPC extends Mob {
 	int tick = 0;
 	int tx = 0;
 	int ty = 0;
-	int velocity = 128;
+	int cx;
+	int cy;
+	int velocity = 176;
 	int idlewalking = 0;
-	int selectorindex=0;
-	int timer=0;
+	int selectorindex = 0;
+	int pointerindex = 0;
+	int timer = 0;
+	int Wtimer = 0;
 	public int windowWidth, windowHeight;
 	boolean eventNPC;
 	boolean found = false;
@@ -25,8 +29,10 @@ public class NPC extends Mob {
 	boolean starving = false;
 	boolean clicked;
 	boolean stop = false;
+	boolean playercommand = false;
 
-	public NPC(double xpos, double ypos, String name, boolean eventNPC, Game game) {
+	public NPC(double xpos, double ypos, String name, boolean eventNPC,
+			Game game) {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
@@ -47,7 +53,15 @@ public class NPC extends Mob {
 				selectorindex = 0;
 			}
 		}
-		
+		Wtimer++;
+		if (Wtimer >= 4) {
+			pointerindex++;
+			Wtimer = 0;
+			if (pointerindex > 8) {
+				pointerindex = 0;
+			}
+		}
+
 		if (eventNPC && clicked && !found) {
 			found = true;
 			friend = true;
@@ -74,31 +88,47 @@ public class NPC extends Mob {
 		} else {
 			idlewalking = 128;
 		}
+
 		for (int i = 1; i < 4; i++) {
-			if (tick == i * 360 && !clicked) {
+			if (tick == i * 360 && !clicked && !playercommand
+					&& rand.nextBoolean()) {// checks if the
+				// unit is idle,
+				// or not simply
+				// found, and
+				// then decides
+				// whatever or
+				// not it should
+				// walk
 				do {
 					tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
 					ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
 				} while (game.saveGame.level.isWaterTile(tx, ty));
-			}else if(clicked && Mouse.isButtonDown(1)){
-				tx=(int) (game.cursor.getXpos()-(windowWidth/2));
-				ty=(int) (game.cursor.getYpos()-(windowHeight/2));
+			} else if (clicked && Mouse.isButtonDown(1)) {
+				tx = (int) (game.cursor.getXpos() + game.saveGame.player
+						.getXpos());
+				ty = (int) (game.cursor.getYpos() + game.saveGame.player
+						.getYpos());
+				playercommand = true;
 			}
 		}
 
-		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10 || Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
+		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
+				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
 			double dx = xpos - tx;
 			double dy = ypos - ty;
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity * dt / 1000;
 			yspd = Math.sin(angle) * velocity * dt / 1000;
 		} else {
+			playercommand = false;
 			xspd = 0;
 			yspd = 0;
 		}
+
 		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
 		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
-		if (tick >= 1080) {
+
+		if (tick >= 1080) {// tick reset
 			tick = 0;
 		} else {
 			tick++;
@@ -106,11 +136,17 @@ public class NPC extends Mob {
 
 		xpos -= xspd;
 		ypos -= yspd;
-		if (Mouse.isButtonDown(0) && !stop) {
+
+		if (Mouse.isButtonDown(0) && !stop) {// Player clicking the NPC
 			stop = true;
-			int cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor.getXpos());
-			int cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor.getYpos());
-			if (cx > xpos - (windowWidth / 2) - 30 && cx < xpos - (windowWidth / 2) + 30 && cy > ypos - (windowHeight / 2) - height && cy < ypos - (windowHeight / 2)) {
+			cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
+					.getXpos());
+			cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
+					.getYpos());
+			if (cx > xpos - (windowWidth / 2) - 30
+					&& cx < xpos - (windowWidth / 2) + 30
+					&& cy > ypos - (windowHeight / 2) - height
+					&& cy < ypos - (windowHeight / 2)) {
 				if (clicked) {
 					clicked = false;
 				} else {
@@ -129,10 +165,15 @@ public class NPC extends Mob {
 		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 		if (clicked) {
-			SpriteCollection.NPCSEL[selectorindex].render(xdraw - 40, ydraw - 170);
+			SpriteCollection.NPCSEL[selectorindex].render(xdraw - 40,
+					ydraw - 170);
 		}
 		if (starving) {
 			SpriteCollection.NPCHUNG.render(xdraw - 32, ydraw - 170);
+		}
+		if (playercommand) {
+			SpriteCollection.WPointer[pointerindex].render(tx - xoffset - 32,
+					ty - yoffset - 40);
 		}
 	}
 
