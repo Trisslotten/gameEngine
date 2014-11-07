@@ -3,6 +3,7 @@ package spel.tileMap;
 import java.io.Serializable;
 
 import spel.entities.structures.vegetation.*;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -12,6 +13,7 @@ import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.Structure;
 import spel.entities.structures.vegetation.Rock;
+import spel.entities.structures.vegetation.SmallBush;
 import spel.entities.structures.vegetation.Tree;
 import spel.tileMap.tiles.DarkGrassTile;
 import spel.tileMap.tiles.DarkWater;
@@ -95,9 +97,15 @@ public class Level implements Serializable {
 						plants.add(new Tree(xpos, ypos, SpriteCollection.palmtree.height, SpriteCollection.palmtree.width, false, true));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
-					}
+					} else if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true));
+					} 
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
-
+					if (rand.nextBoolean()) {
+						plants.add(new BushTree(xpos, ypos, SpriteCollection.bushtree.height, SpriteCollection.bushtree.width, false, true));
+					} else if (rand.nextBoolean()) {
+						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true));
+					}
 				}
 			}
 		}

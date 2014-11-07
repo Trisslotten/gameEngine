@@ -10,14 +10,9 @@ import spel.entities.gui.SpriteCollection;
 import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
 
-public class SmallBush extends Vegetation {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3920308251178819548L;
-
-	public SmallBush(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
+public class BushTree extends Vegetation {
+	public BushTree(double xpos, double ypos, double height, double width,
+			boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
 		xdraw = xpos;
 		ydraw = ypos;
@@ -43,9 +38,10 @@ public class SmallBush extends Vegetation {
 	public void render(int xoffset, int yoffset, Game game) {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
-		SpriteCollection.smallbush.render(xdraw, ydraw);
-		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
-		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
+		SpriteCollection.bushtree.render(xdraw, ydraw);
+		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos,
+				Color.pink);
+		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+",
+				Color.pink);
 	}
-
 }

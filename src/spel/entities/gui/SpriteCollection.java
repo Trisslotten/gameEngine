@@ -67,7 +67,10 @@ public class SpriteCollection {
 	 */
 	public static final Sprite palmtree = new Sprite("res/art/plants/palm.png");
 	public static final Sprite rock = new Sprite("res/art/plants/rock.png");
-
+	public static final Sprite smallbush = new Sprite("res/art/plants/buske_liten.png");
+	public static final Sprite bushtree= new Sprite("res/art/plants/buskträd.png");
+	public static final Sprite coconut= new Sprite("res/art/plants/kokosnöt.png");
+	
 	/*
 	 * ETC
 	 */
