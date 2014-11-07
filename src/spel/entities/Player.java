@@ -68,9 +68,10 @@ public class Player extends Entity implements Serializable {
 				Ty = (int) ypos;
 				Tx = (int) xpos;
 			}
-			
+
 		}
-		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
+		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0
+				|| Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
 			walking = true;
 			drawWPointer = true;
 			double dx = xpos - Tx;
@@ -138,17 +139,21 @@ public class Player extends Entity implements Serializable {
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
-			SpriteCollection.WPointer[pointerindex].render(Tx - xpos + windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
+			SpriteCollection.WPointer[pointerindex].render(Tx - xpos
+					+ windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
 		if (walking) {
 			if (standframe) {
-				SpriteCollection.playerWalking[direction][0].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][0].render(
+						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			} else {
-				SpriteCollection.playerWalking[direction][walkframe].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][walkframe].render(
+						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			}
 
 		} else {
-			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+			SpriteCollection.player.render((windowWidth / 2) - 32,
+					(windowHeight / 2) - 87);
 		}
 	}
 
@@ -169,9 +174,9 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public int getrange(double xpos, double ypos) {
-		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
+				+ Math.pow(this.ypos - ypos, 2));
 		return r;
 	}
 
 }
-

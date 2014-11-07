@@ -22,6 +22,7 @@ public class NPC extends Mob {
 	boolean friend = false;
 	boolean starving = false;
 	boolean clicked;
+	boolean stop = false;
 
 	public NPC(double xpos, double ypos, String name, boolean eventNPC,
 			Game game) {
@@ -93,7 +94,8 @@ public class NPC extends Mob {
 
 		xpos -= xspd;
 		ypos -= yspd;
-		if (Mouse.isButtonDown(0)) {
+		if (Mouse.isButtonDown(0) && !stop) {
+			stop = true;
 			int cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
 					.getXpos());
 			int cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
@@ -102,12 +104,17 @@ public class NPC extends Mob {
 					&& cx < xpos - (windowWidth / 2) + 30
 					&& cy > ypos - (windowHeight / 2) - height
 					&& cy < ypos - (windowHeight / 2)) {
-				clicked = true;
-				hunger = 10;
-				System.out.println(hunger + " " + starving);
+				if (clicked) {
+					clicked = false;
+				} else {
+					clicked = true;
+				}
 			} else {
 				clicked = false;
 			}
+		}
+		if (!Mouse.isButtonDown(0)) {
+			stop = false;
 		}
 	}
 
