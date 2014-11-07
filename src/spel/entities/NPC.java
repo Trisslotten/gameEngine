@@ -87,10 +87,13 @@ public class NPC extends Mob {
 		xpos -= xspd;
 		ypos -= yspd;
 		if (Mouse.isButtonDown(0)) {
-			int cx=(int) ((game.saveGame.player.getxpos() - (windowHeight / 2))+game.cursor.getXpos());
-			int cy=(int) ((game.saveGame.player.getypos() - (windowWidth / 2))+game.cursor.getYpos());
-			if(xpos > cx && xpos < cx + width && ypos > cy && ypos < cy + height){
+			int cx=(int) ((game.saveGame.player.getxpos() - (windowWidth / 2))+game.cursor.getXpos());
+			int cy=(int) ((game.saveGame.player.getypos() - (windowHeight / 2))+game.cursor.getYpos());
+			System.out.println("clicked "+cx +" "+cy);
+			System.out.println("xpos "+xpos);
+			if(cx > xpos-(windowWidth/2)-30 && cx < xpos - (windowWidth/2)+30 && cy > ypos-(windowHeight/2)-height && cy < ypos - (windowHeight/2)){
 			clicked = true;	
+			System.out.println("being clicked");
 			}	
 		}
 	}
