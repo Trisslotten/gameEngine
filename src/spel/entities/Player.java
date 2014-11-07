@@ -21,6 +21,7 @@ public class Player extends Entity implements Serializable {
 	boolean drawWPointer = false, standframe = false;
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
+	boolean walking = false;
 
 	// Inventory inventory;
 
@@ -31,11 +32,15 @@ public class Player extends Entity implements Serializable {
 		velocity = 256;
 		this.height = SpriteCollection.player.height;
 		this.width = SpriteCollection.player.width;
+		deltaSum = 0;
 	}
 
 	public void update(double dt, Game game) {
-		deltaSum += dt / 1000;
-		double interval = 0.2;
+		deltaSum++;
+		System.out.println(deltaSum);
+		System.out.println(deltaTimer);
+		System.out.println(walkframe);
+		double interval = 10;
 		if (deltaSum > deltaTimer + interval) {
 			deltaTimer += interval;
 			standframe = !standframe;
@@ -45,7 +50,6 @@ public class Player extends Entity implements Serializable {
 				else
 					walkframe++;
 			}
-
 		}
 
 		timer++;
@@ -64,8 +68,10 @@ public class Player extends Entity implements Serializable {
 				Ty = (int) ypos;
 				Tx = (int) xpos;
 			}
+			
 		}
 		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
+			walking = true;
 			drawWPointer = true;
 			double dx = xpos - Tx;
 			double dy = ypos - Ty;
@@ -113,6 +119,7 @@ public class Player extends Entity implements Serializable {
 			drawWPointer = false;
 			xspd = 0;
 			yspd = 0;
+			walking = false;
 		}
 
 		xpos -= xspd;
@@ -127,13 +134,13 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public void render(double interpolation) {
-		interpolation /= 100;
+		interpolation /= 1000;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
 			SpriteCollection.WPointer[pointerindex].render(Tx - xpos + windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
-		if (xspd != 0 || yspd != 0) {
+		if (walking) {
 			if (standframe) {
 				SpriteCollection.playerWalking[direction][0].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			} else {
@@ -167,3 +174,4 @@ public class Player extends Entity implements Serializable {
 	}
 
 }
+

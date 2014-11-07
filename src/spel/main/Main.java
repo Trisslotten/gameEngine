@@ -152,7 +152,7 @@ public class Main implements Runnable {
 				
 				updateDelta = getUpdateDelta();
 				update(updateDelta);
-				System.out.println(updateDelta);
+				//System.out.println(updateDelta);
 				updates++;
 				delta--;
 			}
