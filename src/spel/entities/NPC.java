@@ -16,6 +16,8 @@ public class NPC extends Mob {
 	int ty = 0;
 	int velocity = 128;
 	int idlewalking = 0;
+	int selectorindex=0;
+	int timer=0;
 	public int windowWidth, windowHeight;
 	boolean eventNPC;
 	boolean found = false;
@@ -38,6 +40,15 @@ public class NPC extends Mob {
 	public void update(double dt, Game game) {
 		Random rand = new Random();
 		super.update(dt);
+		timer++;
+		if (timer >= 4) {
+			selectorindex++;
+			timer = 0;
+			if (selectorindex > 17) {
+				selectorindex = 0;
+			}
+		}
+		
 		if (eventNPC && clicked && !found) {
 			found = true;
 			friend = true;
@@ -65,11 +76,14 @@ public class NPC extends Mob {
 			idlewalking = 128;
 		}
 		for (int i = 1; i < 4; i++) {
-			if (tick == i * 360) {
+			if (tick == i * 360 && !clicked) {
 				do {
 					tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
 					ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
 				} while (game.saveGame.level.isWaterTile(tx, ty));
+			}else if(clicked && Mouse.isButtonDown(1)){
+				tx=(int) (game.cursor.getXpos()-(windowWidth/2));
+				ty=(int) (game.cursor.getYpos()-(windowHeight/2));
 			}
 		}
 
@@ -122,7 +136,7 @@ public class NPC extends Mob {
 		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
 		if (clicked) {
-			SpriteCollection.NPCEX.render(xdraw - 32, ydraw - 170);
+			SpriteCollection.NPCSEL[selectorindex].render(xdraw - 40, ydraw - 170);
 		}
 		if (starving) {
 			SpriteCollection.NPCHUNG.render(xdraw - 32, ydraw - 170);
