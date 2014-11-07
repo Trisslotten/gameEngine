@@ -88,13 +88,12 @@ public class Main implements Runnable {
 
 	protected void preGLInit() {
 	}
-
-	public long getTime() {
-	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-	}
 	
+	public long nanoTime() {
+		return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
+	}
+
 	public double getMillis() {
-		//return ((double) System.nanoTime()) / 1000000.0;
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
@@ -102,7 +101,7 @@ public class Main implements Runnable {
 
 	public double getUpdateDelta() {
 		oldUpdateTime = newUpdateTime;
-		newUpdateTime = getTime();
+		newUpdateTime = getMillis();
 		return (newUpdateTime - oldUpdateTime);
 	}
 
@@ -110,7 +109,7 @@ public class Main implements Runnable {
 
 	public double getRenderDelta() {
 		oldRenderTime = newRenderTime;
-		newRenderTime = getTime();
+		newRenderTime = nanoTime();
 		return (newRenderTime - oldRenderTime);
 	}
 
@@ -132,7 +131,7 @@ public class Main implements Runnable {
 			e.printStackTrace();
 		}
 
-		long lastTime = System.nanoTime();
+		long lastTime = nanoTime();
 		long timer = (long) getMillis();
 		final double ms = 1000.0 / UPDATES_PER_SECOND;
 		final double ns = 1000000000.0 / UPDATES_PER_SECOND;
@@ -145,13 +144,15 @@ public class Main implements Runnable {
 			if (Display.isCloseRequested())
 				running = false;
 
-			long now = System.nanoTime();
+			long now = nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while (delta >= 1 && updates < UPDATES_PER_SECOND) {
+			
+			while (delta >= 1) {
+				
 				updateDelta = getUpdateDelta();
 				update(updateDelta);
-
+				System.out.println(updateDelta);
 				updates++;
 				delta--;
 			}
