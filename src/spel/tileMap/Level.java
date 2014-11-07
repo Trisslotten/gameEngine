@@ -1,6 +1,8 @@
 package spel.tileMap;
 
 import java.io.Serializable;
+
+import spel.entities.structures.vegetation.*;
 import java.util.Random;
 import java.util.Vector;
 
@@ -28,7 +30,7 @@ public class Level implements Serializable {
 	private static final long serialVersionUID = -7039780207013125942L;
 
 	public Tile[] tiles;
-	Vector<Structure> plants = new Vector<Structure>();
+	Vector<Vegetation> plants = new Vector<Vegetation>();
 	Vector<NPC> NPCs = new Vector<NPC>();
 
 	public int levelSize = 128;
@@ -159,6 +161,7 @@ public class Level implements Serializable {
 		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
+	
 	public boolean getNPCclicked(){
 		for(NPC e: NPCs){
 			if(e.getclicked()){
@@ -206,6 +209,12 @@ public class Level implements Serializable {
 	public void update(double dt, Game game) {
 		for (NPC npc : NPCs) {
 			npc.update(dt, game);
+		}
+		for(int i=0;i<plants.size();i++) {
+			plants.elementAt(i).update(dt, game);
+			if(plants.elementAt(i).ded()){
+				plants.remove(i);
+			}
 		}
 	}
 
