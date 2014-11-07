@@ -89,9 +89,9 @@ public class Level implements Serializable {
 				int xpos = x * tilePixelLength + rand.nextInt(tilePixelLength);
 				int ypos = y * tilePixelLength + rand.nextInt(tilePixelLength);
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
-					if (rand.nextBoolean() && rand.nextBoolean()&& rand.nextBoolean()) {
-						plants.add(new Tree(xpos, ypos, SpriteCollection.grass.height, SpriteCollection.grass.width, false, true));
-					} else if (rand.nextBoolean()&& rand.nextBoolean()) {
+					if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new Tree(xpos, ypos, SpriteCollection.palmtree.height, SpriteCollection.palmtree.width, false, true));
+					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
@@ -104,8 +104,6 @@ public class Level implements Serializable {
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true, game));
 		}
 	}
-	
-	
 
 	public boolean isWaterTile(int xoffset, int yoffset) {
 		boolean isWater = false;
@@ -224,11 +222,20 @@ public class Level implements Serializable {
 		}
 		boolean behind = true;
 		for (int i = 0; i < plants.size(); i++) {
-			if (plants.elementAt(i).getYpos() + plants.elementAt(i).getHeight() > player.getYpos() + player.height && behind) {
-				behind = false;
-				player.render(0);
+			double xdraw = plants.elementAt(i).getXdraw();
+			double ydraw = plants.elementAt(i).getYdraw();
+			double xpos = plants.elementAt(i).getXpos();
+			double ypos = plants.elementAt(i).getYpos();
+			double width = plants.elementAt(i).getWidth();
+			double height = plants.elementAt(i).getHeight();
+			plants.elementAt(i).setToDraw(xoffset-game.getWidth()/2, yoffset-game.getHeight()/2);
+			if (xdraw < game.getWidth() && xdraw + width > 0 && ydraw < game.getHeight() && ydraw + height > 0) {
+				if (ydraw + height > player.getDrawBottom() && behind) {
+					behind = false;
+					player.render(0);
+				}
+				plants.elementAt(i).render(xoffset-game.getWidth()/2, yoffset-game.getHeight()/2, game);
 			}
-			plants.elementAt(i).render(xoffset, yoffset, game);
 		}
 		if (behind) {
 			player.render(0);

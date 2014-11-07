@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.glGetString;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
@@ -87,9 +88,13 @@ public class Main implements Runnable {
 
 	protected void preGLInit() {
 	}
+	
+	public long nanoTime() {
+		return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
+	}
 
 	public double getMillis() {
-		return ((double) System.nanoTime()) / 1000000.0;
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	double oldUpdateTime, newUpdateTime;
@@ -104,7 +109,7 @@ public class Main implements Runnable {
 
 	public double getRenderDelta() {
 		oldRenderTime = newRenderTime;
-		newRenderTime = System.nanoTime();
+		newRenderTime = nanoTime();
 		return (newRenderTime - oldRenderTime);
 	}
 
@@ -126,7 +131,7 @@ public class Main implements Runnable {
 			e.printStackTrace();
 		}
 
-		long lastTime = System.nanoTime();
+		long lastTime = nanoTime();
 		long timer = (long) getMillis();
 		final double ms = 1000.0 / UPDATES_PER_SECOND;
 		final double ns = 1000000000.0 / UPDATES_PER_SECOND;
@@ -139,13 +144,15 @@ public class Main implements Runnable {
 			if (Display.isCloseRequested())
 				running = false;
 
-			long now = System.nanoTime();
+			long now = nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while (delta >= 1 && updates < UPDATES_PER_SECOND) {
+			
+			while (delta >= 1) {
+				
 				updateDelta = getUpdateDelta();
 				update(updateDelta);
-
+				System.out.println(updateDelta);
 				updates++;
 				delta--;
 			}

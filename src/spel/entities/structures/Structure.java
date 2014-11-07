@@ -42,6 +42,10 @@ public class Structure extends Entity {
 		xpos += xspd * dt / 1000;
 		ypos += yspd * dt / 1000;
 	}
+	public void setToDraw(int xoffset, int yoffset) {
+		xdraw = xpos - xoffset;
+		ydraw = ypos - yoffset;
+	}
 
 	public void render(int xoffset,int yoffset, Game game) {
 		xdraw = xpos-xoffset;

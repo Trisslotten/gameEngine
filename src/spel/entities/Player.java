@@ -122,6 +122,10 @@ public class Player extends Entity implements Serializable {
 
 	}
 
+	public double getDrawBottom() {
+		return (windowHeight / 2) - 87 + height;
+	}
+
 	public void render(double interpolation) {
 		interpolation /= 100;
 		xdraw -= xspd * interpolation;
@@ -148,11 +152,12 @@ public class Player extends Entity implements Serializable {
 	public void setTy(int Ty) {
 		this.Ty = Ty;
 	}
-	
-	public int getypos(){
+
+	public int getypos() {
 		return (int) ypos;
 	}
-	public int getxpos(){
+
+	public int getxpos() {
 		return (int) xpos;
 	}
 
