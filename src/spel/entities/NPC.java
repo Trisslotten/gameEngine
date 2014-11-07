@@ -12,15 +12,20 @@ public class NPC extends Mob {
 	int tx = 0;
 	int ty = 0;
 	int velocity = 128;
+	public int windowWidth, windowHeight;
 	boolean eventNPC;
 	boolean found = false;
 	boolean friend = false;
 	boolean starving = false;
+	boolean clicked;
 
-	public NPC(double xpos, double ypos, String name, boolean eventNPC) {
+	public NPC(double xpos, double ypos, String name, boolean eventNPC,
+			Game game) {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
+		windowWidth = game.getWidth();
+		windowHeight = game.getHeight();
 	}
 
 	public void update(double dt, Game game) {
@@ -77,11 +82,22 @@ public class NPC extends Mob {
 
 		xpos -= xspd;
 		ypos -= yspd;
+
+		if (Math.abs(((game.saveGame.player.getxpos() - (windowHeight / 2)) + game.cursor
+				.getXpos()) - xpos) > 100
+				|| Math.abs(((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
+						.getYpos()) - ypos) > 100) {
+			clicked = true;
+		}
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {
 		super.render(xoffset, yoffset, game);
 		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
+		if (clicked) {
+			SpriteCollection.NPCEX.render(xdraw - 32, ydraw);
+			clicked=false;
+		}
 	}
 
 	public void eat(int amount) {
