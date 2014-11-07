@@ -2,6 +2,8 @@ package spel.entities.structures.vegetation;
 
 import java.util.Random;
 
+import org.lwjgl.input.Mouse;
+
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.items.resources.Stone;
@@ -31,8 +33,10 @@ public class Rock extends Structure {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void update(Game game) {
-		if(pla)
+	public void update(double dt, Game game) {
+		if(game.saveGame.player.axeSelected&&Mouse.isButtonDown(0)&&hover(game)){
+			
+		}
 	}
 	
 	public void render(int xoffset, int yoffset, Game game) {
