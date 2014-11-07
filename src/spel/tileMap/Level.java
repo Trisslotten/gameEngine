@@ -2,7 +2,9 @@ package spel.tileMap;
 
 import java.io.Serializable;
 
+import spel.entities.structures.special.Statue;
 import spel.entities.structures.vegetation.*;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -32,6 +34,7 @@ public class Level implements Serializable {
 	public Tile[] tiles;
 	Vector<Vegetation> plants = new Vector<Vegetation>();
 	Vector<NPC> NPCs = new Vector<NPC>();
+	Vector<Structure> structures = new Vector<Structure>();
 
 	public int levelSize = 128;
 	public int tilePixelLength;
@@ -54,6 +57,7 @@ public class Level implements Serializable {
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double lvlSize = this.levelSize;
+		structures.add(new Statue(tilePixelLength*levelSize/2,tilePixelLength*levelSize/2,true,false));
 
 		for (int y = 0; y < lvlSize; y++) {
 			for (int x = 0; x < lvlSize; x++) {
@@ -259,6 +263,9 @@ public class Level implements Serializable {
 		}
 		for (NPC npc : NPCs) {
 			npc.render(xoffset, yoffset, game);
+		}
+		for (Structure structure : structures) {
+			structure.render(xoffset, yoffset, game);
 		}
 
 		int size = 1;
