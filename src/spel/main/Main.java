@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.glGetString;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
@@ -88,15 +89,20 @@ public class Main implements Runnable {
 	protected void preGLInit() {
 	}
 
+	public long getTime() {
+	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	
 	public double getMillis() {
-		return ((double) System.nanoTime()) / 1000000.0;
+		//return ((double) System.nanoTime()) / 1000000.0;
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	double oldUpdateTime, newUpdateTime;
 
 	public double getUpdateDelta() {
 		oldUpdateTime = newUpdateTime;
-		newUpdateTime = getMillis();
+		newUpdateTime = getTime();
 		return (newUpdateTime - oldUpdateTime);
 	}
 
@@ -104,7 +110,7 @@ public class Main implements Runnable {
 
 	public double getRenderDelta() {
 		oldRenderTime = newRenderTime;
-		newRenderTime = System.nanoTime();
+		newRenderTime = getTime();
 		return (newRenderTime - oldRenderTime);
 	}
 

@@ -8,6 +8,10 @@ public class Resource extends Item {
 		this.amount=amount;
 	}
 	
+	public int getAmount() {
+		return amount;
+	}
+	
 	public void addAmount(int amount) {
 		this.amount += amount;
 	}
