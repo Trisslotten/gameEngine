@@ -15,7 +15,7 @@ public class Button extends Graphics {
 	 */
 	private static final long serialVersionUID = -1198390322690529505L;
 
-	protected boolean clicked, hover,  released, down, soundPlayed = false;
+	protected boolean clicked, hover, released, down, soundPlayed = false;
 
 	protected Sprite sprite;
 
