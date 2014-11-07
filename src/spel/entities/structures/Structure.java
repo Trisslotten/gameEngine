@@ -37,10 +37,14 @@ public class Structure extends Entity {
 	public boolean gridlocked() {
 		return gridlocked;
 	}
+	public boolean hover(Game game) {
+		int x= (int) game.cursor.getXpos();
+		int y= (int) game.cursor.getXpos();
+		return x>xdraw&&y>ydraw&&x<xdraw+width&&y<ydraw+height;
+	}
 
 	public void update(double dt, Game game) {
-		xpos += xspd * dt / 1000;
-		ypos += yspd * dt / 1000;
+
 	}
 	public void setToDraw(int xoffset, int yoffset) {
 		xdraw = xpos - xoffset;

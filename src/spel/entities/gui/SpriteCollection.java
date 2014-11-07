@@ -31,6 +31,7 @@ public class SpriteCollection {
 	 * GUI
 	 */
 	public static final Sprite sidebar = new Sprite("res/art/gui/base.png");
+	
 
 	/*
 	 * Buttons
