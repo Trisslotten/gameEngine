@@ -3,6 +3,9 @@ package spel.entities;
 import java.io.Serializable;
 import java.util.Vector;
 
+import org.newdawn.slick.Color;
+
+import spel.Game;
 import spel.entities.items.Item;
 import spel.entities.items.resources.Resource;
 
@@ -34,8 +37,13 @@ public class Inventory implements Serializable {
 		items.add(item);
 	}
 
-	public void render() {
-
+	public void render(Game game) {
+		for(int i=0;i<items.size();i++){
+			Resource res = (Resource)items.elementAt(i);
+			String str = res.getAmount() + " " + res.getClass().getSimpleName();
+			game.text.render(51, 201+i*20, str, Color.black);
+			game.text.render(50, 200+i*20, str, Color.red);
+		}
 	}
 
 }

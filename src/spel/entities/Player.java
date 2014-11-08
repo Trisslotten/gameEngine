@@ -139,7 +139,7 @@ public class Player extends Entity implements Serializable {
 		return (windowHeight / 2) - 87 + height;
 	}
 
-	public void render(double interpolation) {
+	public void render(double interpolation, Game game) {
 		interpolation /= 1000;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
@@ -160,6 +160,8 @@ public class Player extends Entity implements Serializable {
 			SpriteCollection.player.render((windowWidth / 2) - 32,
 					(windowHeight / 2) - 87);
 		}
+		
+		inventory.render(game);
 	}
 
 	public void setTx(int Tx) {

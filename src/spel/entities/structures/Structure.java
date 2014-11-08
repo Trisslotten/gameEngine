@@ -39,9 +39,9 @@ public class Structure extends Entity {
 	}
 
 	public boolean hover(Game game, double width, double height) {
-		double x = game.cursor.getXpos()+ xpos;//-game.getWidth()/2-width;
-		double y = game.cursor.getYpos()+ ypos;//-game.getHeight()/2-height;
-		return x>xpos&&y>ypos&&x<xpos+width&&y<ypos+height;
+		double x = game.cursor.getXpos();//-game.getWidth()/2-width;
+		double y = game.cursor.getYpos();//-game.getHeight()/2-height;
+		return x>xdraw&&y>ydraw&&x<xdraw+width&&y<ydraw+height;
 	}
 
 	public void update(double dt, Game game) {

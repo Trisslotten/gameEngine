@@ -259,13 +259,13 @@ public class Level implements Serializable {
 			if (xdraw < game.getWidth() && xdraw + width > 0 && ydraw < game.getHeight() && ydraw + height > 0) {
 				if (ydraw + height > player.getDrawBottom() && behind) {
 					behind = false;
-					player.render(0);
+					player.render(0, game);
 				}
 				plants.elementAt(i).render(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2, game);
 			}
 		}
 		if (behind) {
-			player.render(0);
+			player.render(0, game);
 		}
 		for (NPC npc : NPCs) {
 			npc.render(xoffset, yoffset, game);
