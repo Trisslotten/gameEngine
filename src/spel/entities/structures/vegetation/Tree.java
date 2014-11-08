@@ -39,7 +39,8 @@ public class Tree extends Vegetation {
 		if(game.cursor.buttonClicked(0)) {
 			
 		}
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover(game)&&!game.saveGame.player.treeClicked) {
+		boolean hover = hover(game, SpriteCollection.palmtree.width,SpriteCollection.palmtree.height);
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover) {
 			game.saveGame.player.treeClicked();
 			game.saveGame.player.inventory.addResource(harvest());
 		}

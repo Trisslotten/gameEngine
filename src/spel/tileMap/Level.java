@@ -58,7 +58,7 @@ public class Level implements Serializable {
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double lvlSize = this.levelSize;
-		structures.add(new Statue(tilePixelLength*levelSize/2,tilePixelLength*levelSize/2,true,false));
+		structures.add(new Statue(tilePixelLength * levelSize / 2, tilePixelLength * levelSize / 2, true, false));
 
 		for (int y = 0; y < lvlSize; y++) {
 			for (int x = 0; x < lvlSize; x++) {
@@ -71,7 +71,6 @@ public class Level implements Serializable {
 				noise[(int) (x + y * lvlSize)] *= (1 - Math.abs((x / lvlSize * 2) - 1)) * (1 - Math.abs((y / lvlSize * 2) - 1));
 			}
 		}
-
 		for (int i = 0; i < tiles.length; i++) {
 			if (noise[i] > 0.12) {
 				if (noise[i] > 0.2) {
@@ -102,7 +101,7 @@ public class Level implements Serializable {
 						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
 					} else if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true));
-					} 
+					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 					if (rand.nextBoolean()) {
 						plants.add(new BushTree(xpos, ypos, SpriteCollection.bushtree.height, SpriteCollection.bushtree.width, false, true));
@@ -172,10 +171,10 @@ public class Level implements Serializable {
 		return new Position(x * tilePixelLength, y * tilePixelLength);
 
 	}
-	
-	public boolean getNPCclicked(){
-		for(NPC e: NPCs){
-			if(e.getclicked()){
+
+	public boolean getNPCclicked() {
+		for (NPC e : NPCs) {
+			if (e.getclicked()) {
 				return true;
 			}
 		}
@@ -221,9 +220,9 @@ public class Level implements Serializable {
 		for (NPC npc : NPCs) {
 			npc.update(dt, game);
 		}
-		for(int i=0;i<plants.size();i++) {
+		for (int i = 0; i < plants.size(); i++) {
 			plants.elementAt(i).update(dt, game);
-			if(plants.elementAt(i).ded()){
+			if (plants.elementAt(i).ded()) {
 				plants.remove(i);
 			}
 		}
@@ -256,13 +255,13 @@ public class Level implements Serializable {
 			double ypos = plants.elementAt(i).getYpos();
 			double width = plants.elementAt(i).getWidth();
 			double height = plants.elementAt(i).getHeight();
-			plants.elementAt(i).setToDraw(xoffset-game.getWidth()/2, yoffset-game.getHeight()/2);
+			plants.elementAt(i).setToDraw(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2);
 			if (xdraw < game.getWidth() && xdraw + width > 0 && ydraw < game.getHeight() && ydraw + height > 0) {
 				if (ydraw + height > player.getDrawBottom() && behind) {
 					behind = false;
 					player.render(0);
 				}
-				plants.elementAt(i).render(xoffset-game.getWidth()/2, yoffset-game.getHeight()/2, game);
+				plants.elementAt(i).render(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2, game);
 			}
 		}
 		if (behind) {

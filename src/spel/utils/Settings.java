@@ -20,7 +20,7 @@ public class Settings implements Serializable {
 	public float volume;
 	
 	public static final String filename = "settings.stn";
-	public static final String filedir = System.getProperty("user.home") + "/Documents/My Games/TestGame/";
+	public static final String filedir = System.getProperty("user.home") + "/Documents/TestGame/";
 	public static final String filepath = filedir + filename;
 	
 	public Settings() {

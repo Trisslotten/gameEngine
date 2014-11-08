@@ -34,9 +34,9 @@ public class SmallBush extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
-		if (Mouse.isButtonDown(0) && hover(game)) {
-			System.out.println("asdasd");
-			game.saveGame.player.inventory.addResource(harvest());
+		boolean hover = hover(game, SpriteCollection.smallbush.width,SpriteCollection.smallbush.height);
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
+			
 		}
 	}
 

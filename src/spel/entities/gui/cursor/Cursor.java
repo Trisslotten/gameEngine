@@ -29,20 +29,20 @@ public class Cursor extends Entity {
 	public void update() {
 		xpos = Mouse.getX();
 		ypos = game.getHeight() - Mouse.getY();
-
-		setButtons();
-
 	}
 
 	public boolean buttonDown(int i) {
+		Mouse.poll();
 		return down[i];
 	}
 
 	public boolean buttonClicked(int i) {
+		Mouse.poll();
 		return !down[i] && Mouse.isButtonDown(i);
 	}
 
 	public boolean buttonReleased(int i) {
+		Mouse.poll();
 		return down[i] && !Mouse.isButtonDown(i);
 	}
 

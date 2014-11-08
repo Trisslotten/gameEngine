@@ -69,6 +69,7 @@ public class Game extends Main {
 		}
 		gui.update(dt);
 		buttonClicked = false;
+		cursor.setButtons();
 	}
 
 	public int render(double interpolation) {

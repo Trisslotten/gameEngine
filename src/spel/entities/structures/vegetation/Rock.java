@@ -31,7 +31,8 @@ public class Rock extends Vegetation {
 	}
 	
 	public void update(double dt, Game game) {
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover(game)&&!game.saveGame.player.treeClicked) {
+		boolean hover = hover(game, SpriteCollection.rock.width,SpriteCollection.rock.height);
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
 			
 		}
 	}

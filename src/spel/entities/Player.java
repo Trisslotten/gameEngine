@@ -22,6 +22,7 @@ public class Player extends Entity implements Serializable {
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
 	boolean walking = false;
+	public boolean collided;
 	
 	public boolean axeSelected = true, pickaxeSelected;
 
@@ -37,6 +38,7 @@ public class Player extends Entity implements Serializable {
 		this.width = SpriteCollection.player.width;
 		deltaSum = 0;
 		inventory = new Inventory();
+		collided = false;
 	}
 
 	public void update(double dt, Game game) {

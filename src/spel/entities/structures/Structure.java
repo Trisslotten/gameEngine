@@ -38,9 +38,9 @@ public class Structure extends Entity {
 		return gridlocked;
 	}
 
-	public boolean hover(Game game) {
-		double x = game.cursor.getXpos()+ xpos-game.getWidth()/2;
-		double y = game.cursor.getYpos()+ ypos-game.getHeight()/2;
+	public boolean hover(Game game, double width, double height) {
+		double x = game.cursor.getXpos()+ xpos;//-game.getWidth()/2-width;
+		double y = game.cursor.getYpos()+ ypos;//-game.getHeight()/2-height;
 		return x>xpos&&y>ypos&&x<xpos+width&&y<ypos+height;
 	}
 
