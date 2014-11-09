@@ -33,9 +33,9 @@ public class Level implements Serializable {
 	private static final long serialVersionUID = -7039780207013125942L;
 
 	public Tile[] tiles;
-	Vector<Vegetation> plants = new Vector<Vegetation>();
+	public Vector<Vegetation> plants = new Vector<Vegetation>();
 	Vector<NPC> NPCs = new Vector<NPC>();
-	Vector<Structure> structures = new Vector<Structure>();
+	public Vector<Structure> structures = new Vector<Structure>();
 
 	public int levelSize = 128;
 	public int tilePixelLength;
@@ -54,7 +54,7 @@ public class Level implements Serializable {
 		SimplexNoise_octave noisegen = new SimplexNoise_octave(0);
 		double amplitude = 0;
 		int iterations = 3;
-		double smthnss = 20;
+		double smthnss = 25;
 		double smoothx = smthnss * levelSize / 30;
 		double smoothy = smthnss * levelSize / 30;
 		double lvlSize = this.levelSize;
@@ -95,6 +95,7 @@ public class Level implements Serializable {
 				int xpos = x * tilePixelLength + rand.nextInt(tilePixelLength);
 				int ypos = y * tilePixelLength + rand.nextInt(tilePixelLength);
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
+
 					if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Tree(xpos, ypos, SpriteCollection.palmtree.height, SpriteCollection.palmtree.width, false, true));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
@@ -228,7 +229,7 @@ public class Level implements Serializable {
 		}
 	}
 
-	public void render(int xoffset, int yoffset, Game game, Player player) {
+	public void render(int xoffset, int yoffset, Game game, Player player, double interpolation) {
 		int xstart = (xoffset - width / 2) / tilePixelLength;
 		int ystart = (yoffset - height / 2) / tilePixelLength;
 		int xend = (xoffset + tilePixelLength + width / 2) / tilePixelLength;
@@ -251,21 +252,24 @@ public class Level implements Serializable {
 		for (int i = 0; i < plants.size(); i++) {
 			double xdraw = plants.elementAt(i).getXdraw();
 			double ydraw = plants.elementAt(i).getYdraw();
-			double xpos = plants.elementAt(i).getXpos();
-			double ypos = plants.elementAt(i).getYpos();
+			double collx = plants.elementAt(i).collx;
+			double colly = plants.elementAt(i).colly;
 			double width = plants.elementAt(i).getWidth();
 			double height = plants.elementAt(i).getHeight();
 			plants.elementAt(i).setToDraw(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2);
 			if (xdraw < game.getWidth() && xdraw + width > 0 && ydraw < game.getHeight() && ydraw + height > 0) {
+				System.out.println(ydraw + height);
+				System.out.println(player.getDrawBottom());
+				System.out.println();
 				if (ydraw + height > player.getDrawBottom() && behind) {
 					behind = false;
-					player.render(0, game);
+					player.render(interpolation, game);
 				}
 				plants.elementAt(i).render(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2, game);
 			}
 		}
 		if (behind) {
-			player.render(0, game);
+			player.render(interpolation, game);
 		}
 		for (NPC npc : NPCs) {
 			npc.render(xoffset, yoffset, game);

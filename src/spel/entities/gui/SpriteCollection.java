@@ -75,6 +75,7 @@ public class SpriteCollection {
 	 * ETC
 	 */
 	public static final Sprite statue = new Sprite("res/art/special/statue.png");
+	public static final Sprite circle = new Sprite("res/art/circle.png");
 	
 	/*
 	 * NPC

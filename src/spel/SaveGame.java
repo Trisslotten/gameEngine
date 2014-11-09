@@ -12,7 +12,6 @@ import org.newdawn.slick.Color;
 
 import spel.entities.Player;
 import spel.entities.gui.Graphics;
-import spel.entities.gui.backgrounds.Sidebar;
 import spel.tileMap.Level;
 import spel.utils.Position;
 
@@ -28,13 +27,11 @@ public class SaveGame implements Serializable {
 
 	public Player player;
 	public Level level;
-	public Graphics sidebar;
 
 	public SaveGame(Game game) {
 		level = new Level(game);
 		Position pos = level.getSpawnPosition(); 
 		player = new Player(pos.x, pos.y, game);
-		sidebar = new Sidebar(game.getWidth()-64,0);
 	}
 
 	public SaveGame(SaveGame saveGame) {
@@ -81,8 +78,7 @@ public class SaveGame implements Serializable {
 	}
 
 	public void render(double interp, Game game) {
-		level.render((int) player.getXdraw(), (int) player.getYdraw(), game, player);
-		
+		level.render((int) player.getXdraw(), (int) player.getYdraw(), game, player, interp);
 		game.text.render(200, 20, (int)player.getXpos()+ " "+ (int)player.getYpos(), Color.pink);
 		
 	}

@@ -11,11 +11,13 @@ import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
 
 public class BushTree extends Vegetation {
-	public BushTree(double xpos, double ypos, double height, double width,
-			boolean permanent, boolean gridlocked) {
+	public BushTree(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
-		xdraw = xpos;
-		ydraw = ypos;
+		collx = xpos+76;
+		colly = ypos+225;
+		xpos -= 76;
+		ypos -= 225;
+		radius = 14;
 	}
 
 	public Resource harvest() {
@@ -29,9 +31,9 @@ public class BushTree extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
-		boolean hover = hover(game, SpriteCollection.bushtree.width,SpriteCollection.bushtree.height);
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
-			
+		boolean hover = hover(game, SpriteCollection.bushtree.width, SpriteCollection.bushtree.height);
+		if (game.saveGame.player.axeSelected && game.cursor.buttonClicked(0) && hover && !game.saveGame.player.treeClicked) {
+
 		}
 	}
 
@@ -39,9 +41,7 @@ public class BushTree extends Vegetation {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
 		SpriteCollection.bushtree.render(xdraw, ydraw);
-		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos,
-				Color.pink);
-		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+",
-				Color.pink);
+		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
+		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
 	}
 }

@@ -6,6 +6,7 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.vegetation.Vegetation;
 
 public class Player extends Entity implements Serializable {
 
@@ -23,27 +24,27 @@ public class Player extends Entity implements Serializable {
 	int direction = 0, walkframe = 0;
 	boolean walking = false;
 	public boolean collided;
-	
+
 	public boolean axeSelected = true, pickaxeSelected;
 
 	public Inventory inventory;
 	public boolean treeClicked;
+	private double radius;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
-		velocity = 1024;
+		velocity = 256;
 		this.height = SpriteCollection.player.height;
 		this.width = SpriteCollection.player.width;
 		deltaSum = 0;
 		inventory = new Inventory();
 		collided = false;
+		radius = 10;
 	}
 
 	public void update(double dt, Game game) {
-		
-	
 		deltaSum++;
 		double interval = 10;
 		if (deltaSum > deltaTimer + interval) {
@@ -75,20 +76,17 @@ public class Player extends Entity implements Serializable {
 			}
 
 		}
-		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0
-				|| Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
+		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
 			walking = true;
 			drawWPointer = true;
 			double dx = xpos - Tx;
 			double dy = ypos - Ty;
 			double angle = Math.atan2(dy, dx);
-			xspd = Math.cos(angle) * velocity * dt / 1000;
-			yspd = Math.sin(angle) * velocity * dt / 1000;
-			/*
-			 * angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
+			xspd = Math.cos(angle) * velocity;
+			yspd = Math.sin(angle) * velocity;
+			/* angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
 			 * (double) i; if (angle > d * Math.PI / 4 && angle <= d * Math.PI /
-			 * 4 + Math.PI / 4) { direction = i; } }
-			 */
+			 * 4 + Math.PI / 4) { direction = i; } } */
 
 			for (int i = 0; i < 9; i++) {
 				double d = (double) i;
@@ -120,7 +118,6 @@ public class Player extends Entity implements Serializable {
 					break;
 				}
 			}
-
 		} else {
 			drawWPointer = false;
 			xspd = 0;
@@ -128,8 +125,41 @@ public class Player extends Entity implements Serializable {
 			walking = false;
 		}
 
-		xpos -= xspd;
-		ypos -= yspd;
+		//check collisions
+		for (Vegetation v : game.saveGame.level.plants) {
+			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0 && v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
+				double deltax = v.collx - (xpos);
+				double deltay = v.colly - (ypos);
+
+				double circleDistance = Math.sqrt(deltax * deltax + deltay * deltay);
+				if (circleDistance < v.radius + radius) {
+					collided = true;
+					double[] v1 = rotateVector(deltax, deltay, Math.PI / 2);
+					double[] v2 = rotateVector(deltax, deltay, -Math.PI / 2);
+					double dx1 = v1[0] + xpos - Tx;
+					double dy1 = v1[1] + ypos - Ty;
+					double dx2 = v2[0] + xpos - Tx;
+					double dy2 = v2[1] + ypos - Ty;
+					double distance1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+					double distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+					if (distance2 < distance1) {
+						double angle3 = Math.atan2(v1[1], v1[0]);
+						xspd = Math.cos(angle3) * velocity;
+						yspd = Math.sin(angle3) * velocity;
+					} else {
+						double angle3 = Math.atan2(v2[1], v2[0]);
+						xspd = Math.cos(angle3) * velocity;
+						yspd = Math.sin(angle3) * velocity;
+					}
+
+				} else {
+					collided = false;
+				}
+			}
+		}
+		xpos -= xspd * dt / 1000;
+		ypos -= yspd * dt / 1000;
+
 		xdraw = xpos;
 		ydraw = ypos;
 		treeClicked = false;
@@ -139,28 +169,31 @@ public class Player extends Entity implements Serializable {
 		return (windowHeight / 2) - 87 + height;
 	}
 
+	public double[] rotateVector(double x, double y, double rads) {
+		double[] vector = new double[2];
+		vector[0] = x * Math.cos(rads) - y * Math.sin(rads);
+		vector[1] = x * Math.sin(rads) + y * Math.cos(rads);
+		return vector;
+	}
+
 	public void render(double interpolation, Game game) {
 		interpolation /= 1000;
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
-			SpriteCollection.WPointer[pointerindex].render(Tx - xpos
-					+ windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
+			SpriteCollection.WPointer[pointerindex].render(Tx - xpos + windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
 		if (walking) {
 			if (standframe) {
-				SpriteCollection.playerWalking[direction][0].render(
-						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][0].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			} else {
-				SpriteCollection.playerWalking[direction][walkframe].render(
-						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][walkframe].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			}
 
 		} else {
-			SpriteCollection.player.render((windowWidth / 2) - 32,
-					(windowHeight / 2) - 87);
+			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 		}
-		
+
 		inventory.render(game);
 	}
 
@@ -181,8 +214,7 @@ public class Player extends Entity implements Serializable {
 	}
 
 	public int getrange(double xpos, double ypos) {
-		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
-				+ Math.pow(this.ypos - ypos, 2));
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
 		return r;
 	}
 

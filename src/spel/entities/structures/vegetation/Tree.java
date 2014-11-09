@@ -21,6 +21,13 @@ public class Tree extends Vegetation {
 
 	public Tree(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
+		this.width = SpriteCollection.palmtree.width;
+		this.height = SpriteCollection.palmtree.height;
+		collx = xpos+115;
+		colly = ypos+275;
+		radius = 25;
+		xpos -= 115;
+		ypos -= 275;
 		xdraw = xpos;
 		ydraw = ypos;
 	}
@@ -36,11 +43,8 @@ public class Tree extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
-		if(game.cursor.buttonClicked(0)) {
-			
-		}
 		boolean hover = hover(game, SpriteCollection.palmtree.width,SpriteCollection.palmtree.height);
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover) {
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
 			game.saveGame.player.treeClicked();
 			game.saveGame.player.inventory.addResource(harvest());
 		}

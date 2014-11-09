@@ -19,8 +19,11 @@ public class SmallBush extends Vegetation {
 
 	public SmallBush(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
-		xdraw = xpos;
-		ydraw = ypos;
+		collx = xpos+31;
+		colly = ypos+21;
+		xpos -=  31;
+		ypos -= 21;
+		radius = 20;
 	}
 
 	public Resource harvest() {

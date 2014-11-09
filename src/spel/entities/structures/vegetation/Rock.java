@@ -17,6 +17,11 @@ public class Rock extends Vegetation {
 	
 	public Rock(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, height, width, permanent, gridlocked);
+		collx = xpos+26;
+		colly = ypos+22;
+		xpos -=  26;
+		ypos -= 22;
+		radius = 26;
 	}
 	
 	public Stone harvest(){
@@ -24,16 +29,12 @@ public class Rock extends Vegetation {
 		durability -= 50;
 		return new Stone(rand.nextInt(3)+2);
 	}
-
-	public Rock(double xpos, double ypos, boolean permanent, boolean gridlocked) {
-		super(xpos, ypos, permanent, gridlocked);
-		// TODO Auto-generated constructor stub
-	}
 	
 	public void update(double dt, Game game) {
 		boolean hover = hover(game, SpriteCollection.rock.width,SpriteCollection.rock.height);
 		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
-			
+			game.saveGame.player.treeClicked();
+			game.saveGame.player.inventory.addResource(harvest());
 		}
 	}
 	
