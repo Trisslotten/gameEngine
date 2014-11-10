@@ -86,27 +86,14 @@ public class SpriteCollection {
 	/*
 	 * NPC
 	 */
-	public static final Sprite[] NPC = NPC();
+	public static final Sprite NPC = new Sprite("res/art/NPC/1.png");
 	public static final Sprite NPCEX = new Sprite("res/art/NPC/NPC!.png");
 	public static final Sprite NPCHUNG = new Sprite("res/art/NPC/NPCHUNG.png");
-	
-	public static final Sprite NPCCUT = new Sprite("res/art/NPC/cut.png");
-	public static final Sprite NPCHACK = new Sprite("res/art/NPC/hack.png");
-	public static final Sprite NPCFUCKINGBERRIES = new Sprite("res/art/NPC/fucking berries.png");
-	public static final Sprite NPCGUARD = new Sprite("res/art/NPC/guard.png");
-	
 	public static final Sprite[] NPCSEL = NPCSEL();
 	public static Sprite[] NPCSEL() {
 		Sprite[] NPCSEL = new Sprite[18];
 		for (int i = 1; i < 19; i++) {
 			NPCSEL[i - 1] = new Sprite("res/art/pointers/" + i + ".png");
-		}
-		return NPCSEL;
-	}
-	public static Sprite[] NPC() {
-		Sprite[] NPCSEL = new Sprite[3];
-		for (int i = 0; i < 3; i++) {
-			NPCSEL[i] = new Sprite("res/art/NPC/" + i + ".png");
 		}
 		return NPCSEL;
 	}
