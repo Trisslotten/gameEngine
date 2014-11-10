@@ -36,6 +36,12 @@ public class SpriteCollection {
 	/*
 	 * Buttons
 	 */
+	public static final Sprite pause = new Sprite("res/art/gui/Pausa.png");
+	public static final Sprite pauseHover = new Sprite("res/art/gui/Paus_hover.png");
+	public static final Sprite bag = new Sprite("res/art/gui/Bag.png");
+	public static final Sprite bagHover = new Sprite("res/art/gui/Bag_hover.png");
+	public static final Sprite workbench = new Sprite("res/art/gui/workbench.png");
+	public static final Sprite workbenchHover = new Sprite("res/art/gui/Workbench_hover.png");
 	public static final Sprite settings = new Sprite("res/art/buttons/menu/inst.png");
 	public static final Sprite settingsHover = new Sprite("res/art/buttons/menu/inst_hover.png");
 	public static final Sprite quit = new Sprite("res/art/buttons/menu/avsluta.png");

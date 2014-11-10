@@ -23,12 +23,13 @@ public class Player extends Entity implements Serializable {
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
 	boolean walking = false;
-	public boolean collided;
+	public boolean collided, harvesting;
+	public Vegetation harvest;
 
 	public boolean axeSelected = true, pickaxeSelected;
 
 	public Inventory inventory;
-	public boolean treeClicked;
+	public boolean vegetationClicked;
 	private double radius;
 
 	public Player(double xpos, double ypos, Game game) {
@@ -162,7 +163,7 @@ public class Player extends Entity implements Serializable {
 
 		xdraw = xpos;
 		ydraw = ypos;
-		treeClicked = false;
+		vegetationClicked = false;
 	}
 
 	public double getDrawBottom() {
@@ -218,8 +219,14 @@ public class Player extends Entity implements Serializable {
 		return r;
 	}
 
-	public void treeClicked() {
-		this.treeClicked = true;
+	public void vegetationClicked() {
+		this.vegetationClicked = true;
+	}
+
+	public void harvest(Vegetation vegetation) {
+		vegetationClicked();
+		harvesting = true;
+		this.harvest = vegetation;
 	}
 
 }

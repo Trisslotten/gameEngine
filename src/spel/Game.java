@@ -2,6 +2,7 @@ package spel;
 
 import org.lwjgl.input.Keyboard;
 
+import spel.entities.gui.GameGUI;
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
 import spel.main.Main;
@@ -20,6 +21,7 @@ public class Game extends Main {
 	public Settings settings;
 	public SaveGame saveGame;
 	public Gui gui;
+	public GameGUI gameGui;
 	public boolean buttonClicked;
 
 	public enum State {
@@ -37,9 +39,11 @@ public class Game extends Main {
 		keys = new Keys();
 		text = new Text(14);
 		gui = new Gui(this);
+
 	}
 
 	public void loadAssets() {
+		gameGui = new GameGUI(this);
 		cursor = new Cursor("res/cursor.png", this);
 	}
 
@@ -66,6 +70,7 @@ public class Game extends Main {
 		}
 		if (gameState == State.PLAYING) {
 			saveGame.update(dt, this);
+			gameGui.update(this);
 		}
 		gui.update(dt);
 		buttonClicked = false;
@@ -80,6 +85,7 @@ public class Game extends Main {
 			if (gameState != State.PLAYING)
 				interp = 0;
 			saveGame.render(interp, this);
+			gameGui.render(this);
 		}
 		gui.render();
 
