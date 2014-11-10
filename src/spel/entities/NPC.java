@@ -1,12 +1,13 @@
 package spel.entities;
 
+import java.util.Collections;
 import java.util.Random;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.vegetation.Vegetation;
 
 public class NPC extends Mob {
 	String name;
@@ -22,6 +23,13 @@ public class NPC extends Mob {
 	int pointerindex = 0;
 	int timer = 0;
 	int Wtimer = 0;
+	int variation = 0;
+	int initx = 0;
+	int inity = 0;
+	int wood = 0;
+	int rock = 0;
+	int food = 0;
+	int workertick;
 	public int windowWidth, windowHeight;
 	boolean eventNPC;
 	boolean found = false;
@@ -30,6 +38,14 @@ public class NPC extends Mob {
 	boolean clicked;
 	boolean stop = false;
 	boolean playercommand = false;
+	boolean cut;
+	boolean hack;
+	boolean collect;
+	boolean guard;
+	boolean working;
+	boolean testing = true;
+	boolean step1 = true;
+	boolean step2 = false;
 
 	public NPC(double xpos, double ypos, String name, boolean eventNPC,
 			Game game) {
@@ -40,9 +56,18 @@ public class NPC extends Mob {
 		height = SpriteCollection.NPCEX.height;
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
+		Random rand = new Random();
+		variation = rand.nextInt(3);
 	}
 
 	public void update(double dt, Game game) {
+		jobselector(game);
+		if (testing) {
+			testing = false;
+			initx = (int) xpos;
+			inity = (int) ypos;
+		}
+		workchk();
 		Random rand = new Random();
 		super.update(dt);
 		timer++;
@@ -91,7 +116,7 @@ public class NPC extends Mob {
 
 		for (int i = 1; i < 4; i++) {
 			if (tick == i * 360 && !clicked && !playercommand
-					&& rand.nextBoolean()) {// checks if the
+					&& rand.nextBoolean() && !working) {// checks if the
 				// unit is idle,
 				// or not simply
 				// found, and
@@ -99,16 +124,17 @@ public class NPC extends Mob {
 				// whatever or
 				// not it should
 				// walk
-				do {
-					tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
-					ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
-				} while (game.saveGame.level.isWaterTile(tx, ty));
+				tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
+				ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
 			} else if (clicked && Mouse.isButtonDown(1)) {
 				tx = (int) (game.cursor.getXpos() + game.saveGame.player
 						.getXpos());
 				ty = (int) (game.cursor.getYpos() + game.saveGame.player
 						.getYpos());
 				playercommand = true;
+				working = false;
+				step1 = true;
+				step2 = false;
 			}
 		}
 
@@ -137,6 +163,10 @@ public class NPC extends Mob {
 		xpos -= xspd;
 		ypos -= yspd;
 
+		clickbutton(game.saveGame.player.getxpos(),
+				game.saveGame.player.getypos(), game.cursor.getXpos(),
+				game.cursor.getYpos(), game);
+
 		if (Mouse.isButtonDown(0) && !stop) {// Player clicking the NPC
 			stop = true;
 			cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
@@ -156,17 +186,24 @@ public class NPC extends Mob {
 				clicked = false;
 			}
 		}
+
 		if (!Mouse.isButtonDown(0)) {
 			stop = false;
 		}
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {
+
 		super.render(xoffset, yoffset, game);
-		SpriteCollection.NPC.render(xdraw - 32, ydraw - 87);
+		SpriteCollection.NPC[variation].render(xdraw - 32, ydraw - 87);
 		if (clicked) {
 			SpriteCollection.NPCSEL[selectorindex].render(xdraw - 40,
 					ydraw - 170);
+
+			SpriteCollection.NPCCUT.render(xdraw + 28, ydraw);
+			SpriteCollection.NPCHACK.render(xdraw + 28, ydraw - 128);
+			SpriteCollection.NPCFUCKINGBERRIES.render(xdraw - 100, ydraw);
+			SpriteCollection.NPCGUARD.render(xdraw - 100, ydraw - 128);
 		}
 		if (starving) {
 			SpriteCollection.NPCHUNG.render(xdraw - 32, ydraw - 170);
@@ -174,6 +211,191 @@ public class NPC extends Mob {
 		if (playercommand) {
 			SpriteCollection.WPointer[pointerindex].render(tx - xoffset - 32,
 					ty - yoffset - 40);
+		}
+	}
+
+	public void clickbutton(int pxpos, int pypos, double d, double e, Game game) {
+		if (Mouse.isButtonDown(0)) {
+			cx = (int) ((pxpos - (windowWidth / 2)) + d);
+			cy = (int) ((pypos - (windowHeight / 2)) + e);
+			if (cx > xpos + 92 - (windowWidth / 2) - 64
+					&& cx < xpos + 92 - (windowWidth / 2)
+					&& cy > ypos + 66 - (windowHeight / 2) - 64
+					&& cy < ypos + 66 - (windowHeight / 2)) {
+				cut = true;
+				collect = false;
+				hack = false;
+				guard = false;
+				working = true;
+			}
+			if (cx > xpos + 92 - (windowWidth / 2) - 64
+					&& cx < xpos + 92 - (windowWidth / 2)
+					&& cy > ypos - 66 - (windowHeight / 2) - 64
+					&& cy < ypos - 66 - (windowHeight / 2)) {
+				cut = false;
+				collect = false;
+				hack = true;
+				guard = false;
+				working = true;
+			}
+			if (cx > xpos - 34 - (windowWidth / 2) - 64
+					&& cx < xpos - 34 - (windowWidth / 2)
+					&& cy > ypos + 66 - (windowHeight / 2) - 64
+					&& cy < ypos + 66 - (windowHeight / 2)) {
+				cut = false;
+				collect = true;
+				hack = false;
+				guard = false;
+				working = true;
+			}
+			if (cx > xpos - 34 - (windowWidth / 2) - 64
+					&& cx < xpos - 34 - (windowWidth / 2)
+					&& cy > ypos - 66 - (windowHeight / 2) - 64
+					&& cy < ypos - 66 - (windowHeight / 2)) {
+				cut = false;
+				collect = false;
+				hack = false;
+				guard = true;
+				working = true;
+			}
+		}
+	}
+
+	public void workchk() {
+		if (!working) {
+			cut = false;
+			collect = false;
+			hack = false;
+			guard = false;
+		}
+	}
+
+	public void collectwood(Game game) {
+		if (step1) {
+			int[] tree = new int[game.saveGame.level.plants.size()];
+			int counter = 0;
+			for (Vegetation v : game.saveGame.level.plants) {
+				if (game.saveGame.level.plants.elementAt(counter).getClass()
+						.getSimpleName().equals("Tree")) {
+					tree[counter] = getrange(
+							game.saveGame.level.plants.elementAt(counter).xpos,
+							game.saveGame.level.plants.elementAt(counter).ypos);
+				} else {
+					tree[counter] = 100000000;
+				}
+				counter++;
+			}
+			int min = tree[0];
+			int index = 0;
+			for (int i = 1; i < tree.length; i++) {
+				if (tree[i] < min) {
+					min = tree[i];
+					index = i;
+				}
+			}
+			tx = (int) game.saveGame.level.plants.elementAt(index).xpos + 100
+					+ (windowWidth / 2);
+			ty = (int) game.saveGame.level.plants.elementAt(index).ypos + 291
+					+ (windowHeight / 2);
+			step1 = false;
+		}
+		if (getrange(tx, ty) < 20) {
+			workertick++;
+		}
+		if (workertick >= 100) {
+			workertick = 0;
+			wood++;
+			step2 = true;
+		}
+		if (step2) {
+			tx = initx;
+			ty = inity;
+		}
+		if (getrange(initx, inity) < 20) {
+			step1 = true;
+			step2 = false;
+			wood--;
+			System.out.println(wood);
+		}
+	}
+
+	public void collectfood(Game game) {
+
+	}
+
+	public void collectstone(Game game) {
+		if (step1) {
+			int[] tree = new int[game.saveGame.level.plants.size()];
+			int counter = 0;
+			for (Vegetation v : game.saveGame.level.plants) {
+				if (game.saveGame.level.plants.elementAt(counter).getClass()
+						.getSimpleName().equals("Rock")) {
+					tree[counter] = getrange(
+							game.saveGame.level.plants.elementAt(counter).xpos,
+							game.saveGame.level.plants.elementAt(counter).ypos);
+				} else {
+					tree[counter] = 100000000;
+				}
+				counter++;
+			}
+			int min = tree[0];
+			int index = 0;
+			for (int i = 1; i < tree.length; i++) {
+				if (tree[i] < min) {
+					min = tree[i];
+					index = i;
+				}
+			}
+			tx = (int) game.saveGame.level.plants.elementAt(index).xpos
+					+ (windowWidth / 2);
+			ty = (int) game.saveGame.level.plants.elementAt(index).ypos
+					+ (windowHeight / 2);
+			step1 = false;
+		}
+		if (getrange(tx, ty) < 20) {
+			workertick++;
+		}
+		if (workertick >= 100) {
+			workertick = 0;
+			rock++;
+			step2 = true;
+		}
+		if (step2) {
+			tx = initx;
+			ty = inity;
+		}
+		if (getrange(initx, inity) < 20) {
+			step1 = true;
+			step2 = false;
+			rock--;
+			System.out.println(rock);
+		}
+	}
+
+	public void guard(Game game) {
+
+	}
+
+	public int getrange(double xpos, double ypos) {
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
+				+ Math.pow(this.ypos - ypos, 2));
+		return r;
+	}
+
+	public void jobselector(Game game) {
+		if (working) {
+			if (cut) {
+				collectwood(game);
+			}
+			if (hack) {
+				collectstone(game);
+			}
+			if (collect) {
+				collectfood(game);
+			}
+			if (guard) {
+				guard(game);
+			}
 		}
 	}
 

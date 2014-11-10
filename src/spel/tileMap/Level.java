@@ -258,9 +258,6 @@ public class Level implements Serializable {
 			double height = plants.elementAt(i).getHeight();
 			plants.elementAt(i).setToDraw(xoffset - game.getWidth() / 2, yoffset - game.getHeight() / 2);
 			if (xdraw < game.getWidth() && xdraw + width > 0 && ydraw < game.getHeight() && ydraw + height > 0) {
-				System.out.println(ydraw + height);
-				System.out.println(player.getDrawBottom());
-				System.out.println();
 				if (ydraw + height > player.getDrawBottom() && behind) {
 					behind = false;
 					player.render(interpolation, game);
