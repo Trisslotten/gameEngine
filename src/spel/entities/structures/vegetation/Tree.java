@@ -6,11 +6,13 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 import spel.Game;
+import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.items.resources.Stone;
 import spel.entities.items.resources.Wood;
 import spel.entities.structures.Structure;
 import spel.entities.items.resources.*;
+import spel.entities.items.tools.ThrowingTool;
 
 public class Tree extends Vegetation {
 
@@ -45,7 +47,7 @@ public class Tree extends Vegetation {
 	public void update(double dt, Game game) {
 		boolean hover = hover(game, SpriteCollection.palmtree.width,SpriteCollection.palmtree.height);
 		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.vegetationClicked) {
-			
+			game.saveGame.player.throwingTool = new ThrowingTool(game.saveGame.player.xpos + game.getWidth()/2,game.saveGame.player.ypos+game.getHeight()/2,xpos,ypos);
 			
 			game.saveGame.player.vegetationClicked();
 			game.saveGame.player.inventory.addResource(harvest());

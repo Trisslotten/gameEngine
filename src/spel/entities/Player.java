@@ -6,6 +6,7 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.items.tools.ThrowingTool;
 import spel.entities.structures.vegetation.Vegetation;
 
 public class Player extends Entity implements Serializable {
@@ -25,7 +26,7 @@ public class Player extends Entity implements Serializable {
 	boolean walking = false;
 	public boolean collided, harvesting;
 	public Vegetation harvest;
-
+	public ThrowingTool throwingTool;
 	public boolean axeSelected = true, pickaxeSelected;
 
 	public Inventory inventory;
@@ -85,9 +86,11 @@ public class Player extends Entity implements Serializable {
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity;
 			yspd = Math.sin(angle) * velocity;
-			/* angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
+			/*
+			 * angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
 			 * (double) i; if (angle > d * Math.PI / 4 && angle <= d * Math.PI /
-			 * 4 + Math.PI / 4) { direction = i; } } */
+			 * 4 + Math.PI / 4) { direction = i; } }
+			 */
 
 			for (int i = 0; i < 9; i++) {
 				double d = (double) i;
@@ -126,7 +129,7 @@ public class Player extends Entity implements Serializable {
 			walking = false;
 		}
 
-		//check collisions
+		// check collisions
 		for (Vegetation v : game.saveGame.level.plants) {
 			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0 && v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
 				double deltax = v.collx - (xpos);
@@ -158,8 +161,14 @@ public class Player extends Entity implements Serializable {
 				}
 			}
 		}
-		xpos -= xspd * dt / 1000;
-		ypos -= yspd * dt / 1000;
+		if (throwingTool == null) {
+			xpos -= xspd * dt / 1000;
+			ypos -= yspd * dt / 1000;
+		} else {
+			throwingTool.update(dt);
+			if(throwingTool.ded())
+				throwingTool = null;
+		}
 
 		xdraw = xpos;
 		ydraw = ypos;
@@ -194,8 +203,26 @@ public class Player extends Entity implements Serializable {
 		} else {
 			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 		}
+		if(throwingTool!=null){
+			throwingTool.render(interpolation, (int)xpos, (int)ypos, game);
+		}
 
 		inventory.render(game);
+	}
+
+	public int getrange(double xpos, double ypos) {
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
+		return r;
+	}
+
+	public void vegetationClicked() {
+		this.vegetationClicked = true;
+	}
+
+	public void harvest(Vegetation vegetation) {
+		vegetationClicked();
+		harvesting = true;
+		this.harvest = vegetation;
 	}
 
 	public void setTx(int Tx) {
@@ -212,21 +239,6 @@ public class Player extends Entity implements Serializable {
 
 	public int getxpos() {
 		return (int) xpos;
-	}
-
-	public int getrange(double xpos, double ypos) {
-		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
-		return r;
-	}
-
-	public void vegetationClicked() {
-		this.vegetationClicked = true;
-	}
-
-	public void harvest(Vegetation vegetation) {
-		vegetationClicked();
-		harvesting = true;
-		this.harvest = vegetation;
 	}
 
 }
