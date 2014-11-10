@@ -25,8 +25,8 @@ public class Tree extends Vegetation {
 		super(xpos, ypos, height, width, permanent, gridlocked);
 		this.width = SpriteCollection.palmtree.width;
 		this.height = SpriteCollection.palmtree.height;
-		collx = xpos+115;
-		colly = ypos+275;
+		collx = xpos + 115;
+		colly = ypos + 275;
 		radius = 25;
 		xpos -= 115;
 		ypos -= 275;
@@ -45,12 +45,13 @@ public class Tree extends Vegetation {
 	}
 
 	public void update(double dt, Game game) {
-		boolean hover = hover(game, SpriteCollection.palmtree.width,SpriteCollection.palmtree.height);
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.vegetationClicked) {
-			game.saveGame.player.throwingTool = new ThrowingTool(game.saveGame.player.xpos + game.getWidth()/2,game.saveGame.player.ypos+game.getHeight()/2,xpos,ypos);
-			
-			game.saveGame.player.vegetationClicked();
-			game.saveGame.player.inventory.addResource(harvest());
+		Player player = game.saveGame.player;
+		boolean hover = hover(game, SpriteCollection.palmtree.width, SpriteCollection.palmtree.height);
+		if (player.axeSelected && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
+			player.throwingTool = new ThrowingTool(player.xpos + game.getWidth() / 2, player.ypos + game.getHeight() / 2, collx + game.getWidth() / 2, colly + game.getHeight() / 2-20);
+
+			player.vegetationClicked();
+			player.inventory.addResource(harvest());
 		}
 	}
 

@@ -161,14 +161,13 @@ public class Player extends Entity implements Serializable {
 				}
 			}
 		}
-		if (throwingTool == null) {
-			xpos -= xspd * dt / 1000;
-			ypos -= yspd * dt / 1000;
-		} else {
+		if (throwingTool != null) {
 			throwingTool.update(dt);
 			if(throwingTool.ded())
 				throwingTool = null;
 		}
+		xpos -= xspd * dt / 1000;
+		ypos -= yspd * dt / 1000;
 
 		xdraw = xpos;
 		ydraw = ypos;
