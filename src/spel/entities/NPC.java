@@ -46,6 +46,7 @@ public class NPC extends Mob {
 	boolean testing = true;
 	boolean step1 = true;
 	boolean step2 = false;
+	boolean dropoff = true;
 
 	public NPC(double xpos, double ypos, String name, boolean eventNPC,
 			Game game) {
@@ -113,82 +114,85 @@ public class NPC extends Mob {
 		} else {
 			idlewalking = 128;
 		}
-
-		for (int i = 1; i < 4; i++) {
-			if (tick == i * 360 && !clicked && !playercommand
-					&& rand.nextBoolean() && !working) {// checks if the
-				// unit is idle,
-				// or not simply
-				// found, and
-				// then decides
-				// whatever or
-				// not it should
-				// walk
-				tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
-				ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
-			} else if (clicked && Mouse.isButtonDown(1)) {
-				tx = (int) (game.cursor.getXpos() + game.saveGame.player
-						.getXpos());
-				ty = (int) (game.cursor.getYpos() + game.saveGame.player
-						.getYpos());
-				playercommand = true;
-				working = false;
-				step1 = true;
-				step2 = false;
-			}
-		}
-
-		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
-				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
-			double dx = xpos - tx;
-			double dy = ypos - ty;
-			double angle = Math.atan2(dy, dx);
-			xspd = Math.cos(angle) * velocity * dt / 1000;
-			yspd = Math.sin(angle) * velocity * dt / 1000;
+		if (starving) {
+			goeat();
 		} else {
-			playercommand = false;
-			xspd = 0;
-			yspd = 0;
-		}
-
-		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
-		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
-
-		if (tick >= 1080) {// tick reset
-			tick = 0;
-		} else {
-			tick++;
-		}
-
-		xpos -= xspd;
-		ypos -= yspd;
-
-		clickbutton(game.saveGame.player.getxpos(),
-				game.saveGame.player.getypos(), game.cursor.getXpos(),
-				game.cursor.getYpos(), game);
-
-		if (Mouse.isButtonDown(0) && !stop) {// Player clicking the NPC
-			stop = true;
-			cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
-					.getXpos());
-			cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
-					.getYpos());
-			if (cx > xpos - (windowWidth / 2) - 30
-					&& cx < xpos - (windowWidth / 2) + 30
-					&& cy > ypos - (windowHeight / 2) - height
-					&& cy < ypos - (windowHeight / 2)) {
-				if (clicked) {
-					clicked = false;
-				} else {
-					clicked = true;
+			for (int i = 1; i < 4; i++) {
+				if (tick == i * 360 && !clicked && !playercommand
+						&& rand.nextBoolean() && !working) {// checks if the
+					// unit is idle,
+					// or not simply
+					// found, and
+					// then decides
+					// whatever or
+					// not it should
+					// walk
+					tx = (int) (xpos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
+					ty = (int) (ypos + (int) (rand.nextInt(idlewalking) - (idlewalking / 2)));
+				} else if (clicked && Mouse.isButtonDown(1)) {
+					tx = (int) (game.cursor.getXpos() + game.saveGame.player
+							.getXpos());
+					ty = (int) (game.cursor.getYpos() + game.saveGame.player
+							.getYpos());
+					playercommand = true;
+					working = false;
+					step1 = true;
+					step2 = false;
 				}
-			} else {
-				clicked = false;
 			}
-		}
 
-		if (!Mouse.isButtonDown(0)) {
-			stop = false;
+			if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
+					|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
+				double dx = xpos - tx;
+				double dy = ypos - ty;
+				double angle = Math.atan2(dy, dx);
+				xspd = Math.cos(angle) * velocity * dt / 1000;
+				yspd = Math.sin(angle) * velocity * dt / 1000;
+			} else {
+				playercommand = false;
+				xspd = 0;
+				yspd = 0;
+			}
+
+			xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
+			ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();
+
+			if (tick >= 1080) {// tick reset
+				tick = 0;
+			} else {
+				tick++;
+			}
+
+			xpos -= xspd;
+			ypos -= yspd;
+
+			clickbutton(game.saveGame.player.getxpos(),
+					game.saveGame.player.getypos(), game.cursor.getXpos(),
+					game.cursor.getYpos(), game);
+
+			if (Mouse.isButtonDown(0) && !stop) {// Player clicking the NPC
+				stop = true;
+				cx = (int) ((game.saveGame.player.getxpos() - (windowWidth / 2)) + game.cursor
+						.getXpos());
+				cy = (int) ((game.saveGame.player.getypos() - (windowHeight / 2)) + game.cursor
+						.getYpos());
+				if (cx > xpos - (windowWidth / 2) - 30
+						&& cx < xpos - (windowWidth / 2) + 30
+						&& cy > ypos - (windowHeight / 2) - height
+						&& cy < ypos - (windowHeight / 2)) {
+					if (clicked) {
+						clicked = false;
+					} else {
+						clicked = true;
+					}
+				} else {
+					clicked = false;
+				}
+			}
+
+			if (!Mouse.isButtonDown(0)) {
+				stop = false;
+			}
 		}
 	}
 
@@ -325,6 +329,7 @@ public class NPC extends Mob {
 
 	public void collectstone(Game game) {
 		if (step1) {
+
 			int[] tree = new int[game.saveGame.level.plants.size()];
 			int counter = 0;
 			for (Vegetation v : game.saveGame.level.plants) {
@@ -359,6 +364,8 @@ public class NPC extends Mob {
 			workertick = 0;
 			rock++;
 			step2 = true;
+			dropoff = true;
+			System.out.println(rock);
 		}
 		if (step2) {
 			tx = initx;
@@ -367,7 +374,10 @@ public class NPC extends Mob {
 		if (getrange(initx, inity) < 20) {
 			step1 = true;
 			step2 = false;
-			rock--;
+			if (dropoff) {
+				rock--;
+				dropoff = false;
+			}
 			System.out.println(rock);
 		}
 	}
@@ -397,6 +407,10 @@ public class NPC extends Mob {
 				guard(game);
 			}
 		}
+	}
+
+	public void goeat() {
+
 	}
 
 	public void eat(int amount) {
