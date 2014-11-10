@@ -38,8 +38,8 @@ public class SmallBush extends Vegetation {
 
 	public void update(double dt, Game game) {
 		boolean hover = hover(game, SpriteCollection.smallbush.width,SpriteCollection.smallbush.height);
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
-			
+		if(game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.vegetationClicked) {
+			game.saveGame.player.harvest(this);
 		}
 	}
 
@@ -47,8 +47,6 @@ public class SmallBush extends Vegetation {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
 		SpriteCollection.smallbush.render(xdraw, ydraw);
-		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
-		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
 	}
 
 }

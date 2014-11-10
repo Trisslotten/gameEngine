@@ -32,7 +32,7 @@ public class Coconut extends Vegetation {
 
 	public void update(double dt, Game game) {
 		boolean hover = hover(game, SpriteCollection.coconut.width,SpriteCollection.coconut.height);
-		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.treeClicked) {
+		if(game.saveGame.player.axeSelected&&game.cursor.buttonClicked(0)&&hover&&!game.saveGame.player.vegetationClicked) {
 			
 		}
 	}
