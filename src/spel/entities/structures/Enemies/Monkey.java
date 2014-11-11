@@ -13,25 +13,25 @@ public class Monkey extends Mob {
 	int tx = 0;
 	int ty = 0;
 	int tick = 0;
-	int timer=0;
-	int timertick=0;
+	int timer = 0;
+	int timertick = 0;
 	boolean facing = true; // true=right, false = left;
 	boolean fleeing = false;
 
 	public Monkey(double xpos, double ypos) {
 		super(xpos, ypos);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void update(double dt, Game game) {
 		Random rand = new Random();
-		timer=rand.nextInt(10000)+100;
-		if(timertick>=timer && getrange(game.saveGame.player.xpos,
-				game.saveGame.player.ypos) < 512){
+		timer = rand.nextInt(10000) + 100;
+		if (timertick >= timer
+				&& getrange(game.saveGame.player.xpos,
+						game.saveGame.player.ypos) < 512) {
 			Sound.gorillascream.play();
-			timertick=0;
+			timertick = 0;
 		}
-			timertick++;
+		timertick++;
 		if (rand.nextInt(512) == 256) {
 			fleeing = false;
 		}
@@ -42,32 +42,31 @@ public class Monkey extends Mob {
 			attackmode = false;
 		}
 		attackmode = true;
-		if (!attackmode && rand.nextBoolean() && tick >= 360) {
+		if (!attackmode && rand.nextBoolean() && tick >= 360 && !fleeing) {
 			tx = (int) (xpos + (int) (rand.nextInt(1024) - (1024 / 2)));
 			ty = (int) (ypos + (int) (rand.nextInt(1024) - (1024 / 2)));
 			tick = 0;
 		} else if (attackmode) {
 			if (!fleeing) {
-				//for(Structure s: game.saveGame.level.structures){
-				//get structure position "barn"
-				//}
-			}
-			for (int i = 0; i < game.saveGame.level.NPCs.size(); i++) {
-				if (getrange(game.saveGame.level.NPCs.elementAt(i).xpos,
-						game.saveGame.level.NPCs.elementAt(i).ypos) < 256) {
-					tx = (int) game.saveGame.level.NPCs.elementAt(i).xpos;
-					ty = (int) game.saveGame.level.NPCs.elementAt(i).ypos;
-					fleeing = true;
-				}
-				if(getrange(game.saveGame.player.xpos,
-								game.saveGame.player.ypos) < 256){
-					tx = (int) game.saveGame.player.xpos;
-					ty = (int) game.saveGame.player.ypos;
-					fleeing = true;
-				}
+				// for(Structure s: game.saveGame.level.structures){
+				// get structure position "barn"
+				// }
 			}
 		} else {
 			tick++;
+		}
+		for (int i = 0; i < game.saveGame.level.NPCs.size(); i++) {
+			if (getrange(game.saveGame.level.NPCs.elementAt(i).xpos,
+					game.saveGame.level.NPCs.elementAt(i).ypos) < 256) {
+				tx = (int) game.saveGame.level.NPCs.elementAt(i).xpos;
+				ty = (int) game.saveGame.level.NPCs.elementAt(i).ypos;
+				fleeing = true;
+			}
+		}
+		if (getrange(game.saveGame.player.xpos, game.saveGame.player.ypos) < 256) {
+			tx = (int) game.saveGame.player.xpos;
+			ty = (int) game.saveGame.player.ypos;
+			fleeing = true;
 		}
 		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
 				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
