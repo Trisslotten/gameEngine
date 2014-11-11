@@ -4,6 +4,12 @@ import spel.entities.Sprite;
 
 public class SpriteCollection {
 
+	
+	/*
+	 * Structures
+	 */
+	public static final Sprite hut = new Sprite("res/art/structures/hut.png");
+	
 	/*
 	 * PlayerSprites
 	 */
@@ -82,6 +88,9 @@ public class SpriteCollection {
 	 */
 	public static final Sprite statue = new Sprite("res/art/special/statue.png");
 	public static final Sprite circle = new Sprite("res/art/circle.png");
+	public static final Sprite[] axe = getAxeSprites();
+	public static final Sprite[] pickaxe = getAxeSprites();
+	public static final Sprite shadow = new Sprite("res/art/tools/shadow.png");
 	
 	/*
 	 * NPC
@@ -117,6 +126,22 @@ public class SpriteCollection {
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite[] WPointer = WPointer();
 
+	public static Sprite[] getAxeSprites() {
+		Sprite[] axe = new Sprite[4];
+		for (int i = 0; i < axe.length; i++) {
+			axe[i] = new Sprite("res/art/tools/axe/" + i + ".png");
+		}
+		return axe;
+	}
+	public static Sprite[] getPickaxeSprites() {
+		Sprite[] pickaxe = new Sprite[4];
+		for (int i = 0; i < axe.length; i++) {
+			pickaxe[i] = new Sprite("res/art/tools/pickaxe/" + i + ".png");
+		}
+		return pickaxe;
+	}
+	
+	
 	public static Sprite[] WPointer() {
 		Sprite[] WPointer = new Sprite[9];
 		for (int i = 1; i < 10; i++) {

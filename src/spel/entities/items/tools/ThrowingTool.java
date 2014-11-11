@@ -4,33 +4,30 @@ import org.newdawn.slick.Color;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.vegetation.Vegetation;
 
 public class ThrowingTool {
 
 	public double x, y, z, xspd, yspd, zspd;
-	public double time;
+	public double time, spriteTimer;
+	public int spriteIndex;
 	public double xstart, ystart, xtarget, ytarget, xcenter, ycenter;
 	public double velocity = 500, gravity = 120;
 	public boolean hit = false;
+	public Vegetation plant;
+	public boolean isAxe;
 
-	public ThrowingTool(double xstart, double ystart, double xtarget, double ytarget) {
+	public ThrowingTool(double xstart, double ystart, double xtarget, double ytarget, Vegetation plant, boolean isAxe) {
 		ystart -= 40;
 		double dx = xstart - xtarget;
 		double dy = ystart - ytarget;
-		/* double diameter = Math.sqrt(dx * dx + dy * dy); double distance =
-		 * Math.PI * diameter; double heightAngle = Math.asin(distance * gravity
-		 * / (velocity * velocity)) / 2; double normalAngle = Math.atan(dx /
-		 * dy)+ Math.PI/2; x = xstart; y = ystart; z = 1; xspd =
-		 * Math.cos(normalAngle) * velocity; yspd = Math.sin(normalAngle) *
-		 * velocity; double time = distance / velocity; zspd =
-		 * Math.sin(Math.sqrt(distance * gravity) / Math.sin(2 * heightAngle));
-		 * xcenter = xstart + dx/2; ycenter = ystart + dy/2; */
 		double d = Math.sqrt(dx * dx + dy * dy);
 		double azimuth = Math.atan2(dy, dx);
 		double elevation = Math.asin(gravity * d / (velocity * velocity)) / 2;
 		xspd = velocity * Math.cos(elevation) * Math.cos(azimuth);
 		yspd = velocity * Math.cos(elevation) * Math.sin(azimuth);
 		zspd = velocity * Math.sin(elevation);
+		this.isAxe = isAxe;
 
 		time = 0;
 		x = xstart;
@@ -40,11 +37,21 @@ public class ThrowingTool {
 		this.ystart = ystart;
 		this.xtarget = xtarget;
 		this.ytarget = ytarget;
+		this.plant = plant;
+		spriteTimer = time;
+		spriteIndex = 0;
 
 	}
 
 	public void update(double dt) {
 		time += dt / 1000;
+		if(time>spriteTimer+0.1){
+			spriteTimer+=0.1;
+			spriteIndex++;
+			if(spriteIndex>3){
+				spriteIndex = 0;
+			}
+		}
 		x = xstart - xspd * time;
 		y = ystart - yspd * time;
 		z = zspd * time - 0.5 * gravity * time * time;
@@ -58,8 +65,8 @@ public class ThrowingTool {
 			xspd = -velocity * Math.cos(elevation) * Math.cos(azimuth);
 			yspd = -velocity * Math.cos(elevation) * Math.sin(azimuth);
 			zspd = velocity * Math.sin(elevation);
-
 			time = 0;
+			spriteTimer = time;
 			x = xtarget;
 			y = ytarget;
 			xstart = xtarget;
@@ -74,9 +81,14 @@ public class ThrowingTool {
 	}
 
 	public void render(double interpolation, int xoffset, int yoffset, Game game) {
-		SpriteCollection.coconut.render(x - xoffset, y - yoffset);
-		SpriteCollection.coconut.render(x - xoffset, y - z * 10 - yoffset);
-		game.text.render(500, 500, xspd + " " + yspd + " " + (zspd + 0.5 * gravity * time), Color.black);
+		if(isAxe){
+			SpriteCollection.shadow.render(x - xoffset, y - yoffset);
+			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
+		} else {
+			SpriteCollection.shadow.render(x - xoffset, y - yoffset);
+			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
+		}
+		
 	}
 
 	public double[] rotateVector(double x, double y, double rads) {

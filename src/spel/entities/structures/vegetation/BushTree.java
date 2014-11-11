@@ -11,8 +11,8 @@ import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
 
 public class BushTree extends Vegetation {
-	public BushTree(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
-		super(xpos, ypos, height, width, permanent, gridlocked);
+	public BushTree(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
+		super(xpos, ypos, height, width, permanent, gridlocked, game);
 		collx = xpos+76;
 		colly = ypos+225;
 		xpos -= 76;

@@ -2,11 +2,16 @@ package spel.tileMap;
 
 import java.io.Serializable;
 
+import spel.entities.structures.Buildings.Fireplace;
+import spel.entities.structures.Buildings.Hut;
 import spel.entities.structures.special.Statue;
 import spel.entities.structures.vegetation.*;
 
 import java.util.Random;
 import java.util.Vector;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.NPC;
@@ -97,17 +102,19 @@ public class Level implements Serializable {
 				if (tile.getClass().getSimpleName().equals("GrassTile")) {
 
 					if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
-						plants.add(new Tree(xpos, ypos, SpriteCollection.palmtree.height, SpriteCollection.palmtree.width, false, true));
+						plants.add(new Tree(xpos, ypos, SpriteCollection.palmtree.height, SpriteCollection.palmtree.width, false, true, game));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
-						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true));
+						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true, game));
 					} else if (rand.nextBoolean() && rand.nextBoolean() && rand.nextBoolean()) {
-						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true));
+						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
-					if (rand.nextBoolean()) {
-						plants.add(new BushTree(xpos, ypos, SpriteCollection.bushtree.height, SpriteCollection.bushtree.width, false, true));
+					if (rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true, game));
 					} else if (rand.nextBoolean()) {
-						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true));
+						plants.add(new BushTree(xpos, ypos, SpriteCollection.bushtree.height, SpriteCollection.bushtree.width, false, true, game));
+					} else if (rand.nextBoolean()) {
+						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
 					}
 				}
 			}
@@ -227,6 +234,13 @@ public class Level implements Serializable {
 				plants.remove(i);
 			}
 		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			int x = (int) (game.saveGame.player.xpos);
+			int y = (int) (game.saveGame.player.ypos);
+
+			System.out.println("space pressed");
+			structures.add(new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game));
+		}
 	}
 
 	public void render(int xoffset, int yoffset, Game game, Player player, double interpolation) {
@@ -273,6 +287,7 @@ public class Level implements Serializable {
 		}
 		for (Structure structure : structures) {
 			structure.render(xoffset, yoffset, game);
+			System.out.println("rendered Building");
 		}
 
 		int size = 1;

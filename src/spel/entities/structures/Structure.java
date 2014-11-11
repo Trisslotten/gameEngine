@@ -13,11 +13,26 @@ public class Structure extends Entity {
 	protected int durability = 100;
 	protected int tick = 0;
 	int structurelevel = 0;
+	public int woodCost;
+	public int stoneCost;
+	public int nailCost;
+	
 
-	public Structure(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
+	public Structure(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
 		super(xpos, ypos, height, width);
 		this.permanent = permanent;
 		this.gridlocked = gridlocked;
+		/*
+		if(gridlocked){
+			int x = (int) (xpos/game.saveGame.level.tilePixelLength);
+			xpos = x*game.saveGame.level.tilePixelLength;
+			int y = (int) (ypos/game.saveGame.level.tilePixelLength);
+			ypos = y*game.saveGame.level.tilePixelLength;
+		}
+		*/
+		woodCost = 1;
+		stoneCost = 1;
+		nailCost = 0;
 	}
 
 	public Structure(double xpos, double ypos, boolean permanent, boolean gridlocked) {

@@ -26,7 +26,6 @@ public class Player extends Entity implements Serializable {
 	boolean walking = false;
 	public boolean collided, harvesting;
 	public Vegetation harvest;
-	public ThrowingTool throwingTool;
 	public boolean axeSelected = true, pickaxeSelected;
 
 	public Inventory inventory;
@@ -161,11 +160,7 @@ public class Player extends Entity implements Serializable {
 				}
 			}
 		}
-		if (throwingTool != null) {
-			throwingTool.update(dt);
-			if(throwingTool.ded())
-				throwingTool = null;
-		}
+		
 		xpos -= xspd * dt / 1000;
 		ypos -= yspd * dt / 1000;
 
@@ -202,9 +197,7 @@ public class Player extends Entity implements Serializable {
 		} else {
 			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 		}
-		if(throwingTool!=null){
-			throwingTool.render(interpolation, (int)xpos, (int)ypos, game);
-		}
+		
 
 		inventory.render(game);
 	}

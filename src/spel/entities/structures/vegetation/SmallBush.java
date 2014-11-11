@@ -17,8 +17,8 @@ public class SmallBush extends Vegetation {
 	 */
 	private static final long serialVersionUID = 3920308251178819548L;
 
-	public SmallBush(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked) {
-		super(xpos, ypos, height, width, permanent, gridlocked);
+	public SmallBush(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
+		super(xpos, ypos, height, width, permanent, gridlocked, game);
 		collx = xpos+31;
 		colly = ypos+21;
 		xpos -=  31;
