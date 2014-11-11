@@ -39,7 +39,7 @@ public class Game extends Main {
 		keys = new Keys();
 		text = new Text(14);
 		gui = new Gui(this);
-
+		
 	}
 
 	public void loadAssets() {

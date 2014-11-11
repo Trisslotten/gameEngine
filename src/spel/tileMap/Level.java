@@ -2,12 +2,9 @@ package spel.tileMap;
 
 import java.io.Serializable;
 
-<<<<<<< HEAD
 import spel.entities.structures.Buildings.Fireplace;
 import spel.entities.structures.Buildings.Hut;
-=======
 import spel.entities.structures.Enemies.Monkey;
->>>>>>> origin/Testing
 import spel.entities.structures.special.Statue;
 import spel.entities.structures.vegetation.*;
 

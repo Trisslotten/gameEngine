@@ -5,6 +5,7 @@ import java.util.Random;
 import spel.Game;
 import spel.entities.Mob;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.Structure;
 import spel.utils.Sound;
 
 public class Monkey extends Mob {
@@ -41,16 +42,21 @@ public class Monkey extends Mob {
 		if (rand.nextInt(1024) == 512) {
 			attackmode = false;
 		}
-		attackmode = true;
 		if (!attackmode && rand.nextBoolean() && tick >= 360 && !fleeing) {
 			tx = (int) (xpos + (int) (rand.nextInt(1024) - (1024 / 2)));
 			ty = (int) (ypos + (int) (rand.nextInt(1024) - (1024 / 2)));
 			tick = 0;
 		} else if (attackmode) {
 			if (!fleeing) {
-				// for(Structure s: game.saveGame.level.structures){
-				// get structure position "barn"
-				// }
+				int i = 0;
+				for (Structure s : game.saveGame.level.structures) {
+					if (game.saveGame.level.structures.elementAt(i).getClass()
+							.getSimpleName().equals("Barn")) {
+						tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
+						ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
+					}
+					i++;
+				}
 			}
 		} else {
 			tick++;
@@ -98,11 +104,7 @@ public class Monkey extends Mob {
 
 	public void render(int xoffset, int yoffset, Game game) {
 		super.render(xoffset, yoffset, game);
-		if (facing) {
-			SpriteCollection.monR.render(xdraw + 32, ydraw + 32);
-		} else {
-			SpriteCollection.monL.render(xdraw + 32, ydraw + 32);
-		}
+		SpriteCollection.mon.render(xdraw + 32, ydraw + 32);
 	}
 
 	public int getrange(double xpos, double ypos) {
