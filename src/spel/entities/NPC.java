@@ -276,6 +276,7 @@ public class NPC extends Mob {
 
 	public void collectwood(Game game) {
 		if (step1) {
+
 			int[] tree = new int[game.saveGame.level.plants.size()];
 			int counter = 0;
 			for (Vegetation v : game.saveGame.level.plants) {
@@ -310,6 +311,8 @@ public class NPC extends Mob {
 			workertick = 0;
 			wood++;
 			step2 = true;
+			dropoff = true;
+			System.out.println(rock);
 		}
 		if (step2) {
 			tx = initx;
@@ -318,13 +321,65 @@ public class NPC extends Mob {
 		if (getrange(initx, inity) < 20) {
 			step1 = true;
 			step2 = false;
-			wood--;
-			System.out.println(wood);
+			if (dropoff) {
+				wood--;
+				dropoff = false;
+			}
 		}
 	}
 
 	public void collectfood(Game game) {
+		if (step1) {
 
+			int[] tree = new int[game.saveGame.level.plants.size()];
+			int counter = 0;
+			for (Vegetation v : game.saveGame.level.plants) {
+				if (game.saveGame.level.plants.elementAt(counter).getClass()
+						.getSimpleName().equals("SmallBush")) {
+					tree[counter] = getrange(
+							game.saveGame.level.plants.elementAt(counter).xpos,
+							game.saveGame.level.plants.elementAt(counter).ypos);
+				} else {
+					tree[counter] = 100000000;
+				}
+				counter++;
+			}
+			int min = tree[0];
+			int index = 0;
+			for (int i = 1; i < tree.length; i++) {
+				if (tree[i] < min) {
+					min = tree[i];
+					index = i;
+				}
+			}
+			tx = (int) game.saveGame.level.plants.elementAt(index).xpos + 32
+					+ (windowWidth / 2);
+			ty = (int) game.saveGame.level.plants.elementAt(index).ypos + 53
+					+ (windowHeight / 2);
+			step1 = false;
+		}
+		if (getrange(tx, ty) < 20) {
+			workertick++;
+		}
+		if (workertick >= 100) {
+			workertick = 0;
+			food++;
+			step2 = true;
+			dropoff = true;
+			System.out.println(rock);
+		}
+		if (step2) {
+			tx = initx;
+			ty = inity;
+		}
+		if (getrange(initx, inity) < 20) {
+			step1 = true;
+			step2 = false;
+			if (dropoff) {
+				food--;
+				dropoff = false;
+			}
+		}
 	}
 
 	public void collectstone(Game game) {
@@ -351,9 +406,9 @@ public class NPC extends Mob {
 					index = i;
 				}
 			}
-			tx = (int) game.saveGame.level.plants.elementAt(index).xpos
+			tx = (int) game.saveGame.level.plants.elementAt(index).xpos + 25
 					+ (windowWidth / 2);
-			ty = (int) game.saveGame.level.plants.elementAt(index).ypos
+			ty = (int) game.saveGame.level.plants.elementAt(index).ypos + 45
 					+ (windowHeight / 2);
 			step1 = false;
 		}
@@ -378,7 +433,6 @@ public class NPC extends Mob {
 				rock--;
 				dropoff = false;
 			}
-			System.out.println(rock);
 		}
 	}
 

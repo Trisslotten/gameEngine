@@ -5,7 +5,7 @@ public class Mob extends Entity {
 
 	public Mob(double xpos, double ypos) {
 		super(xpos, ypos);
-
+		
 	}
 	public void damage(int damage){
 		health-=damage;

@@ -120,8 +120,11 @@ public class SpriteCollection {
 		return NPCSEL;
 	}
 	
-	
-	
+	/*
+	 * MOB
+	 */
+	public static final Sprite monL = new Sprite("res/art/MOB/monkeyL.png");
+	public static final Sprite monR = new Sprite("res/art/MOB/monkeyR.png");
 	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite[] WPointer = WPointer();
