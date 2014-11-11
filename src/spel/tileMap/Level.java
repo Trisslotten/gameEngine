@@ -2,6 +2,7 @@ package spel.tileMap;
 
 import java.io.Serializable;
 
+import spel.entities.structures.Enemies.Monkey;
 import spel.entities.structures.special.Statue;
 import spel.entities.structures.vegetation.*;
 
@@ -34,7 +35,8 @@ public class Level implements Serializable {
 
 	public Tile[] tiles;
 	public Vector<Vegetation> plants = new Vector<Vegetation>();
-	Vector<NPC> NPCs = new Vector<NPC>();
+	public Vector<NPC> NPCs = new Vector<NPC>();
+	Vector<Monkey> Monkeys = new Vector<Monkey>();
 	public Vector<Structure> structures = new Vector<Structure>();
 
 	public int levelSize = 128;
@@ -115,6 +117,10 @@ public class Level implements Serializable {
 		for (int i = 0; i < 50; i++) {
 			Position pos = getNPCPosition();
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true, game));
+		}
+		for (int i = 0; i < 50; i++) {
+			Position pos = getNPCPosition();
+			Monkeys.add(new Monkey(pos.x, pos.y));
 		}
 	}
 
@@ -221,6 +227,9 @@ public class Level implements Serializable {
 		for (NPC npc : NPCs) {
 			npc.update(dt, game);
 		}
+		for (Monkey monkey : Monkeys) {
+			monkey.update(dt, game);
+		}
 		for (int i = 0; i < plants.size(); i++) {
 			plants.elementAt(i).update(dt, game);
 			if (plants.elementAt(i).ded()) {
@@ -270,6 +279,9 @@ public class Level implements Serializable {
 		}
 		for (NPC npc : NPCs) {
 			npc.render(xoffset, yoffset, game);
+		}
+		for (Monkey monkey : Monkeys) {
+			monkey.render(xoffset, yoffset, game);
 		}
 		for (Structure structure : structures) {
 			structure.render(xoffset, yoffset, game);

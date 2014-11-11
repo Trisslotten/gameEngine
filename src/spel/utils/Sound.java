@@ -9,6 +9,7 @@ public class Sound {
 	public boolean played;
 	
 	public static Sound woodbutton = new Sound("res/sounds/woodbutton.wav");
+	public static Sound gorillascream = new Sound("res/sounds/gorillascream.wav");
 	
 	public void reset() {
 		played = false;
