@@ -1,6 +1,7 @@
 package spel.entities.structures.Buildings;
 
 import spel.Game;
+import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.Structure;
 
 public class Fireplace extends Structure {
@@ -10,7 +11,7 @@ public class Fireplace extends Structure {
 		super(xpos, ypos, height, width, permanent, gridlocked, game);
 		this.woodCost = 8;
 		this.stoneCost = 5;
-		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost);	
+		
 	}
 
 	public void update(double dt) {
@@ -23,12 +24,18 @@ public class Fireplace extends Structure {
 			}
 		}
 	}
+	public boolean ded() {
+		return false;
+	}
 
 	public void render(int xoffset, int yoffset, Game game) {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - xoffset;
-
-		//SpriteCollection.fireplace.render(xdraw,ydraw);
+		if(durability<0) {
+			SpriteCollection.fireOff.render(xdraw,ydraw);
+		} else {
+			SpriteCollection.fireOn.render(xdraw,ydraw);
+		}
 	}
 
 }

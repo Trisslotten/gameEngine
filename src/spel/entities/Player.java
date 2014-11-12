@@ -30,11 +30,13 @@ public class Player extends Entity implements Serializable {
 	boolean walking = false;
 	public boolean collided, harvesting;
 	public Vegetation harvest;
-	public boolean axeSelected = true, pickaxeSelected;
+	public boolean hasAxe = false, hasPickaxe = false;
+	public boolean hutSelected = false, fireplaceSelected = false, shelterSelected = false;
 
 	public Inventory inventory;
 	public boolean vegetationClicked;
 	private double radius;
+	public boolean placedHut = false;
 
 	public Player(double xpos, double ypos, Game game) {
 		super(xpos, ypos);

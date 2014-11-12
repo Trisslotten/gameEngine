@@ -9,6 +9,9 @@ public class SpriteCollection {
 	 * Structures
 	 */
 	public static final Sprite hut = new Sprite("res/art/structures/hut.png");
+	public static final Sprite fireOn = new Sprite("res/art/structures/fireplace/on.png");
+	public static final Sprite fireOff = new Sprite("res/art/structures/fireplace/off.png");
+	
 	
 	/*
 	 * PlayerSprites
@@ -82,6 +85,7 @@ public class SpriteCollection {
 	public static final Sprite smallbush = new Sprite("res/art/plants/buske_liten.png");
 	public static final Sprite bushtree= new Sprite("res/art/plants/buskträd.png");
 	public static final Sprite coconut= new Sprite("res/art/plants/kokosnöt.png");
+	public static final Sprite smallRock = new Sprite("res/art/plants/liten.png");
 	public static final Sprite[] sticks = getSticks();
 	
 	/*

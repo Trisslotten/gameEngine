@@ -17,6 +17,7 @@ import spel.entities.structures.special.Statue;
 import spel.entities.structures.vegetation.BushTree;
 import spel.entities.structures.vegetation.Rock;
 import spel.entities.structures.vegetation.SmallBush;
+import spel.entities.structures.vegetation.SmallRock;
 import spel.entities.structures.vegetation.Sticks;
 import spel.entities.structures.vegetation.Tree;
 import spel.entities.structures.vegetation.Vegetation;
@@ -109,6 +110,8 @@ public class Level implements Serializable {
 						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Sticks(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
+					} else if (rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 					if (rand.nextBoolean() && rand.nextBoolean()) {
@@ -119,6 +122,8 @@ public class Level implements Serializable {
 						plants.add(new SmallBush(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Sticks(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
+					} else if (rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
 				}
 			}
@@ -245,14 +250,15 @@ public class Level implements Serializable {
 				plants.remove(i);
 			}
 		}
-		if (game.keys.keyPressed(Keyboard.KEY_SPACE)) {
-			int x = (int) (game.saveGame.player.xpos) + (int)game.cursor.getXdraw() - game.getWidth()/2;
-			int y = (int) (game.saveGame.player.ypos) + (int)game.cursor.getYdraw() - game.getHeight()/2;
-
-			System.out.println("space pressed");
+		if (game.cursor.buttonClicked(0)&&game.saveGame.player.hutSelected) {
+			int x = (int) (game.saveGame.player.xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
+			int y = (int) (game.saveGame.player.ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
 			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
-			if(hut.payCost(game)){
-				structures.add(hut);
+			if (!game.saveGame.player.placedHut) {
+				if (hut.payCost(game)) {
+					structures.add(hut);
+					game.saveGame.player.placedHut = true;
+				}
 			}
 		}
 	}

@@ -44,7 +44,7 @@ public class Tree extends Vegetation {
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		boolean hover = hover(game, SpriteCollection.palmtree.width, SpriteCollection.palmtree.height);
-		if (player.axeSelected && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
+		if (player.hasAxe && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
 			throwingTool = new ThrowingTool(player.xpos + game.getWidth() / 2, player.ypos + game.getHeight() / 2, collx + game.getWidth() / 2, colly + game.getHeight() / 2 - 20, this,true);
 			player.vegetationClicked = true; 
 		}
