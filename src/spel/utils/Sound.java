@@ -11,7 +11,7 @@ public class Sound {
 	public static Sound woodbutton = new Sound("res/sounds/woodbutton.wav");
 	public static Sound gorillascream = new Sound(
 			"res/sounds/gorillascream.wav");
-	public static Sound[] music = music();
+	/*public static Sound[] music = music();
 
 	public static Sound[] music() {
 		Sound[] Music = new Sound[3];
@@ -19,7 +19,7 @@ public class Sound {
 			Music[i] = new Sound("res/sounds/music/" + i + ".mp3");
 		}
 		return Music;
-	}
+	}*/
 
 	public void reset() {
 		played = false;
