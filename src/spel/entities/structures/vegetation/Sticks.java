@@ -24,30 +24,33 @@ public class Sticks extends Vegetation {
 		radius = 1;
 	}
 	public Resource harvest() {
-		Random rand = new Random();
 		durability -= 100;
-		return new Wood(rand.nextInt(2) + 1);
+		return new Wood(1);
 	}
 
 	public Sticks(double xpos, double ypos, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos, permanent, gridlocked);
 		// TODO Auto-generated constructor stub
 	}
+	
 	public boolean toGetHarvested = false;
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		player.vegetationClicked = false;
 		boolean hover = hover(game, width, height);
-		if(toGetHarvested&&player.getrange(xpos, ypos)<70) {
+		int x = (int) (xpos+width/2);
+		int y = (int) (ypos+height/2);
+		int range = player.getrange(x, y);
+		if(toGetHarvested&&range<40) {
 			player.vegetationClicked = true; 
 			player.inventory.addResource(harvest());
-		} else if (game.cursor.buttonClicked(0) && hover && !player.vegetationClicked&&player.getrange(xpos, ypos)<50) {
+		} else if (game.cursor.buttonClicked(0) && hover && !player.vegetationClicked&&range<40) {
 			player.vegetationClicked = true; 
 			player.inventory.addResource(harvest());
 		} else if(game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
 			toGetHarvested = true;
-			player.Tx = (int) xpos+32;
-			player.Ty = (int) ypos+32;
+			player.Tx = (int) x;
+			player.Ty = (int) y;
 		}
 	}
 

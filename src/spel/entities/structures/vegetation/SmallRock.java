@@ -3,6 +3,8 @@ package spel.entities.structures.vegetation;
 import spel.Game;
 import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.items.resources.Resource;
+import spel.entities.items.resources.Stone;
 
 public class SmallRock extends Vegetation {
 
@@ -15,22 +17,29 @@ public class SmallRock extends Vegetation {
 		super(xpos, ypos, permanent, gridlocked);
 		// TODO Auto-generated constructor stub
 	}
+	public Resource harvest() {
+		durability -= 100;
+		return new Stone(1);
+	}
 	
 	public boolean toGetHarvested = false;
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		player.vegetationClicked = false;
 		boolean hover = hover(game, width, height);
-		if(toGetHarvested&&player.getrange(xpos, ypos)<70) {
+		int x = (int) (xpos+16);
+		int y = (int) (ypos+16);
+		int range = player.getrange(x, y);
+		if(toGetHarvested&&range<40) {
 			player.vegetationClicked = true; 
 			player.inventory.addResource(harvest());
-		} else if (game.cursor.buttonClicked(0) && hover && !player.vegetationClicked&&player.getrange(xpos, ypos)<70) {
+		} else if (game.cursor.buttonClicked(0) && hover && !player.vegetationClicked&&range<40) {
 			player.vegetationClicked = true; 
 			player.inventory.addResource(harvest());
 		} else if(game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
 			toGetHarvested = true;
-			player.Tx = (int) xpos+32;
-			player.Ty = (int) ypos+32;
+			player.Tx = (int) x;
+			player.Ty = (int) y;
 		}
 	}
 

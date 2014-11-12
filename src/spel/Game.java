@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import spel.entities.gui.GameGUI;
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
+import spel.entities.items.resources.Wood;
 import spel.main.Main;
 import spel.utils.Keys;
 import spel.utils.Settings;
@@ -14,7 +15,7 @@ public class Game extends Main {
 
 	public Keys keys;
 	public Cursor cursor;
-	public Text text;
+	public Text text, small, smaller;
 	public boolean paused;
 	public State gameState;
 	public State oldState;
@@ -37,8 +38,11 @@ public class Game extends Main {
 		UPDATES_PER_SECOND = 60;
 		gameState = State.MENU;
 		keys = new Keys();
-		text = new Text(14);
+		text = new Text(24);
+		small = new Text(18);
+		smaller = new Text(12);
 		gui = new Gui(this);
+		
 		
 	}
 

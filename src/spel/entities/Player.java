@@ -6,6 +6,11 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.items.resources.*;
+import spel.entities.items.resources.Wood;
+import spel.entities.structures.Structure;
+import spel.entities.structures.Buildings.Fireplace;
+import spel.entities.structures.Buildings.Hut;
 import spel.entities.structures.vegetation.Vegetation;
 
 public class Player extends Entity implements Serializable {
@@ -25,7 +30,7 @@ public class Player extends Entity implements Serializable {
 	boolean walking = false;
 	public boolean collided, harvesting;
 	public Vegetation harvest;
-	public boolean hasAxe = false, hasPickaxe = false;
+	public boolean hasAxe = false, hasPickaxe = false, hasHammer = false;
 	public boolean hutSelected = false, fireplaceSelected = false, shelterSelected = false;
 
 	public Inventory inventory;
@@ -44,6 +49,13 @@ public class Player extends Entity implements Serializable {
 		inventory = new Inventory();
 		collided = false;
 		radius = 10;
+		
+		//debug
+		inventory.addResource(new Wood(101));
+		inventory.addResource(new Food(101));
+		inventory.addResource(new Iron(101));
+		inventory.addResource(new IronNails(101));
+		inventory.addResource(new Stone(101));
 	}
 
 	public void update(double dt, Game game) {
@@ -202,7 +214,52 @@ public class Player extends Entity implements Serializable {
 
 		inventory.render(game);
 	}
+	
+	public void craftFireplace(Game game) {
+		if (game.cursor.buttonClicked(0)&&hutSelected) {
+			int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
+			int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
+			Structure fireplace = new Fireplace(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, false, false, game);
+			if (!placedHut) {
+				if (fireplace.payCost(game)) {
+					game.saveGame.level.structures.add(fireplace);
+					placedHut = true;
+				}
+			}
+		}
+	}
 
+	public void craftHut(Game game) {
+		if (game.cursor.buttonClicked(0)&&game.saveGame.player.hutSelected) {
+			int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
+			int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
+			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
+			if (!game.saveGame.player.placedHut) {
+				if (hut.payCost(game)) {
+					game.saveGame.level.structures.add(hut);
+					placedHut = true;
+				}
+			}
+		}
+	}
+	
+	public void craftAxe() {
+		if(inventory.payCost(2, 2, 0)) {
+			this.hasAxe = true;
+		}
+	}
+	
+	public void craftPickaxe() {
+		if(inventory.payCost(5, 5, 0)) {
+			this.hasAxe = true;
+		}
+	}
+	public void craftHammer() {
+		if(inventory.payCost(5, 1, 0)) {
+			this.hasAxe = true;
+		}
+	}
+	
 	public int getrange(double xpos, double ypos) {
 		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
 		return r;

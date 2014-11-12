@@ -132,7 +132,7 @@ public class Level implements Serializable {
 			Position pos = getNPCPosition();
 			NPCs.add(new NPC(pos.x, pos.y, "asd", true, game));
 		}
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 5; i++) {
 			Position pos = getNPCPosition();
 			Monkeys.add(new Monkey(pos.x, pos.y));
 		}
@@ -250,17 +250,7 @@ public class Level implements Serializable {
 				plants.remove(i);
 			}
 		}
-		if (game.cursor.buttonClicked(0)&&game.saveGame.player.hutSelected) {
-			int x = (int) (game.saveGame.player.xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
-			int y = (int) (game.saveGame.player.ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
-			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
-			if (!game.saveGame.player.placedHut) {
-				if (hut.payCost(game)) {
-					structures.add(hut);
-					game.saveGame.player.placedHut = true;
-				}
-			}
-		}
+		
 	}
 
 	public void render(int xoffset, int yoffset, Game game, Player player, double interpolation) {
@@ -311,12 +301,13 @@ public class Level implements Serializable {
 		for (Structure structure : structures) {
 			structure.render(xoffset, yoffset, game);
 		}
-
+		/*
 		int size = 1;
 		for (int y = 0; y < levelSize; y++) {
 			for (int x = 0; x < levelSize; x++) {
 				tiles[x + y * levelSize].render(x * size, y * size, size, size);
 			}
 		}
+		*/
 	}
 }

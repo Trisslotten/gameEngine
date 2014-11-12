@@ -41,7 +41,5 @@ public class BushTree extends Vegetation {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
 		SpriteCollection.bushtree.render(xdraw, ydraw);
-		game.text.render((int) xdraw, (int) ydraw, "+ " + xpos + " " + ypos, Color.pink);
-		game.text.render((int) (xdraw + width), (int) (ydraw + height), "+", Color.pink);
 	}
 }

@@ -39,9 +39,23 @@ public class SpriteCollection {
 	/*
 	 * GUI
 	 */
+	public static final Sprite pausPopup = new Sprite("res/art/gui/paus/paus.png");
+	public static final Sprite pauseQuit = new Sprite("res/art/gui/paus/avsluta_knapp.png");
+	public static final Sprite pauseMenu= new Sprite("res/art/gui/paus/tillbaka_knapp.png");
 	public static final Sprite sidebar = new Sprite("res/art/gui/base.png");
+	public static final Sprite bagPopup = new Sprite("res/art/gui/bag/BagPopup.png");
+	public static final Sprite craftingPopup = new Sprite("res/art/gui/craft/arbetsbord.png");
+	public static final Sprite nail = new Sprite("res/art/gui/bag/spik.png");
+	public static final Sprite iron = new Sprite("res/art/gui/bag/järn.png");
+	public static final Sprite food = new Sprite("res/art/gui/bag/mat.png");
+	public static final Sprite stone = new Sprite("res/art/gui/bag/sten.png");
+	public static final Sprite wood = new Sprite("res/art/gui/bag/wood.png");
+	public static final Sprite amount = new Sprite("res/art/gui/bag/mängd.png");
+	public static final Sprite stoneAxe = new Sprite("res/art/gui/tools/Yxa.png");
+	public static final Sprite stoneAxeHover = new Sprite("res/art/gui/tools/Yxa_Hover.png");
+	public static final Sprite stonePick = new Sprite("res/art/gui/tools/Stenhackare.png");
+	public static final Sprite stonePickHover = new Sprite("res/art/gui/tools/stenhackare_Hover.png");
 	
-
 	/*
 	 * Buttons
 	 */
