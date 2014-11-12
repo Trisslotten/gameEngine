@@ -1,7 +1,5 @@
 package spel.entities.items.tools;
 
-import org.newdawn.slick.Color;
-
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.vegetation.Vegetation;

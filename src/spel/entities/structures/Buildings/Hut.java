@@ -19,7 +19,7 @@ public class Hut extends Structure {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - xoffset;
 
-		SpriteCollection.hut.render(xdraw,ydraw);
+		//SpriteCollection.hut.render(xdraw,ydraw);
 	}
 
 }

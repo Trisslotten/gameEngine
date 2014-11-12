@@ -6,7 +6,6 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
-import spel.entities.items.tools.ThrowingTool;
 import spel.entities.structures.vegetation.Vegetation;
 
 public class Player extends Entity implements Serializable {
