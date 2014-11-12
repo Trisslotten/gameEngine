@@ -11,15 +11,26 @@ public class Sound {
 	public static Sound woodbutton = new Sound("res/sounds/woodbutton.wav");
 	public static Sound gorillascream = new Sound(
 			"res/sounds/gorillascream.wav");
-	/*public static Sound[] music = music();
+	public static Sound grasstep = new Sound(
+			"res/sounds/grasstep.wav");
+	public static Sound[] music = music();
+	public static Sound[] sandstep = sandwalk();
 
 	public static Sound[] music() {
 		Sound[] Music = new Sound[3];
 		for (int i = 0; i < 3; i++) {
-			Music[i] = new Sound("res/sounds/music/" + i + ".mp3");
+			Music[i] = new Sound("res/sounds/music/" + i + ".wav");
 		}
 		return Music;
-	}*/
+	}
+	
+	public static Sound[] sandwalk() {
+		Sound[] Music = new Sound[3];
+		for (int i = 0; i < 3; i++) {
+			Music[i] = new Sound("res/sounds/sandstep/" + i + ".wav");
+		}
+		return Music;
+	}
 
 	public void reset() {
 		played = false;

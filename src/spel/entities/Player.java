@@ -1,6 +1,7 @@
 package spel.entities;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 
@@ -12,6 +13,8 @@ import spel.entities.structures.Structure;
 import spel.entities.structures.Buildings.Fireplace;
 import spel.entities.structures.Buildings.Hut;
 import spel.entities.structures.vegetation.Vegetation;
+import spel.tileMap.tiles.GrassTile;
+import spel.utils.Sound;
 
 public class Player extends Entity implements Serializable {
 
@@ -23,7 +26,9 @@ public class Player extends Entity implements Serializable {
 	public int Tx = 0;
 	public int windowWidth, windowHeight;
 	int pointerindex = 0;
+	int hunger = 100;
 	double timer;
+	int tick = 0;
 	boolean drawWPointer = false, standframe = false;
 	double velocity, deltaSum, deltaTimer;
 	int direction = 0, walkframe = 0;
@@ -60,6 +65,12 @@ public class Player extends Entity implements Serializable {
 
 	public void update(double dt, Game game) {
 		deltaSum++;
+		Random rand = new Random();
+		if (tick >= 360) {
+			hunger--;
+			tick = 0;
+		}
+		tick++;
 		double interval = 10;
 		if (deltaSum > deltaTimer + interval) {
 			deltaTimer += interval;
@@ -84,13 +95,15 @@ public class Player extends Entity implements Serializable {
 		if (Mouse.isButtonDown(1) && !game.saveGame.level.getNPCclicked()) {
 			Ty = (int) ((int) (ypos - windowHeight / 2) + game.cursor.getYpos());
 			Tx = (int) ((int) (xpos - windowWidth / 2) + game.cursor.getXpos());
+
 			if (game.saveGame.level.isWaterTile(Tx, Ty)) {
 				Ty = (int) ypos;
 				Tx = (int) xpos;
 			}
 
 		}
-		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
+		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0
+				|| Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
 			walking = true;
 			drawWPointer = true;
 			double dx = xpos - Tx;
@@ -143,11 +156,13 @@ public class Player extends Entity implements Serializable {
 
 		// check collisions
 		for (Vegetation v : game.saveGame.level.plants) {
-			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0 && v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
+			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0
+					&& v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
 				double deltax = v.collx - (xpos);
 				double deltay = v.colly - (ypos);
 
-				double circleDistance = Math.sqrt(deltax * deltax + deltay * deltay);
+				double circleDistance = Math.sqrt(deltax * deltax + deltay
+						* deltay);
 				if (circleDistance < v.radius + radius) {
 					collided = true;
 					double[] v1 = rotateVector(deltax, deltay, Math.PI / 2);
@@ -173,7 +188,7 @@ public class Player extends Entity implements Serializable {
 				}
 			}
 		}
-		
+
 		xpos -= xspd * dt / 1000;
 		ypos -= yspd * dt / 1000;
 
@@ -198,19 +213,22 @@ public class Player extends Entity implements Serializable {
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
-			SpriteCollection.WPointer[pointerindex].render(Tx - xpos + windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
+			SpriteCollection.WPointer[pointerindex].render(Tx - xpos
+					+ windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
 		if (walking) {
 			if (standframe) {
-				SpriteCollection.playerWalking[direction][0].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][0].render(
+						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			} else {
-				SpriteCollection.playerWalking[direction][walkframe].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][walkframe].render(
+						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			}
 
 		} else {
-			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
+			SpriteCollection.player.render((windowWidth / 2) - 32,
+					(windowHeight / 2) - 87);
 		}
-		
 
 		inventory.render(game);
 	}
@@ -261,7 +279,8 @@ public class Player extends Entity implements Serializable {
 	}
 	
 	public int getrange(double xpos, double ypos) {
-		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
+				+ Math.pow(this.ypos - ypos, 2));
 		return r;
 	}
 
@@ -289,6 +308,10 @@ public class Player extends Entity implements Serializable {
 
 	public int getxpos() {
 		return (int) xpos;
+	}
+
+	public void eat(int amount) {
+		hunger += amount;
 	}
 
 }
