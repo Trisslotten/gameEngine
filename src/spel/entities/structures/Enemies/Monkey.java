@@ -29,7 +29,7 @@ public class Monkey extends Mob {
 		if (timertick >= timer
 				&& getrange(game.saveGame.player.xpos,
 						game.saveGame.player.ypos) < 512) {
-			Sound.gorillascream.play(1.0f,0.5f);
+			Sound.gorillascream.play(1.0f, 0.5f);
 			timertick = 0;
 		}
 		timertick++;
@@ -51,22 +51,34 @@ public class Monkey extends Mob {
 				int i = 0;
 				for (Structure s : game.saveGame.level.structures) {
 					if (game.saveGame.level.structures.elementAt(i).getClass()
-							.getSimpleName().equals("House")) {
+							.getSimpleName().equals("Hut")) {
 						tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
 						ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
 					}
 					i++;
 				}
-if(i!=game.saveGame.level.structures.size()){
-				if (getrange(game.saveGame.level.structures.elementAt(i).xpos,
-						game.saveGame.level.structures.elementAt(i).ypos) < 20) {
-					if (rand.nextBoolean()) {
-						//game.saveGame.level.structures.elementAt(i).stealwood();
-					} else {
-						//game.saveGame.level.structures.elementAt(i).stealstone();
+				if (i != game.saveGame.level.structures.size()) {
+					if (getrange(
+							game.saveGame.level.structures.elementAt(i).xpos,
+							game.saveGame.level.structures.elementAt(i).ypos) < 20) {
+						int random = rand.nextInt(5);
+						if (random == 0) {
+							// game.saveGame.level.structures.elementAt(i).removewood(rand.nextInt(10)+10);
+						}
+						if (random == 1) {
+							// game.saveGame.level.structures.elementAt(i).removestone(rand.nextInt(10)+10);
+						}
+						if (random == 2) {
+							// game.saveGame.level.structures.elementAt(i).removefood(rand.nextInt(10)+10);
+						}
+						if (random == 3) {
+							// game.saveGame.level.structures.elementAt(i).removeiron(rand.nextInt(10)+10);
+						}
+						if (random == 4) {
+							// game.saveGame.level.structures.elementAt(i).removespikes(rand.nextInt(10)+10);
+						}
 					}
 				}
-}
 			}
 
 		} else {
