@@ -1,5 +1,7 @@
 package spel;
 
+import java.util.Random;
+
 import org.lwjgl.input.Keyboard;
 
 import spel.entities.gui.GameGUI;
@@ -8,10 +10,11 @@ import spel.entities.gui.cursor.Cursor;
 import spel.main.Main;
 import spel.utils.Keys;
 import spel.utils.Settings;
+import spel.utils.Sound;
 import spel.utils.Text;
 
 public class Game extends Main {
-
+	int i;
 	public Keys keys;
 	public Cursor cursor;
 	public Text text;
@@ -39,7 +42,8 @@ public class Game extends Main {
 		keys = new Keys();
 		text = new Text(14);
 		gui = new Gui(this);
-		
+		Random rand = new Random();
+		i = rand.nextInt(3);
 	}
 
 	public void loadAssets() {
@@ -75,6 +79,14 @@ public class Game extends Main {
 		gui.update(dt);
 		buttonClicked = false;
 		cursor.setButtons();
+		if (!Sound.music[i].playing()) {
+			if (i == 2) {
+				i = 0;
+			}else{
+				i++;
+			}
+				Sound.music[i].play(1.0f,0.2f);
+		}
 	}
 
 	public int render(double interpolation) {

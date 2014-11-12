@@ -29,7 +29,7 @@ public class Monkey extends Mob {
 		if (timertick >= timer
 				&& getrange(game.saveGame.player.xpos,
 						game.saveGame.player.ypos) < 512) {
-			Sound.gorillascream.play();
+			Sound.gorillascream.play(1.0f,0.5f);
 			timertick = 0;
 		}
 		timertick++;
@@ -57,11 +57,17 @@ public class Monkey extends Mob {
 					}
 					i++;
 				}
-				/*
-				 * if(getrange(game.saveGame.level.structures.elementAt(i).xpos,game
-				 * .saveGame.level.structures.elementAt(i).ypos)<20){ //barn
-				 * inventory--; }
-				 */}
+if(i!=game.saveGame.level.structures.size()){
+				if (getrange(game.saveGame.level.structures.elementAt(i).xpos,
+						game.saveGame.level.structures.elementAt(i).ypos) < 20) {
+					if (rand.nextBoolean()) {
+						//game.saveGame.level.structures.elementAt(i).stealwood();
+					} else {
+						//game.saveGame.level.structures.elementAt(i).stealstone();
+					}
+				}
+}
+			}
 
 		} else {
 			tick++;
