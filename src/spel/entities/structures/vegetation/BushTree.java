@@ -32,7 +32,7 @@ public class BushTree extends Vegetation {
 
 	public void update(double dt, Game game) {
 		boolean hover = hover(game, SpriteCollection.bushtree.width, SpriteCollection.bushtree.height);
-		if (game.saveGame.player.axeSelected && game.cursor.buttonClicked(0) && hover && !game.saveGame.player.vegetationClicked) {
+		if (game.saveGame.player.hasAxe && game.cursor.buttonClicked(0) && hover && !game.saveGame.player.vegetationClicked) {
 
 		}
 	}
