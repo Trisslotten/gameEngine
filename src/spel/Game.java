@@ -85,7 +85,7 @@ public class Game extends Main {
 			}else{
 				i++;
 			}
-				Sound.music[i].play(1.0f,0.2f);
+				Sound.music[i].play(1.0f,0.3f);
 		}
 	}
 
