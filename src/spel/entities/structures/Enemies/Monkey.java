@@ -51,13 +51,18 @@ public class Monkey extends Mob {
 				int i = 0;
 				for (Structure s : game.saveGame.level.structures) {
 					if (game.saveGame.level.structures.elementAt(i).getClass()
-							.getSimpleName().equals("Barn")) {
+							.getSimpleName().equals("House")) {
 						tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
 						ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
 					}
 					i++;
 				}
-			}
+				/*
+				 * if(getrange(game.saveGame.level.structures.elementAt(i).xpos,game
+				 * .saveGame.level.structures.elementAt(i).ypos)<20){ //barn
+				 * inventory--; }
+				 */}
+
 		} else {
 			tick++;
 		}
