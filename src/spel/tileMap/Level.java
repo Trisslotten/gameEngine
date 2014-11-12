@@ -245,12 +245,15 @@ public class Level implements Serializable {
 				plants.remove(i);
 			}
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			int x = (int) (game.saveGame.player.xpos);
-			int y = (int) (game.saveGame.player.ypos);
+		if (game.keys.keyPressed(Keyboard.KEY_SPACE)) {
+			int x = (int) (game.saveGame.player.xpos) + (int)game.cursor.getXdraw() - game.getWidth()/2;
+			int y = (int) (game.saveGame.player.ypos) + (int)game.cursor.getYdraw() - game.getHeight()/2;
 
 			System.out.println("space pressed");
-			//structures.add(new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game));
+			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
+			if(hut.payCost(game)){
+				structures.add(hut);
+			}
 		}
 	}
 

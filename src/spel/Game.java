@@ -54,7 +54,7 @@ public class Game extends Main {
 				paused = !paused;
 		}
 		cursor.update();
-		keys.setKeys();
+		
 	}
 
 	public void quit() {
@@ -75,6 +75,7 @@ public class Game extends Main {
 		gui.update(dt);
 		buttonClicked = false;
 		cursor.setButtons();
+		keys.setKeys();
 	}
 
 	public int render(double interpolation) {

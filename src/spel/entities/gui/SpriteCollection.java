@@ -90,7 +90,7 @@ public class SpriteCollection {
 	public static final Sprite statue = new Sprite("res/art/special/statue.png");
 	public static final Sprite circle = new Sprite("res/art/circle.png");
 	public static final Sprite[] axe = getAxeSprites();
-	public static final Sprite[] pickaxe = getAxeSprites();
+	public static final Sprite[] pickaxe = getPickaxeSprites();
 	public static final Sprite shadow = new Sprite("res/art/tools/shadow.png");
 	
 	/*

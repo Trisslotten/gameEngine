@@ -34,6 +34,10 @@ public class Structure extends Entity {
 		stoneCost = 1;
 		nailCost = 0;
 	}
+	
+	public boolean payCost(Game game) {
+		return game.saveGame.player.inventory.payCost(woodCost, stoneCost, nailCost);
+	}
 
 	public Structure(double xpos, double ypos, boolean permanent, boolean gridlocked) {
 		super(xpos, ypos);

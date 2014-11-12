@@ -84,7 +84,7 @@ public class ThrowingTool {
 			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
 		} else {
 			SpriteCollection.shadow.render(x - xoffset, y - yoffset);
-			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
+			SpriteCollection.pickaxe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
 		}
 		
 	}

@@ -8,7 +8,6 @@ public class Hut extends Structure {
 
 	public Hut(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
 		super(xpos, ypos, height, width, permanent, gridlocked, game);
-		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost);
 	}
 
 	public void update(double dt) {
@@ -16,10 +15,11 @@ public class Hut extends Structure {
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {
-		xdraw = xpos - xoffset;
-		ydraw = ypos - xoffset;
+		xdraw = xpos - xoffset + game.getWidth()/2-width/2;
+		ydraw = ypos - yoffset + game.getHeight()/2-height/2;
 
-		//SpriteCollection.hut.render(xdraw,ydraw);
+		SpriteCollection.hut.render(xdraw,ydraw);
 	}
 
 }
+
