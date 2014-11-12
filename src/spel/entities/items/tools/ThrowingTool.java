@@ -1,7 +1,5 @@
 package spel.entities.items.tools;
 
-import org.newdawn.slick.Color;
-
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.vegetation.Vegetation;
@@ -86,7 +84,7 @@ public class ThrowingTool {
 			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
 		} else {
 			SpriteCollection.shadow.render(x - xoffset, y - yoffset);
-			SpriteCollection.axe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
+			SpriteCollection.pickaxe[spriteIndex].render(x - xoffset, y - z * 10 - yoffset);
 		}
 		
 	}

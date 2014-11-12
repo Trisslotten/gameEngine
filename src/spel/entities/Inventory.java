@@ -16,7 +16,7 @@ public class Inventory implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1472282108566202597L;
-	Vector<Item> items = new Vector<Item>();
+	Vector<Resource> items = new Vector<Resource>();
 
 	public void addResource(Resource res) {
 		System.out.println("adding resource " + res.getClass().getSimpleName());
@@ -34,7 +34,7 @@ public class Inventory implements Serializable {
 		addItem(res);
 	}
 
-	public void addItem(Item item) {
+	public void addItem(Resource item) {
 		items.add(item);
 	}
 
@@ -47,29 +47,33 @@ public class Inventory implements Serializable {
 		}
 	}
 
-	public void payCost(int woodCost, int stoneCost, int nailCost) {
-		for (int i = 0; i < items.size(); i++) {
-			Resource res = (Resource) items.elementAt(i);
-			String str = res.getClass().getSimpleName();
-			if (str.equals("Wood")) {
-				if (woodCost > 0 && res.getAmount() > woodCost) {
-					res.addAmount(-woodCost);
-					items.remove(i);
-					items.add(res);
-				}
-			} else if (str.equals("Stone")) {
-				if (stoneCost > 0 && res.getAmount() > stoneCost) {
-					res.addAmount(-stoneCost);
-					items.remove(i);
-					items.add(res);
-				}
-			} else if (str.equals("IronNails")) {
-				if (nailCost > 0 && res.getAmount() > nailCost) {
-					res.addAmount(nailCost);
-					items.remove(i);
-					items.add(res);
-				}
+	public boolean payCost(int woodCost, int stoneCost, int nailCost) {
+		boolean canPay = true;
+		for(int i=0;i<items.size();i++){
+			Resource res = items.elementAt(i);
+			if(res.getClass().getSimpleName().equals("Wood")){
+				if(!(res.getAmount()>=woodCost))
+					canPay = false;
+			} else if(res.getClass().getSimpleName().equals("Stone")){
+				if(!(res.getAmount()>=stoneCost))
+					canPay = false;
+			} else if(res.getClass().getSimpleName().equals("IronNails")){
+				if(!(res.getAmount()>=nailCost))
+					canPay = false;
+			} 
+		}
+		if(canPay) {
+			for(int i=0;i<items.size();i++){
+				Resource res = items.elementAt(i);
+				if(res.getClass().getSimpleName().equals("Wood")){
+					items.elementAt(i).addAmount(-woodCost);
+				} else if(res.getClass().getSimpleName().equals("Stone")){
+					items.elementAt(i).addAmount(-stoneCost);
+				} else if(res.getClass().getSimpleName().equals("IronNails")){
+					items.elementAt(i).addAmount(-nailCost);
+				} 
 			}
 		}
+		return canPay;
 	}
 }

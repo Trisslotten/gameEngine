@@ -82,6 +82,7 @@ public class SpriteCollection {
 	public static final Sprite smallbush = new Sprite("res/art/plants/buske_liten.png");
 	public static final Sprite bushtree= new Sprite("res/art/plants/buskträd.png");
 	public static final Sprite coconut= new Sprite("res/art/plants/kokosnöt.png");
+	public static final Sprite[] sticks = getSticks();
 	
 	/*
 	 * ETC
@@ -89,7 +90,7 @@ public class SpriteCollection {
 	public static final Sprite statue = new Sprite("res/art/special/statue.png");
 	public static final Sprite circle = new Sprite("res/art/circle.png");
 	public static final Sprite[] axe = getAxeSprites();
-	public static final Sprite[] pickaxe = getAxeSprites();
+	public static final Sprite[] pickaxe = getPickaxeSprites();
 	public static final Sprite shadow = new Sprite("res/art/tools/shadow.png");
 	
 	/*
@@ -128,6 +129,14 @@ public class SpriteCollection {
 	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
 	public static final Sprite[] WPointer = WPointer();
+	
+	public static Sprite[] getSticks() {
+		Sprite[] sticks = new Sprite[3];
+		for (int i = 0; i < sticks.length; i++) {
+			sticks[i] = new Sprite("res/art/plants/sticks/" + i + ".png");
+		}
+		return sticks;
+	}
 
 	public static Sprite[] getAxeSprites() {
 		Sprite[] axe = new Sprite[4];

@@ -1,6 +1,5 @@
 package spel.entities;
 
-import java.util.Collections;
 import java.util.Random;
 
 import org.lwjgl.input.Mouse;

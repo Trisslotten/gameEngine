@@ -2,16 +2,11 @@ package spel.entities.structures.vegetation;
 
 import java.util.Random;
 
-import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-
 import spel.Game;
 import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
-import spel.entities.items.resources.Stone;
+import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
-import spel.entities.structures.Structure;
-import spel.entities.items.resources.*;
 import spel.entities.items.tools.ThrowingTool;
 
 public class Tree extends Vegetation {
