@@ -124,7 +124,7 @@ public class SpriteCollection {
 	/*
 	 * MOB
 	 */
-	public static final Sprite monL = new Sprite("res/art/MOB/monkeyL.png");
+	public static final Sprite mon = new Sprite("res/art/MOB/monkey.png");
 	public static final Sprite monR = new Sprite("res/art/MOB/monkeyR.png");
 	
 	public static final Sprite cursor = new Sprite("res/art/cursor.png");
