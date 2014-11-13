@@ -26,8 +26,6 @@ public class Player extends Entity implements Serializable {
 	public int Tx = 0;
 	public int windowWidth, windowHeight;
 	int pointerindex = 0;
-	int hunger = 100;
-	int food;
 	double timer;
 	int tick = 0;
 	boolean drawWPointer = false, standframe = false;
@@ -63,11 +61,6 @@ public class Player extends Entity implements Serializable {
 
 	public void update(double dt, Game game) {
 		deltaSum++;
-		if (tick >= 360) {
-			hunger--;
-			tick = 0;
-		}
-		tick++;
 		double interval = 10;
 		if (deltaSum > deltaTimer + interval) {
 			deltaTimer += interval;
@@ -338,10 +331,6 @@ public class Player extends Entity implements Serializable {
 
 	public int getxpos() {
 		return (int) xpos;
-	}
-
-	public void eat(int amount) {
-		hunger += amount;
 	}
 
 	public void addfood() {
