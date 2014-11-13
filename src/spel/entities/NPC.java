@@ -17,7 +17,7 @@ public class NPC extends Mob {
 	int ty = 0;
 	int cx;
 	int cy;
-	int velocity = 176;
+	int velocity = 256;
 	int idlewalking = 0;
 	int selectorindex = 0;
 	int pointerindex = 0;
