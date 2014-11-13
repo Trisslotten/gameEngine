@@ -1,18 +1,28 @@
 package spel.entities.gui.button;
 
 import spel.Game;
-import spel.entities.Sprite;
+import spel.entities.gui.SpriteCollection;
 
 public class CraftPickaxeButton extends Button {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6820466860416949609L;
+
 	public CraftPickaxeButton(double xpos, double ypos, Game game) {
 		super(xpos, ypos, game);
-		// TODO Auto-generated constructor stub
+		this.width = SpriteCollection.craftPickaxe.width;
+		this.height = SpriteCollection.craftPickaxe.height;
+	}
+	
+	public void clickedEvent() {
+		game.saveGame.player.craftPickaxe();
+	}
+	
+	public void render() {
+		SpriteCollection.craftPickaxe.render(xpos, ypos);
 	}
 
-	public CraftPickaxeButton(float xpos, float ypos, Game game, Sprite sprite) {
-		super(xpos, ypos, game, sprite);
-		// TODO Auto-generated constructor stub
-	}
 
 }

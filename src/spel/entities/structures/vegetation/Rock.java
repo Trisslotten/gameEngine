@@ -28,14 +28,14 @@ public class Rock extends Vegetation {
 
 	public Stone harvest() {
 		Random rand = new Random();
-		durability -= 50;
-		return new Stone(rand.nextInt(3) + 1);
+		durability -= 10;
+		return new Stone(rand.nextInt(2));
 	}
 
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		boolean hover = hover(game, SpriteCollection.rock.width, SpriteCollection.rock.height);
-		if (player.hasPickaxe && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
+		if (player.hasPickaxe && player.pickaxeSelected && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
 			throwingTool = new ThrowingTool(player.xpos + game.getWidth() / 2, player.ypos + game.getHeight() / 2, collx + game.getWidth() / 2, colly + game.getHeight() / 2 - 20, this, false);
 			player.vegetationClicked();
 		}

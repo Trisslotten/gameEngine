@@ -33,8 +33,8 @@ public class Tree extends Vegetation {
 
 	public Resource harvest() {
 		Random rand = new Random();
-		durability -= 50;
-		return new Wood(rand.nextInt(2) + 1);
+		durability -= 10;
+		return new Wood(rand.nextInt(2));
 	}
 
 	public void cut() {
@@ -44,9 +44,9 @@ public class Tree extends Vegetation {
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		boolean hover = hover(game, SpriteCollection.palmtree.width, SpriteCollection.palmtree.height);
-		if (player.hasAxe && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
-			throwingTool = new ThrowingTool(player.xpos + game.getWidth() / 2, player.ypos + game.getHeight() / 2, collx + game.getWidth() / 2, colly + game.getHeight() / 2 - 20, this,true);
-			player.vegetationClicked = true; 
+		if (player.hasAxe && player.axeSelected && game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
+			throwingTool = new ThrowingTool(player.xpos + game.getWidth() / 2, player.ypos + game.getHeight() / 2, collx + game.getWidth() / 2, colly + game.getHeight() / 2 - 20, this, true);
+			player.vegetationClicked = true;
 		}
 		if (throwingTool != null) {
 			boolean hit = throwingTool.hit;
@@ -55,7 +55,6 @@ public class Tree extends Vegetation {
 				throwingTool = null;
 				player.vegetationClicked = false;
 			}
-				
 			if (!hit && throwingTool.hit) {
 				player.inventory.addResource(harvest());
 			}

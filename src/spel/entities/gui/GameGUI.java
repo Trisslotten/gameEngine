@@ -28,6 +28,10 @@ public class GameGUI {
 	public StoneIcon stone;
 	public WoodIcon wood;
 	public AmountIcon amount;
+	
+	public SelectAxeButton selectAxe;
+	public SelectPickaxeButton selectPickaxe;
+	
 
 	public CraftFireButton craftFire;
 	public CraftAxeButton craftAxe;
@@ -48,22 +52,31 @@ public class GameGUI {
 		stone = new StoneIcon(0, 0);
 		wood = new WoodIcon(0, 0);
 		amount = new AmountIcon(0, 0);
+		
+		selectAxe = new SelectAxeButton(game.getWidth() - SpriteCollection.sidebar.width, 300, game);
+		selectPickaxe = new SelectPickaxeButton(game.getWidth() - SpriteCollection.sidebar.width,400, game);
 
 		craftingMenu = new CraftingPopup(240, 20);
 		craftFire = new CraftFireButton(240 + 53, 200, game);
-
+		craftAxe = new CraftAxeButton(240 + 53 + 173, 200, game);
+		craftPickaxe = new CraftPickaxeButton(240 + 53 + 173*2, 200, game);
+		craftShelter = new CraftShelterButton(240 + 53 + 173*3, 200, game);
 	}
 
 	public void update(Game game) {
 		bagButton.update(0);
 		craftButton.update(0);
+		selectAxe.update(0);
+		selectPickaxe.update(0);
 		if (bagButton.active) {
 			if (!craftButton.active && game.cursor.buttonClicked(0)) {
-				//bagButton.active = false;
+				// bagButton.active = false;
 			}
 		}
 		if (craftButton.active) {
 			craftFire.update(0);
+			craftAxe.update(0);
+			craftPickaxe.update(0);
 		}
 
 	}
@@ -72,6 +85,8 @@ public class GameGUI {
 		sidebar.render();
 		bagButton.render();
 		craftButton.render();
+		selectPickaxe.render();
+		selectAxe.render();
 		if (bagButton.active) {
 			bag.render();
 
@@ -147,6 +162,8 @@ public class GameGUI {
 		if (craftButton.active) {
 			craftingMenu.render();
 			craftFire.render();
+			craftAxe.render();
+			craftPickaxe.render();
 		}
 	}
 

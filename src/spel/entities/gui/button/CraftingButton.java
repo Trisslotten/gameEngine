@@ -6,6 +6,10 @@ import spel.entities.gui.SpriteCollection;
 
 public class CraftingButton extends Button {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2283970947309487504L;
 	public boolean active = false;
 
 	public CraftingButton(double xpos, double ypos, Game game) {

@@ -36,7 +36,10 @@ public class Player extends Entity implements Serializable {
 	public boolean collided, harvesting;
 	public Vegetation harvest;
 	public boolean hasAxe = false, hasPickaxe = false, hasHammer = false;
+	public boolean axeSelected = false, pickaxeSelected = false;
 	public boolean hutSelected = false, fireplaceSelected = false, shelterSelected = false;
+	public int npcCounter = 0;
+	
 
 	public Inventory inventory;
 	public boolean vegetationClicked;
@@ -278,13 +281,13 @@ public class Player extends Entity implements Serializable {
 
 	public void craftPickaxe() {
 		if (inventory.payCost(5, 5, 0, 0)) {
-			this.hasAxe = true;
+			this.hasPickaxe = true;
 		}
 	}
 
 	public void craftHammer() {
-		if (inventory.payCost(5, 1, 0, 5)) {
-			this.hasAxe = true;
+		if (inventory.payCost(5, 1, 0, 1)) {
+			this.hasHammer = true;
 		}
 	}
 
