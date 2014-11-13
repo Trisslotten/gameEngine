@@ -39,7 +39,7 @@ public class Inventory implements Serializable {
 	}
 
 	public boolean payCost(int woodCost, int stoneCost, int nailCost, int ironCost) {
-		boolean canPay = true, woodExists = false, stoneExists = false, nailsExists = false;
+		boolean canPay = true, woodExists = false, stoneExists = false, nailsExists = false, ironExists = false;
 		for (int i = 0; i < items.size(); i++) {
 			Resource res = items.elementAt(i);
 			if (res.getClass().getSimpleName().equals("Wood")) {
@@ -57,6 +57,11 @@ public class Inventory implements Serializable {
 				if(nailCost>res.getAmount()){
 					canPay = false;
 				}
+			}  else if (res.getClass().getSimpleName().equals("Iron")) {
+				ironExists = true;
+				if(ironCost>res.getAmount()){
+					canPay = false;
+				}
 			}
 		}
 		if(!woodExists&&woodCost>0) {
@@ -66,6 +71,9 @@ public class Inventory implements Serializable {
 			canPay = false;
 		}
 		if(!nailsExists&&nailCost>0) {
+			canPay = false;
+		}
+		if(!ironExists&&ironCost>0) {
 			canPay = false;
 		}
 		if (canPay) {

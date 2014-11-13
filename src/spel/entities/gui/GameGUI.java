@@ -39,6 +39,7 @@ public class GameGUI {
 	public CraftBoatButton craftBoat;
 	public CraftShelterButton craftShelter;
 	public CraftHutButton craftHut;
+	public CraftNailsButton craftNails;
 
 	public GameGUI(Game game) {
 		sidebar = new Sidebar(game.getWidth() - SpriteCollection.sidebar.width, 0);
@@ -61,6 +62,7 @@ public class GameGUI {
 		craftAxe = new CraftAxeButton(240 + 53 + 173, 200, game);
 		craftPickaxe = new CraftPickaxeButton(240 + 53 + 173*2, 200, game);
 		craftShelter = new CraftShelterButton(240 + 53 + 173*3, 200, game);
+		craftNails = new CraftNailsButton(240 + 53 + 173*3,200,game);
 	}
 
 	public void update(Game game) {
@@ -77,6 +79,7 @@ public class GameGUI {
 			craftFire.update(0);
 			craftAxe.update(0);
 			craftPickaxe.update(0);
+			craftNails.update(0);
 		}
 
 	}
@@ -164,6 +167,7 @@ public class GameGUI {
 			craftFire.render();
 			craftAxe.render();
 			craftPickaxe.render();
+			craftNails.render();
 		}
 	}
 

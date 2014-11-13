@@ -40,7 +40,6 @@ public class Player extends Entity implements Serializable {
 	public boolean axeSelected = false, pickaxeSelected = false;
 	public boolean hutSelected = false, fireplaceSelected = false, shelterSelected = false;
 	public int npcCounter = 0;
-	
 
 	public Inventory inventory;
 	public boolean vegetationClicked;
@@ -107,9 +106,11 @@ public class Player extends Entity implements Serializable {
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity;
 			yspd = Math.sin(angle) * velocity;
-			/* angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
+			/*
+			 * angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
 			 * (double) i; if (angle > d * Math.PI / 4 && angle <= d * Math.PI /
-			 * 4 + Math.PI / 4) { direction = i; } } */
+			 * 4 + Math.PI / 4) { direction = i; } }
+			 */
 
 			for (int i = 0; i < 9; i++) {
 				double d = (double) i;
@@ -292,6 +293,26 @@ public class Player extends Entity implements Serializable {
 		}
 	}
 
+	public void craftBoat(Game game) {
+		int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
+		int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
+		if (game.saveGame.level.getTile(x, y).getClass().getSimpleName().equals("WaterTile") && npcCounter >= 3) {
+			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
+			if (hut.payCost(game)) {
+				game.saveGame.level.structures.add(hut);
+			} else {
+
+			}
+		}
+	}
+
+	public void craftNails() {
+		if(inventory.payCost(0, 0, 0, 1)) {
+			inventory.addResource(new IronNails(10));
+		}
+
+	}
+
 	public int getrange(double xpos, double ypos) {
 		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
 		return r;
@@ -326,13 +347,20 @@ public class Player extends Entity implements Serializable {
 	public void eat(int amount) {
 		hunger += amount;
 	}
-	public void addfood(){
-		inventory.addResource(new Food(1));;
+
+	public void addfood() {
+		inventory.addResource(new Food(1));
+		;
 	}
-	public void addstone(){
-		inventory.addResource(new Stone(1));;
+
+	public void addstone() {
+		inventory.addResource(new Stone(1));
+		;
 	}
-	public void addwood(){
-		inventory.addResource(new Wood(1));;
+
+	public void addwood() {
+		inventory.addResource(new Wood(1));
+		;
 	}
+
 }

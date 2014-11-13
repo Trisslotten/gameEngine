@@ -7,6 +7,8 @@ import org.lwjgl.input.Mouse;
 import spel.Game;
 import spel.entities.Player;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.items.resources.Iron;
+import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Stone;
 import spel.entities.items.tools.ThrowingTool;
 
@@ -26,10 +28,15 @@ public class Rock extends Vegetation {
 		radius = 26;
 	}
 
-	public Stone harvest() {
+	public Resource harvest() {
 		Random rand = new Random();
 		durability -= 10;
-		return new Stone(rand.nextInt(2));
+		if(rand.nextBoolean()&&rand.nextBoolean()&&rand.nextBoolean()&&rand.nextBoolean()){
+			return new Iron(rand.nextInt(2));
+		} else {
+			return new Stone(rand.nextInt(2));
+		}
+		
 	}
 
 	public void update(double dt, Game game) {

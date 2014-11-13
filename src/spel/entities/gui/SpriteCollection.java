@@ -75,12 +75,13 @@ public class SpriteCollection {
 	public static final Sprite start = new Sprite("res/art/buttons/menu/spela.png");
 	public static final Sprite startHover = new Sprite("res/art/buttons/menu/spela_hover.png");
 	public static final Sprite craftFire = new Sprite("res/art/gui/craft/fireplace.png");
-	public static final Sprite craftAxe = new Sprite("res/art/gui/craft/fireplace.png");
-	public static final Sprite craftPickaxe = new Sprite("res/art/gui/craft/fireplace.png");
-	public static final Sprite craftHut = new Sprite("res/art/gui/craft/fireplace.png");
+	public static final Sprite craftAxe = new Sprite("res/art/gui/craft/axe.png");
+	public static final Sprite craftPickaxe = new Sprite("res/art/gui/craft/pickaxe.png");
+	public static final Sprite craftNails = new Sprite("res/art/gui/craft/nails.png");
+	public static final Sprite craftHut = new Sprite("res/art/gui/craft/hut.png");
 	public static final Sprite craftShelter = new Sprite("res/art/gui/craft/fireplace.png");
 	public static final Sprite craftHammer = new Sprite("res/art/gui/craft/fireplace.png");
-	public static final Sprite craftBoat = new Sprite("res/art/gui/craft/fireplace.png");
+	public static final Sprite craftBoat = new Sprite("res/art/gui/craft/boat.png");
 	
 	
 	
