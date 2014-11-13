@@ -7,7 +7,8 @@ import spel.entities.gui.backgrounds.BagPopup;
 import spel.entities.gui.backgrounds.CraftingPopup;
 import spel.entities.gui.backgrounds.Sidebar;
 import spel.entities.gui.button.BagButton;
-import spel.entities.gui.button.CraftingButton;
+import spel.entities.gui.button.CraftFireButton;
+import spel.entities.gui.button.*;
 import spel.entities.gui.icons.*;
 import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
@@ -20,7 +21,7 @@ public class GameGUI {
 	public CraftingButton craftButton;
 	public BagPopup bag;
 	public CraftingPopup craftingMenu;
-	
+
 	public FoodIcon food;
 	public IronIcon iron;
 	public NailIcon nail;
@@ -28,35 +29,41 @@ public class GameGUI {
 	public WoodIcon wood;
 	public AmountIcon amount;
 
+	public CraftFireButton craftFire;
+	public CraftAxeButton craftAxe;
+	public CraftPickaxeButton craftPickaxe;
+	public CraftBoatButton craftBoat;
+	public CraftShelterButton craftShelter;
+	public CraftHutButton craftHut;
+
 	public GameGUI(Game game) {
 		sidebar = new Sidebar(game.getWidth() - SpriteCollection.sidebar.width, 0);
 		bagButton = new BagButton(game.getWidth() - SpriteCollection.sidebar.width + 5, 20, game);
 		craftButton = new CraftingButton(game.getWidth() - SpriteCollection.sidebar.width + 5, SpriteCollection.bag.height + 100, game);
-		bag = new BagPopup(0,0);
-		craftingMenu = new CraftingPopup(200,200);
-		food = new FoodIcon(0,0);
-		iron = new IronIcon(0,0);
-		nail = new NailIcon(0,0);
-		stone = new StoneIcon(0,0);
-		wood = new WoodIcon(0,0);
-		amount = new AmountIcon(0,0);
 
-		
-		
-		
+		bag = new BagPopup(0, 0);
+		food = new FoodIcon(0, 0);
+		iron = new IronIcon(0, 0);
+		nail = new NailIcon(0, 0);
+		stone = new StoneIcon(0, 0);
+		wood = new WoodIcon(0, 0);
+		amount = new AmountIcon(0, 0);
+
+		craftingMenu = new CraftingPopup(240, 20);
+		craftFire = new CraftFireButton(240 + 53, 200, game);
+
 	}
 
 	public void update(Game game) {
 		bagButton.update(0);
 		craftButton.update(0);
 		if (bagButton.active) {
-			
-			if(!craftButton.active&&game.cursor.buttonClicked(0)){
+			if (!craftButton.active && game.cursor.buttonClicked(0)) {
 				//bagButton.active = false;
 			}
 		}
 		if (craftButton.active) {
-			
+			craftFire.update(0);
 		}
 
 	}
@@ -67,81 +74,79 @@ public class GameGUI {
 		craftButton.render();
 		if (bagButton.active) {
 			bag.render();
-			
-			
+
 			int counter = 0;
-			int width = 1250/5;
+			int width = 1250 / 5;
 			int start = 65;
-			for(Resource res:game.saveGame.player.inventory.items) {
-				if(res.getClass().getSimpleName().equals("Wood")){
-					wood.render(start+counter*width, 0);
-					amount.render(start+counter*width+140, 50);
-					if(res.getAmount()>=10){
-						if(res.getAmount()>=100){
-							game.smaller.render(start+counter*width+147, 59, ""+res.getAmount(), Color.black);
+			for (Resource res : game.saveGame.player.inventory.items) {
+				if (res.getClass().getSimpleName().equals("Wood")) {
+					wood.render(start + counter * width, 0);
+					amount.render(start + counter * width + 140, 50);
+					if (res.getAmount() >= 10) {
+						if (res.getAmount() >= 100) {
+							game.smaller.render(start + counter * width + 147, 59, "" + res.getAmount(), Color.black);
 						} else {
-							game.small.render(start+counter*width+147, 56, ""+res.getAmount(), Color.black);
+							game.small.render(start + counter * width + 147, 56, "" + res.getAmount(), Color.black);
 						}
 					} else {
-						game.text.render(start+counter*width+150, 52, ""+res.getAmount(), Color.black);
+						game.text.render(start + counter * width + 150, 52, "" + res.getAmount(), Color.black);
 					}
-				} else if(res.getClass().getSimpleName().equals("Stone")){
-					stone.render(start+counter*width, 0);
-					amount.render(start+counter*width+140, 50);
-					if(res.getAmount()>=10){
-						if(res.getAmount()>=100){
-							game.smaller.render(start+counter*width+147, 59, ""+res.getAmount(), Color.black);
+				} else if (res.getClass().getSimpleName().equals("Stone")) {
+					stone.render(start + counter * width, 0);
+					amount.render(start + counter * width + 140, 50);
+					if (res.getAmount() >= 10) {
+						if (res.getAmount() >= 100) {
+							game.smaller.render(start + counter * width + 147, 59, "" + res.getAmount(), Color.black);
 						} else {
-							game.small.render(start+counter*width+147, 56, ""+res.getAmount(), Color.black);
+							game.small.render(start + counter * width + 147, 56, "" + res.getAmount(), Color.black);
 						}
 					} else {
-						game.text.render(start+counter*width+150, 52, ""+res.getAmount(), Color.black);
+						game.text.render(start + counter * width + 150, 52, "" + res.getAmount(), Color.black);
 					}
-				} else if(res.getClass().getSimpleName().equals("Food")){
-					food.render(start+counter*width, 0);
-					amount.render(start+counter*width+140, 50);
-					if(res.getAmount()>=10){
-						if(res.getAmount()>=100){
-							game.smaller.render(start+counter*width+147, 59, ""+res.getAmount(), Color.black);
+				} else if (res.getClass().getSimpleName().equals("Food")) {
+					food.render(start + counter * width, 0);
+					amount.render(start + counter * width + 140, 50);
+					if (res.getAmount() >= 10) {
+						if (res.getAmount() >= 100) {
+							game.smaller.render(start + counter * width + 147, 59, "" + res.getAmount(), Color.black);
 						} else {
-							game.small.render(start+counter*width+147, 56, ""+res.getAmount(), Color.black);
+							game.small.render(start + counter * width + 147, 56, "" + res.getAmount(), Color.black);
 						}
 					} else {
-						game.text.render(start+counter*width+150, 52, ""+res.getAmount(), Color.black);
+						game.text.render(start + counter * width + 150, 52, "" + res.getAmount(), Color.black);
 					}
-				} else if(res.getClass().getSimpleName().equals("Iron")){
-					iron.render(start+counter*width, 0);
-					amount.render(start+counter*width+140, 50);
-					if(res.getAmount()>=10){
-						if(res.getAmount()>=100){
-							game.smaller.render(start+counter*width+147, 59, ""+res.getAmount(), Color.black);
+				} else if (res.getClass().getSimpleName().equals("Iron")) {
+					iron.render(start + counter * width, 0);
+					amount.render(start + counter * width + 140, 50);
+					if (res.getAmount() >= 10) {
+						if (res.getAmount() >= 100) {
+							game.smaller.render(start + counter * width + 147, 59, "" + res.getAmount(), Color.black);
 						} else {
-							game.small.render(start+counter*width+147, 56, ""+res.getAmount(), Color.black);
+							game.small.render(start + counter * width + 147, 56, "" + res.getAmount(), Color.black);
 						}
 					} else {
-						game.text.render(start+counter*width+150, 52, ""+res.getAmount(), Color.black);
+						game.text.render(start + counter * width + 150, 52, "" + res.getAmount(), Color.black);
 					}
-				} else if(res.getClass().getSimpleName().equals("IronNails")){
-					nail.render(start+counter*width, 0);
-					amount.render(start+counter*width+140, 50);
-					if(res.getAmount()>=10){
-						if(res.getAmount()>=100){
-							game.smaller.render(start+counter*width+147, 59, ""+res.getAmount(), Color.black);
+				} else if (res.getClass().getSimpleName().equals("IronNails")) {
+					nail.render(start + counter * width, 0);
+					amount.render(start + counter * width + 140, 50);
+					if (res.getAmount() >= 10) {
+						if (res.getAmount() >= 100) {
+							game.smaller.render(start + counter * width + 147, 59, "" + res.getAmount(), Color.black);
 						} else {
-							game.small.render(start+counter*width+147, 56, ""+res.getAmount(), Color.black);
+							game.small.render(start + counter * width + 147, 56, "" + res.getAmount(), Color.black);
 						}
 					} else {
-						game.text.render(start+counter*width+150, 52, ""+res.getAmount(), Color.black);
+						game.text.render(start + counter * width + 150, 52, "" + res.getAmount(), Color.black);
 					}
 				}
 				counter++;
 			}
-			
-			
-			
+
 		}
 		if (craftButton.active) {
 			craftingMenu.render();
+			craftFire.render();
 		}
 	}
 

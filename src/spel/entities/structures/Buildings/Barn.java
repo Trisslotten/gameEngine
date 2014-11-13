@@ -18,7 +18,7 @@ public class Barn extends Structure {
 			int y = (int) (ypos/game.saveGame.level.tilePixelLength);
 			ypos = y*game.saveGame.level.tilePixelLength;
 		}
-		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost);	
+		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost,ironCost);	
 	}
 	
 	public void update(double dt) {

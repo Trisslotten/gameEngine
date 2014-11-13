@@ -1,5 +1,7 @@
 package spel.entities.structures.Buildings;
 
+import org.newdawn.slick.Color;
+
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
 import spel.entities.structures.Structure;
@@ -11,7 +13,8 @@ public class Fireplace extends Structure {
 		super(xpos, ypos, height, width, permanent, gridlocked, game);
 		this.woodCost = 8;
 		this.stoneCost = 5;
-		
+		this.xpos-= SpriteCollection.fireOff.width/2;
+		this.ypos-= SpriteCollection.fireOff.height/2;
 	}
 
 	public void update(double dt) {
@@ -23,14 +26,15 @@ public class Fireplace extends Structure {
 				tick++;
 			}
 		}
+		
 	}
 	public boolean ded() {
 		return false;
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {
-		xdraw = xpos - xoffset;
-		ydraw = ypos - xoffset;
+		xdraw = xpos - xoffset + game.getWidth()/2;
+		ydraw = ypos - yoffset + game.getHeight()/2;
 		if(durability<0) {
 			SpriteCollection.fireOff.render(xdraw,ydraw);
 		} else {

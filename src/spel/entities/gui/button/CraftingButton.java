@@ -11,6 +11,8 @@ public class CraftingButton extends Button {
 	public CraftingButton(double xpos, double ypos, Game game) {
 		super(xpos, ypos, game);
 		// TODO Auto-generated constructor stub
+		width = SpriteCollection.workbenchHover.width;
+		height = SpriteCollection.workbenchHover.height;
 	}
 
 	public CraftingButton(float xpos, float ypos, Game game, Sprite sprite) {

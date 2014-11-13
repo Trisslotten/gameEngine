@@ -16,6 +16,9 @@ public class Structure extends Entity {
 	public int woodCost;
 	public int stoneCost;
 	public int nailCost;
+	public int ironCost;
+	public int radius = 20;
+	public int collx, colly;
 	
 
 	public Structure(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
@@ -33,10 +36,13 @@ public class Structure extends Entity {
 		woodCost = 1;
 		stoneCost = 1;
 		nailCost = 0;
+		ironCost = 0;
+		collx = (int) xpos;
+		colly = (int) ypos;
 	}
 	
 	public boolean payCost(Game game) {
-		return game.saveGame.player.inventory.payCost(woodCost, stoneCost, nailCost);
+		return game.saveGame.player.inventory.payCost(woodCost, stoneCost, nailCost,ironCost);
 	}
 
 	public Structure(double xpos, double ypos, boolean permanent, boolean gridlocked) {

@@ -11,7 +11,7 @@ public class Shelter extends Structure {
 		
 		
 		
-		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost);
+		game.saveGame.player.inventory.payCost(woodCost,stoneCost,nailCost,ironCost);
 	}
 
 	public void update(double dt) {

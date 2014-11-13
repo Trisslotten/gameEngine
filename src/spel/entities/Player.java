@@ -54,18 +54,11 @@ public class Player extends Entity implements Serializable {
 		inventory = new Inventory();
 		collided = false;
 		radius = 10;
-		
-		//debug
-		inventory.addResource(new Wood(101));
-		inventory.addResource(new Food(101));
-		inventory.addResource(new Iron(101));
-		inventory.addResource(new IronNails(101));
-		inventory.addResource(new Stone(101));
+
 	}
 
 	public void update(double dt, Game game) {
 		deltaSum++;
-		Random rand = new Random();
 		if (tick >= 360) {
 			hunger--;
 			tick = 0;
@@ -102,8 +95,7 @@ public class Player extends Entity implements Serializable {
 			}
 
 		}
-		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0
-				|| Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
+		if (Math.abs(xpos - Tx) >= 10 && Tx != 0 && Ty != 0 || Math.abs(ypos - (Ty)) >= 10 && Tx != 0 && Ty != 0) {
 			walking = true;
 			drawWPointer = true;
 			double dx = xpos - Tx;
@@ -111,11 +103,9 @@ public class Player extends Entity implements Serializable {
 			double angle = Math.atan2(dy, dx);
 			xspd = Math.cos(angle) * velocity;
 			yspd = Math.sin(angle) * velocity;
-			/*
-			 * angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
+			/* angle += Math.PI / 8; for (int i = 0; i < 8; i++) { double d =
 			 * (double) i; if (angle > d * Math.PI / 4 && angle <= d * Math.PI /
-			 * 4 + Math.PI / 4) { direction = i; } }
-			 */
+			 * 4 + Math.PI / 4) { direction = i; } } */
 
 			for (int i = 0; i < 9; i++) {
 				double d = (double) i;
@@ -156,13 +146,11 @@ public class Player extends Entity implements Serializable {
 
 		// check collisions
 		for (Vegetation v : game.saveGame.level.plants) {
-			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0
-					&& v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
+			if (v.xdraw + v.width > 0 && v.ydraw + v.height > 0 && v.xdraw < game.getWidth() && v.ydraw < game.getHeight()) {
 				double deltax = v.collx - (xpos);
 				double deltay = v.colly - (ypos);
 
-				double circleDistance = Math.sqrt(deltax * deltax + deltay
-						* deltay);
+				double circleDistance = Math.sqrt(deltax * deltax + deltay * deltay);
 				if (circleDistance < v.radius + radius) {
 					collided = true;
 					double[] v1 = rotateVector(deltax, deltay, Math.PI / 2);
@@ -188,6 +176,22 @@ public class Player extends Entity implements Serializable {
 				}
 			}
 		}
+		for (Structure v : game.saveGame.level.structures) {
+
+		}
+
+		if (fireplace) {
+			if (game.cursor.buttonClicked(0)) {
+				craftFireplace(game);
+				fireplace = false;
+			}
+		} else if (hut) {
+			if (game.cursor.buttonClicked(0)) {
+				craftHut(game);
+				hut = false;
+			}
+
+		}
 
 		xpos -= xspd * dt / 1000;
 		ypos -= yspd * dt / 1000;
@@ -196,6 +200,9 @@ public class Player extends Entity implements Serializable {
 		ydraw = ypos;
 		vegetationClicked = false;
 	}
+
+	public boolean fireplace = false;
+	public boolean hut = false;
 
 	public double getDrawBottom() {
 		return (windowHeight / 2) - 87 + height;
@@ -213,42 +220,42 @@ public class Player extends Entity implements Serializable {
 		xdraw -= xspd * interpolation;
 		ydraw -= yspd * interpolation;
 		if (drawWPointer) {
-			SpriteCollection.WPointer[pointerindex].render(Tx - xpos
-					+ windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
+			SpriteCollection.WPointer[pointerindex].render(Tx - xpos + windowWidth / 2 - 32, Ty - ypos + windowHeight / 2 - 40);
 		}
 		if (walking) {
 			if (standframe) {
-				SpriteCollection.playerWalking[direction][0].render(
-						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][0].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			} else {
-				SpriteCollection.playerWalking[direction][walkframe].render(
-						(windowWidth / 2) - 32, (windowHeight / 2) - 87);
+				SpriteCollection.playerWalking[direction][walkframe].render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 			}
 
 		} else {
-			SpriteCollection.player.render((windowWidth / 2) - 32,
-					(windowHeight / 2) - 87);
+			SpriteCollection.player.render((windowWidth / 2) - 32, (windowHeight / 2) - 87);
 		}
 
 		inventory.render(game);
 	}
-	
+
+	public void fireplaceActive() {
+		fireplace = true;
+	}
+
 	public void craftFireplace(Game game) {
-		if (game.cursor.buttonClicked(0)&&hutSelected) {
+		if (true) {
 			int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
 			int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
-			Structure fireplace = new Fireplace(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, false, false, game);
-			if (!placedHut) {
-				if (fireplace.payCost(game)) {
-					game.saveGame.level.structures.add(fireplace);
-					placedHut = true;
-				}
+			Structure fireplace = new Fireplace(x, y, SpriteCollection.fireOn.width, SpriteCollection.fireOn.height, false, false, game);
+			if (fireplace.payCost(game)) {
+				game.saveGame.level.structures.add(fireplace);
+			} else {
+				System.out.println("cannot afford fireplace");
 			}
+
 		}
 	}
 
 	public void craftHut(Game game) {
-		if (game.cursor.buttonClicked(0)&&game.saveGame.player.hutSelected) {
+		if (true) {
 			int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
 			int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
 			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
@@ -256,31 +263,33 @@ public class Player extends Entity implements Serializable {
 				if (hut.payCost(game)) {
 					game.saveGame.level.structures.add(hut);
 					placedHut = true;
+				} else {
+
 				}
 			}
 		}
 	}
-	
+
 	public void craftAxe() {
-		if(inventory.payCost(2, 2, 0)) {
+		if (inventory.payCost(2, 2, 0, 0)) {
 			this.hasAxe = true;
 		}
 	}
-	
+
 	public void craftPickaxe() {
-		if(inventory.payCost(5, 5, 0)) {
+		if (inventory.payCost(5, 5, 0, 0)) {
 			this.hasAxe = true;
 		}
 	}
+
 	public void craftHammer() {
-		if(inventory.payCost(5, 1, 0)) {
+		if (inventory.payCost(5, 1, 0, 5)) {
 			this.hasAxe = true;
 		}
 	}
-	
+
 	public int getrange(double xpos, double ypos) {
-		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2)
-				+ Math.pow(this.ypos - ypos, 2));
+		int r = (int) Math.sqrt(Math.pow(this.xpos - xpos, 2) + Math.pow(this.ypos - ypos, 2));
 		return r;
 	}
 
