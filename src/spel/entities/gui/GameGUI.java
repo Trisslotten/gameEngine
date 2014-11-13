@@ -6,8 +6,7 @@ import spel.Game;
 import spel.entities.gui.backgrounds.BagPopup;
 import spel.entities.gui.backgrounds.CraftingPopup;
 import spel.entities.gui.backgrounds.Sidebar;
-import spel.entities.gui.button.BagButton;
-import spel.entities.gui.button.CraftFireButton;
+import spel.entities.gui.backgrounds.WinScreen;
 import spel.entities.gui.button.*;
 import spel.entities.gui.icons.*;
 import spel.entities.items.resources.Resource;
@@ -63,6 +62,10 @@ public class GameGUI {
 		craftPickaxe = new CraftPickaxeButton(240 + 53 + 173*2, 200, game);
 		craftShelter = new CraftShelterButton(240 + 53 + 173*3, 200, game);
 		craftNails = new CraftNailsButton(240 + 53 + 173*3,200,game);
+		craftHut = new CraftHutButton(240 + 53, 200+243,game);
+		craftBoat = new CraftBoatButton(240 + 53 + 173,443,game);
+		
+		win = new WinScreen(0,0);
 	}
 
 	public void update(Game game) {
@@ -80,6 +83,8 @@ public class GameGUI {
 			craftAxe.update(0);
 			craftPickaxe.update(0);
 			craftNails.update(0);
+			craftHut.update(0);
+			craftBoat.update(0);
 		}
 
 	}
@@ -168,7 +173,15 @@ public class GameGUI {
 			craftAxe.render();
 			craftPickaxe.render();
 			craftNails.render();
+			craftBoat.render();
+			craftHut.render();
+		}
+		if(game.saveGame.player.won) {
+			
+			win.render();
 		}
 	}
+	WinScreen win;
+	
 
 }

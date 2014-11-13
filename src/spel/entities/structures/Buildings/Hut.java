@@ -18,7 +18,7 @@ public class Hut extends Structure {
 	}
 
 	public void update(double dt) {
-
+		
 	}
 
 	public void render(int xoffset, int yoffset, Game game) {

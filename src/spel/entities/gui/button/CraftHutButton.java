@@ -13,11 +13,11 @@ public class CraftHutButton extends Button {
 	}
 	
 	public void clickedEvent() {
-		game.saveGame.player.craftAxe();
+		game.saveGame.player.craftHut(game);
 	}
 	
 	public void render() {
-		SpriteCollection.craftAxe.render(xpos, ypos);
+		SpriteCollection.craftHut.render(xpos, ypos);
 	}
 
 }

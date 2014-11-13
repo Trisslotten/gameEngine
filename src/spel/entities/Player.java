@@ -40,6 +40,7 @@ public class Player extends Entity implements Serializable {
 	public boolean axeSelected = false, pickaxeSelected = false;
 	public boolean hutSelected = false, fireplaceSelected = false, shelterSelected = false;
 	public int npcCounter = 0;
+	public boolean won = false;
 
 	public Inventory inventory;
 	public boolean vegetationClicked;
@@ -296,13 +297,8 @@ public class Player extends Entity implements Serializable {
 	public void craftBoat(Game game) {
 		int x = (int) (xpos) + (int) game.cursor.getXdraw() - game.getWidth() / 2;
 		int y = (int) (ypos) + (int) game.cursor.getYdraw() - game.getHeight() / 2;
-		if (game.saveGame.level.getTile(x, y).getClass().getSimpleName().equals("WaterTile") && npcCounter >= 3) {
-			Structure hut = new Hut(x, y, SpriteCollection.hut.width, SpriteCollection.hut.height, true, true, game);
-			if (hut.payCost(game)) {
-				game.saveGame.level.structures.add(hut);
-			} else {
-				
-			}
+		if (npcCounter >= 3) {
+			game.saveGame.player.won = true;
 		}
 	}
 

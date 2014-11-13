@@ -12,6 +12,7 @@ public class SpriteCollection {
 	public static final Sprite fireOn = new Sprite("res/art/structures/fireplace/on.png");
 	public static final Sprite fireOff = new Sprite("res/art/structures/fireplace/off.png");
 	
+	public static final Sprite winScreen = new Sprite("res/art/winScreen.png");
 	
 	/*
 	 * PlayerSprites

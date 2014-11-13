@@ -64,7 +64,7 @@ public class Main implements Runnable {
 			System.exit(0);
 		}
 		version = glGetString(GL_VERSION);
-		Display.setTitle("OpenGL " + version + " | " + title + " | " + 0 + " ups, " + 0 + " fps");
+		Display.setTitle("Kapten Kaj");
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -164,12 +164,6 @@ public class Main implements Runnable {
 
 			if ((long)getMillis() - timer > 1000) {
 				timer += 1000;
-				
-				if (objects > 0) {
-					Display.setTitle("OpenGL " + version + " | " + title + " | " + updates + " TICKS, " + frames + " FPS | " + objects + " Rendered");
-				} else {
-					Display.setTitle("OpenGL " + version + " | " + title + " | " + updates + " TICKS, " + frames + " FPS");
-				}
 				
 				updates = 0;
 				frames = 0;
