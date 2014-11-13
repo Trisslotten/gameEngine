@@ -10,39 +10,45 @@ import spel.entities.items.resources.Resource;
 import spel.entities.items.resources.Wood;
 
 public class BerryBush extends Vegetation {
-	
 
-	public BerryBush(double xpos, double ypos, double height, double width, boolean permanent, boolean gridlocked, Game game) {
+	boolean harvested = false;
+
+	public BerryBush(double xpos, double ypos, double height, double width,
+			boolean permanent, boolean gridlocked, Game game) {
 		super(xpos, ypos, height, width, permanent, gridlocked, game);
 		// TODO Auto-generated constructor stub
 	}
 
-	public BerryBush(double xpos, double ypos, boolean permanent, boolean gridlocked) {
+	public BerryBush(double xpos, double ypos, boolean permanent,
+			boolean gridlocked) {
 		super(xpos, ypos, permanent, gridlocked);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Resource harvest() {
 		Random rand = new Random();
-		durability -= 100;
+		harvested = true;
 		return new Food(rand.nextInt(2) + 1);
 	}
-	
+
 	public boolean toGetHarvested = false;
+
 	public void update(double dt, Game game) {
 		Player player = game.saveGame.player;
 		player.vegetationClicked = false;
 		boolean hover = hover(game, width, height);
-		int x = (int) (xpos+32);
-		int y = (int) (ypos+32);
+		int x = (int) (xpos + 60);
+		int y = (int) (ypos + 32);
 		int range = player.getrange(x, y);
-		if(toGetHarvested&&range<40) {
-			player.vegetationClicked = true; 
+		if (toGetHarvested && range < 40 &&!harvested) {
+			player.vegetationClicked = true;
 			player.inventory.addResource(harvest());
-		} else if (game.cursor.buttonClicked(0) && hover && !player.vegetationClicked&&range<40) {
-			player.vegetationClicked = true; 
+		} else if (game.cursor.buttonClicked(0) && hover
+				&& !player.vegetationClicked && range < 40) {
+			player.vegetationClicked = true;
 			player.inventory.addResource(harvest());
-		} else if(game.cursor.buttonClicked(0) && hover && !player.vegetationClicked) {
+		} else if (game.cursor.buttonClicked(0) && hover
+				&& !player.vegetationClicked) {
 			toGetHarvested = true;
 			player.Tx = (int) x;
 			player.Ty = (int) y;
@@ -52,7 +58,11 @@ public class BerryBush extends Vegetation {
 	public void render(int xoffset, int yoffset, Game game) {
 		xdraw = xpos - xoffset;
 		ydraw = ypos - yoffset;
-		SpriteCollection.sticks[0].render(xdraw, ydraw);
+		if (!harvested) {
+			SpriteCollection.BB.render(xdraw, ydraw);
+		} else {
+			SpriteCollection.BBH.render(xdraw, ydraw);
+		}
 	}
 
 }

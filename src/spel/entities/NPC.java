@@ -49,7 +49,7 @@ public class NPC extends Mob {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
-		this.variation=variation;
+		this.variation = variation;
 		width = SpriteCollection.NPCEX.width;
 		height = SpriteCollection.NPCEX.height;
 		windowWidth = game.getWidth();
@@ -81,23 +81,6 @@ public class NPC extends Mob {
 		if (eventNPC && clicked && !found) {
 			found = true;
 			friend = true;
-		}
-		if (friend) {
-			if (tick >= 1080) {// should have no hunger left after aprox. 1.5
-								// in-game days, will rapidly die if not fed
-								// (looses all health in less than ~two seconds)
-				hunger--;
-			}
-			if (hunger <= 0) {
-				health--;
-			} else if (hunger >= 40) {
-				health++;
-			}
-			if (hunger <= 25) {
-				starving = true;
-			} else {
-				starving = false;
-			}
 		}
 		if (!found) {
 			idlewalking = 1024;
@@ -330,7 +313,7 @@ public class NPC extends Mob {
 			int counter = 0;
 			for (Vegetation v : game.saveGame.level.plants) {
 				if (game.saveGame.level.plants.elementAt(counter).getClass()
-						.getSimpleName().equals("SmallBush")) {
+						.getSimpleName().equals("BerryBush")) {
 					tree[counter] = getrange(
 							game.saveGame.level.plants.elementAt(counter).xpos,
 							game.saveGame.level.plants.elementAt(counter).ypos);
@@ -442,7 +425,14 @@ public class NPC extends Mob {
 	}
 
 	public void guard(Game game) {
-
+		if (getrange(game.saveGame.player.xpos + (windowWidth / 2),
+				game.saveGame.player.ypos + (windowHeight / 2)) > 128) {
+			tx = (int) (game.saveGame.player.xpos + (windowWidth / 2));
+			ty = (int) (game.saveGame.player.ypos + (windowHeight / 2));
+		} else {
+			tx = (int) xpos;
+			ty = (int) ypos;
+		}
 	}
 
 	public int getrange(double xpos, double ypos) {

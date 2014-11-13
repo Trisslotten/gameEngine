@@ -14,6 +14,7 @@ import spel.entities.structures.Structure;
 import spel.entities.structures.Buildings.Hut;
 import spel.entities.structures.Enemies.Monkey;
 import spel.entities.structures.special.Statue;
+import spel.entities.structures.vegetation.BerryBush;
 import spel.entities.structures.vegetation.BushTree;
 import spel.entities.structures.vegetation.Rock;
 import spel.entities.structures.vegetation.SmallBush;
@@ -113,6 +114,9 @@ public class Level implements Serializable {
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
+					else if (rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new BerryBush(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
+					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 					if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new Rock(xpos, ypos, SpriteCollection.rock.width, SpriteCollection.rock.height, false, true, game));
@@ -124,6 +128,9 @@ public class Level implements Serializable {
 						plants.add(new Sticks(xpos, ypos, SpriteCollection.smallbush.height, SpriteCollection.smallbush.width, false, true, game));
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
+					}
+					else if (rand.nextBoolean() && rand.nextBoolean()) {
+						plants.add(new BerryBush(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
 				}
 			}
