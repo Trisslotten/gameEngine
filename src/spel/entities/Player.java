@@ -301,7 +301,7 @@ public class Player extends Entity implements Serializable {
 			if (hut.payCost(game)) {
 				game.saveGame.level.structures.add(hut);
 			} else {
-
+				
 			}
 		}
 	}

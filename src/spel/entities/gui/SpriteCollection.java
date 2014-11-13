@@ -112,6 +112,10 @@ public class SpriteCollection {
 	public static final Sprite bushtree= new Sprite("res/art/plants/buskträd.png");
 	public static final Sprite coconut= new Sprite("res/art/plants/kokosnöt.png");
 	public static final Sprite smallRock = new Sprite("res/art/plants/liten.png");
+	
+	public static final Sprite BB = new Sprite("res/art/plants/BB.png");
+	public static final Sprite BBH = new Sprite("res/art/plants/BBH.png");
+	
 	public static final Sprite[] sticks = getSticks();
 	
 	/*
