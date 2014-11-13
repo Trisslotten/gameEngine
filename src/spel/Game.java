@@ -1,18 +1,20 @@
 package spel;
 
+import java.util.Random;
+
 import org.lwjgl.input.Keyboard;
 
 import spel.entities.gui.GameGUI;
 import spel.entities.gui.Gui;
 import spel.entities.gui.cursor.Cursor;
-import spel.entities.items.resources.Wood;
 import spel.main.Main;
 import spel.utils.Keys;
 import spel.utils.Settings;
+import spel.utils.Sound;
 import spel.utils.Text;
 
 public class Game extends Main {
-
+	int selector;
 	public Keys keys;
 	public Cursor cursor;
 	public Text text, small, smaller;
@@ -35,6 +37,8 @@ public class Game extends Main {
 	}
 
 	public void init() {
+		Random rand = new Random();
+		selector = rand.nextInt(3);
 		UPDATES_PER_SECOND = 60;
 		gameState = State.MENU;
 		keys = new Keys();
@@ -42,8 +46,7 @@ public class Game extends Main {
 		small = new Text(18);
 		smaller = new Text(12);
 		gui = new Gui(this);
-		
-		
+
 	}
 
 	public void loadAssets() {
@@ -58,7 +61,7 @@ public class Game extends Main {
 				paused = !paused;
 		}
 		cursor.update();
-		
+
 	}
 
 	public void quit() {
@@ -68,6 +71,7 @@ public class Game extends Main {
 
 	public void update(double dt) {
 		handleInputs(dt);
+		Random rand = new Random();
 		if (gameState == State.STARTING) {
 			gameState = State.PLAYING;
 			oldState = State.MENU;
@@ -80,6 +84,11 @@ public class Game extends Main {
 		buttonClicked = false;
 		cursor.setButtons();
 		keys.setKeys();
+
+		if (!Sound.music[selector].playing()) {
+			selector = rand.nextInt(3);
+			Sound.music[selector].play(1.0f, 0.5f);
+		}
 	}
 
 	public int render(double interpolation) {

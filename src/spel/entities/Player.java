@@ -27,6 +27,7 @@ public class Player extends Entity implements Serializable {
 	public int windowWidth, windowHeight;
 	int pointerindex = 0;
 	int hunger = 100;
+	int food;
 	double timer;
 	int tick = 0;
 	boolean drawWPointer = false, standframe = false;
@@ -322,5 +323,13 @@ public class Player extends Entity implements Serializable {
 	public void eat(int amount) {
 		hunger += amount;
 	}
-
+	public void addfood(){
+		inventory.addResource(new Food(1));;
+	}
+	public void addstone(){
+		inventory.addResource(new Stone(1));;
+	}
+	public void addwood(){
+		inventory.addResource(new Wood(1));;
+	}
 }

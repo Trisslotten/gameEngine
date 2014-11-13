@@ -16,11 +16,15 @@ public class Monkey extends Mob {
 	int tick = 0;
 	int timer = 0;
 	int timertick = 0;
-	boolean facing = true; // true=right, false = left;
+	int windowWidth;
+	int windowHeight;
+	boolean steal = true;
 	boolean fleeing = false;
 
-	public Monkey(double xpos, double ypos) {
+	public Monkey(double xpos, double ypos, Game game) {
 		super(xpos, ypos);
+		windowWidth = game.getWidth();
+		windowHeight = game.getHeight();
 	}
 
 	public void update(double dt, Game game) {
@@ -29,17 +33,17 @@ public class Monkey extends Mob {
 		if (timertick >= timer
 				&& getrange(game.saveGame.player.xpos,
 						game.saveGame.player.ypos) < 512) {
-			Sound.gorillascream.play(1.0f, 0.5f);
+			Sound.gorillascream.play(1.0f, 0.3f);
 			timertick = 0;
 		}
 		timertick++;
 		if (rand.nextInt(512) == 256) {
 			fleeing = false;
 		}
-		if (rand.nextInt(1024) == 512) {
+		if (rand.nextInt(2048) == 1024) {
 			attackmode = true;
 		}
-		if (rand.nextInt(1024) == 512) {
+		if (rand.nextInt(2048) == 1024) {
 			attackmode = false;
 		}
 		if (!attackmode && rand.nextBoolean() && tick >= 360 && !fleeing) {
@@ -48,36 +52,32 @@ public class Monkey extends Mob {
 			tick = 0;
 		} else if (attackmode) {
 			if (!fleeing) {
-				int i = 0;
-				for (Structure s : game.saveGame.level.structures) {
-					if (game.saveGame.level.structures.elementAt(i).getClass()
-							.getSimpleName().equals("Hut")) {
-						tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
-						ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
+				tx = (int) game.saveGame.player.xpos + (windowWidth / 2 - 50);
+				ty = (int) game.saveGame.player.ypos + (windowHeight / 2 - 96);
+				if (getrange(
+						game.saveGame.player.xpos + (windowWidth / 2 - 50),
+						game.saveGame.player.ypos + (windowHeight / 2) - 96) < 20) {
+					int random = rand.nextInt(4);
+					if (random == 0) {
+						game.saveGame.player.inventory.payCost(
+								rand.nextInt(10) + 10, 0, 0, 0);
 					}
-					i++;
-				}
-				if (i != game.saveGame.level.structures.size()) {
-					if (getrange(
-							game.saveGame.level.structures.elementAt(i).xpos,
-							game.saveGame.level.structures.elementAt(i).ypos) < 20) {
-						int random = rand.nextInt(5);
-						if (random == 0) {
-							// game.saveGame.level.structures.elementAt(i).removewood(rand.nextInt(10)+10);
-						}
-						if (random == 1) {
-							// game.saveGame.level.structures.elementAt(i).removestone(rand.nextInt(10)+10);
-						}
-						if (random == 2) {
-							// game.saveGame.level.structures.elementAt(i).removefood(rand.nextInt(10)+10);
-						}
-						if (random == 3) {
-							// game.saveGame.level.structures.elementAt(i).removeiron(rand.nextInt(10)+10);
-						}
-						if (random == 4) {
-							// game.saveGame.level.structures.elementAt(i).removespikes(rand.nextInt(10)+10);
-						}
+					if (random == 1) {
+						game.saveGame.player.inventory.payCost(0,
+								rand.nextInt(10) + 10, 0, 0);
 					}
+					if (random == 2) {
+						game.saveGame.player.inventory.payCost(0, 0,
+								rand.nextInt(10) + 10, 0);
+					}
+					if (random == 3) {
+						game.saveGame.player.inventory.payCost(0, 0, 0,
+								rand.nextInt(10) + 10);
+					}
+						attackmode = false;
+						tx = (int) game.saveGame.player.xpos + (windowWidth / 2 - 50);
+						ty = (int) game.saveGame.player.ypos + (windowHeight / 2 - 96);
+						fleeing=true;
 				}
 			}
 
@@ -90,12 +90,8 @@ public class Monkey extends Mob {
 				tx = (int) game.saveGame.level.NPCs.elementAt(i).xpos;
 				ty = (int) game.saveGame.level.NPCs.elementAt(i).ypos;
 				fleeing = true;
+				attackmode = false;
 			}
-		}
-		if (getrange(game.saveGame.player.xpos, game.saveGame.player.ypos) < 256) {
-			tx = (int) game.saveGame.player.xpos;
-			ty = (int) game.saveGame.player.ypos;
-			fleeing = true;
 		}
 		if (tx != 0 && ty != 0 && Math.abs(xpos - tx) >= 10
 				|| Math.abs(ypos - (ty)) >= 10 && tx != 0 && ty != 0) {
@@ -107,11 +103,6 @@ public class Monkey extends Mob {
 		} else {
 			xspd = 0;
 			yspd = 0;
-		}
-		if (tx > xpos) {
-			facing = true;
-		} else {
-			facing = false;
 		}
 		xdraw = xpos - game.getWidth() - game.saveGame.player.getXpos();
 		ydraw = ypos - game.getHeight() - game.saveGame.player.getYpos();

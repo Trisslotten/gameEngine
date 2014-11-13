@@ -6,6 +6,7 @@ import org.lwjgl.input.Mouse;
 
 import spel.Game;
 import spel.entities.gui.SpriteCollection;
+import spel.entities.structures.Structure;
 import spel.entities.structures.vegetation.Vegetation;
 
 public class NPC extends Mob {
@@ -25,9 +26,6 @@ public class NPC extends Mob {
 	int variation = 0;
 	int initx = 0;
 	int inity = 0;
-	int wood = 0;
-	int rock = 0;
-	int food = 0;
 	int workertick;
 	public int windowWidth, windowHeight;
 	boolean eventNPC;
@@ -42,31 +40,24 @@ public class NPC extends Mob {
 	boolean collect;
 	boolean guard;
 	boolean working;
-	boolean testing = true;
 	boolean step1 = true;
 	boolean step2 = false;
 	boolean dropoff = true;
 
 	public NPC(double xpos, double ypos, String name, boolean eventNPC,
-			Game game) {
+			Game game, int variation) {
 		super(xpos, ypos);
 		this.name = name;
 		this.eventNPC = eventNPC;
+		this.variation=variation;
 		width = SpriteCollection.NPCEX.width;
 		height = SpriteCollection.NPCEX.height;
 		windowWidth = game.getWidth();
 		windowHeight = game.getHeight();
-		Random rand = new Random();
-		variation = rand.nextInt(3);
 	}
 
 	public void update(double dt, Game game) {
 		jobselector(game);
-		if (testing) {
-			testing = false;
-			initx = (int) xpos;
-			inity = (int) ypos;
-		}
 		workchk();
 		Random rand = new Random();
 		super.update(dt);
@@ -308,20 +299,25 @@ public class NPC extends Mob {
 		}
 		if (workertick >= 100) {
 			workertick = 0;
-			wood++;
 			step2 = true;
 			dropoff = true;
-			System.out.println(rock);
 		}
 		if (step2) {
-			tx = initx;
-			ty = inity;
+			int i = 0;
+			for (Structure s : game.saveGame.level.structures) {
+				if (game.saveGame.level.structures.elementAt(i).getClass()
+						.getSimpleName().equals("Hut")) {
+					tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
+					ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
+				}
+				i++;
+			}
 		}
 		if (getrange(initx, inity) < 20) {
 			step1 = true;
 			step2 = false;
 			if (dropoff) {
-				wood--;
+				game.saveGame.player.addwood();
 				dropoff = false;
 			}
 		}
@@ -362,20 +358,25 @@ public class NPC extends Mob {
 		}
 		if (workertick >= 100) {
 			workertick = 0;
-			food++;
 			step2 = true;
 			dropoff = true;
-			System.out.println(rock);
 		}
 		if (step2) {
-			tx = initx;
-			ty = inity;
+			int i = 0;
+			for (Structure s : game.saveGame.level.structures) {
+				if (game.saveGame.level.structures.elementAt(i).getClass()
+						.getSimpleName().equals("Hut")) {
+					tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
+					ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
+				}
+				i++;
+			}
 		}
 		if (getrange(initx, inity) < 20) {
 			step1 = true;
 			step2 = false;
 			if (dropoff) {
-				food--;
+				game.saveGame.player.addfood();
 				dropoff = false;
 			}
 		}
@@ -416,20 +417,25 @@ public class NPC extends Mob {
 		}
 		if (workertick >= 100) {
 			workertick = 0;
-			rock++;
 			step2 = true;
 			dropoff = true;
-			System.out.println(rock);
 		}
 		if (step2) {
-			tx = initx;
-			ty = inity;
+			int i = 0;
+			for (Structure s : game.saveGame.level.structures) {
+				if (game.saveGame.level.structures.elementAt(i).getClass()
+						.getSimpleName().equals("Hut")) {
+					tx = (int) game.saveGame.level.structures.elementAt(i).xpos;
+					ty = (int) game.saveGame.level.structures.elementAt(i).ypos;
+				}
+				i++;
+			}
 		}
 		if (getrange(initx, inity) < 20) {
 			step1 = true;
 			step2 = false;
 			if (dropoff) {
-				rock--;
+				game.saveGame.player.addstone();
 				dropoff = false;
 			}
 		}
