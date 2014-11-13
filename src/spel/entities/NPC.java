@@ -81,6 +81,7 @@ public class NPC extends Mob {
 		if (eventNPC && clicked && !found) {
 			found = true;
 			friend = true;
+			game.saveGame.player.npcCounter++;
 		}
 		if (!found) {
 			idlewalking = 1024;
