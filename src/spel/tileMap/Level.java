@@ -114,8 +114,8 @@ public class Level implements Serializable {
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
-					else if (rand.nextBoolean() && rand.nextBoolean()) {
-						plants.add(new BerryBush(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
+					else if (rand.nextBoolean() && rand.nextBoolean()&& rand.nextBoolean()) {
+						plants.add(new BerryBush(xpos, ypos, SpriteCollection.BB.height, SpriteCollection.BB.width, false, true, game));
 					}
 				} else if (tile.getClass().getSimpleName().equals("DarkGrassTile")) {
 					if (rand.nextBoolean() && rand.nextBoolean()) {
@@ -129,8 +129,8 @@ public class Level implements Serializable {
 					} else if (rand.nextBoolean() && rand.nextBoolean()) {
 						plants.add(new SmallRock(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
 					}
-					else if (rand.nextBoolean() && rand.nextBoolean()) {
-						plants.add(new BerryBush(xpos, ypos, SpriteCollection.smallRock.height, SpriteCollection.smallRock.width, false, true, game));
+					else if (rand.nextBoolean() && rand.nextBoolean()&& rand.nextBoolean()) {
+						plants.add(new BerryBush(xpos, ypos, SpriteCollection.BB.height, SpriteCollection.BB.width, false, true, game));
 					}
 				}
 			}
